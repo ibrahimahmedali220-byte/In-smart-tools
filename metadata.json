@@ -1,0 +1,6 @@
+{
+  "name": "India Smart Tools",
+  "description": "Simple, fast and free online utility platform for students, job seekers, creators and everyday users across India.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "India Smart Tools",
+  "short_name": "Smart Tools",
+  "description": "Simple, fast and free online utility platform for students, job seekers, creators and everyday users across India.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["utilities", "productivity", "finance", "education"]
+}

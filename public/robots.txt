@@ -1,0 +1,10 @@
+# India Smart Tools - Robots Exclusion Standard
+User-agent: *
+Allow: /
+
+# Prevent indexing of internal endpoints or non-canonical dynamic query states
+Disallow: /api/
+Disallow: /dist/
+
+# Sitemap location
+Sitemap: https://indiasmarttools.in/sitemap.xml

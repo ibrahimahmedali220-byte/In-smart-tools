@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect width="32" height="32" rx="8" fill="#0f172a"/>
+  <!-- Elegant minimalist wrench and geometric caliper tool mark -->
+  <path d="M10 9a4 4 0 0 1 6.828-2.828l-2.414 2.414a1.5 1.5 0 0 0 2.121 2.121l2.414-2.414A4 4 0 0 1 16.12 15.07l-6.828 6.829a2 2 0 1 1-2.829-2.829l6.829-6.828A3.98 3.98 0 0 1 10 9z" fill="#ffffff"/>
+  <circle cx="22" cy="22" r="2.5" fill="#38bdf8"/>
+</svg>
