@@ -10,7 +10,7 @@ import {
   ConsentPreferences
 } from '../../utils/cookieConsent';
 import { useToast } from '../../components/common/Toast';
-import { ShieldCheck, Info, CheckCircle2, RotateCcw, AlertCircle } from 'lucide-react';
+import { ShieldCheck, Info, CheckCircle2, RotateCcw } from 'lucide-react';
 
 export type LegalDocType = 'privacy' | 'terms' | 'cookies' | 'disclaimer' | 'refund';
 
@@ -23,7 +23,7 @@ interface LegalDocConfig {
   sections: { title: string; content: string[] }[];
 }
 
-const PRIVACY_CONTACT_EMAIL = import.meta.env.VITE_PRIVACY_EMAIL || 'privacy@indiasmarttools.in (Configured Contact Inbox)';
+const PRIVACY_CONTACT_EMAIL = import.meta.env.VITE_PRIVACY_EMAIL || 'privacy@smartlytools.vercel.app (Configured Contact Inbox)';
 
 const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
   privacy: {
@@ -61,32 +61,27 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
         ]
       },
       {
-        title: '4. Browser Storage & Cookies',
+        title: '4. Browser Storage & Local Preferences',
         content: [
-          'India Smart Tools does NOT use tracking cookies, advertising pixels, or cross-site fingerprinting technologies.',
-          'We use strictly necessary technical sessionStorage only to enforce client-side rate-limiting cooldown timestamps (e.g. 5-second throttle between form submissions) to protect our forms against automated spamming.',
-          'For complete details, please consult our Cookie Policy.'
+          'India Smart Tools does NOT use third-party tracking cookies, advertising pixels, or cross-site fingerprinting technologies.',
+          'To provide a seamless, app-like Progressive Web App (PWA) experience, we use local browser storage (localStorage) strictly for three user-controlled preferences:',
+          '1. Theme Preference (ist_theme): Stores your selected display theme (light, dark, or system).',
+          '2. Favorite Tools (ist_favorites): Stores the string IDs of tools you have explicitly starred for quick access.',
+          '3. Recent Tools History (ist_recent_tools): Stores the IDs and timestamps of up to 8 recently visited tools. Zero calculation inputs or files are ever stored.',
+          'You can clear your history or favorites at any time directly within the application, or by clearing your browser cache.'
         ]
       },
       {
-        title: '5. Third-Party Services & Assets',
+        title: '5. Progressive Web App (PWA) & Service Worker',
         content: [
-          '• Web Typography: We load the open-source "Plus Jakarta Sans" font from Google Fonts (fonts.googleapis.com / fonts.gstatic.com). This is an essential static resource; no user calculation data or cookies are shared with Google.',
-          '• External Links: We provide links to official Indian examination portals (e.g., UPSC, SSC, CBSE) and government bodies. We are not responsible for the privacy practices of external third-party portals.'
+          'Our service worker precaches public application assets (HTML, CSS, JavaScript, icons, web fonts) to allow offline functionality on supported devices.',
+          'The service worker never caches sensitive data, passwords, uploaded files, or private calculations.'
         ]
       },
       {
-        title: '6. Children and Minors',
+        title: '6. Privacy Inquiries & Contact',
         content: [
-          'India Smart Tools provides educational, student, and everyday calculators for general users. We do not knowingly solicit, collect, or retain personal information from minors under 18 years of age.'
-        ]
-      },
-      {
-        title: '7. User Rights: Data Access, Deletion & Privacy Inquiries',
-        content: [
-          'Because all tool calculations take place entirely in your local browser and are not saved on a server, there is no remote calculation history or account data to retrieve or delete.',
-          'If you have submitted a communication form and wish to request the removal of your correspondence, please direct your request to our designated privacy contact placeholder below.',
-          `Privacy Contact: ${PRIVACY_CONTACT_EMAIL}`
+          `If you have questions regarding data handling or wish to request clarification on any privacy practice, please reach out to our privacy contact inbox: ${PRIVACY_CONTACT_EMAIL}.`
         ]
       }
     ]
@@ -95,56 +90,33 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
     title: 'Terms of Service',
     slug: 'terms',
     lastUpdated: 'October 2026',
-    description: 'Terms and conditions governing the informational and educational use of India Smart Tools.',
-    notice: 'LEGAL REVIEW RECOMMENDED — These terms govern access and use of the platform based on its current free informational functionality.',
+    description: 'General terms and conditions governing the use of India Smart Tools free online utilities.',
+    notice: 'LEGAL REVIEW RECOMMENDED — These Terms of Service set forth reasonable usage standards for a free, public utility website.',
     sections: [
       {
         title: '1. Acceptance of Terms',
         content: [
-          'By accessing or using India Smart Tools ("the Platform"), you acknowledge and agree to these Terms of Service. If you do not agree with any part of these terms, please do not use the Platform.'
+          'By accessing and using India Smart Tools (smartlytools.vercel.app), you agree to be bound by these Terms of Service. If you do not agree with these terms, you should discontinue using the website.'
         ]
       },
       {
-        title: '2. Free Informational License',
+        title: '2. Free Educational & Utility Platform',
         content: [
-          'All tools, calculators, converters, and informational resources on the Platform are provided free of charge for personal, academic, and non-commercial educational use.',
-          'You are granted a revocable, non-exclusive, and non-transferable license to utilize the tools in accordance with these Terms.'
+          'India Smart Tools provides computational calculators, document utilities, and academic converters free of charge for personal, academic, and professional convenience.',
+          'All tools are provided on an "as is" and "as available" basis without warranties of any kind.'
         ]
       },
       {
-        title: '3. Acceptable Use and Prohibited Misuse',
+        title: '3. Computational Accuracy & Non-Professional Advice',
         content: [
-          'You agree to use the Platform in a lawful, ethical, and responsible manner. You agree NOT to:',
-          '• Deploy automated web scrapers, bots, or denial-of-service scripts against the Platform.',
-          '• Interfere with or attempt to compromise the integrity or security of the Platform infrastructure.',
-          '• Misrepresent results obtained from the Platform as official government certifications or certified financial advice.',
-          '• Reverse-engineer or repurpose proprietary brand assets, documentation, or code without prior permission.'
+          'Calculations produced by financial tools (EMI, SIP, GST, Salary, FD) are mathematical estimates intended for general informational guidance only. They do not constitute certified tax advice, legal opinion, or banking commitments.',
+          'For formal loan agreements, tax filings, or audited financial statements, please consult qualified chartered accountants (CAs) or financial advisers.'
         ]
       },
       {
-        title: '4. Limitation of Calculations & Educational Nature',
+        title: '4. Acceptable Use',
         content: [
-          'Mathematical calculations (including loan EMIs, mutual fund SIP projections, tax calculations, and academic conversions) are provided as mathematical approximations for educational and planning purposes only.',
-          'Official institutions, banks, universities, and recruitment boards may use specific proprietary rounding, surcharge tables, or cutoff criteria. Always verify critical results directly with the relevant official authority.'
-        ]
-      },
-      {
-        title: '5. Intellectual Property',
-        content: [
-          'The design, brand identity, logos, code architecture, and original content of India Smart Tools are the property of the Platform and are protected by applicable intellectual property laws.'
-        ]
-      },
-      {
-        title: '6. Disclaimer of Warranties & Limitation of Liability',
-        content: [
-          'The Platform is provided strictly on an "as is" and "as available" basis without warranties of any kind, whether express or implied.',
-          'To the fullest extent permitted by applicable law, India Smart Tools and its contributors shall not be liable for any direct, indirect, incidental, or consequential damages resulting from the use of or inability to use the Platform or reliance on calculation outputs.'
-        ]
-      },
-      {
-        title: '7. Inquiries & Legal Notices',
-        content: [
-          `For formal notices, intellectual property inquiries, or terms questions, please reach out to our designated contact configuration: ${PRIVACY_CONTACT_EMAIL}`
+          'You agree not to misuse our services, attempt to disrupt infrastructure, reverse-engineer proprietary assets, or execute automated scraping that impairs performance for other Indian users.'
         ]
       }
     ]
@@ -153,39 +125,28 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
     title: 'Cookie Policy',
     slug: 'cookie-policy',
     lastUpdated: 'October 2026',
-    description: 'Clear details on our minimal technical storage and cookie consent architecture.',
+    description: 'Detailed information regarding browser storage, preferences, and cookie usage on India Smart Tools.',
+    notice: 'LEGAL REVIEW RECOMMENDED — We do not use third-party tracking or advertising cookies.',
     sections: [
       {
-        title: '1. What Are Cookies and Local Storage?',
+        title: '1. What Are Cookies and Browser Storage?',
         content: [
-          'Cookies and web storage (localStorage and sessionStorage) are standard browser features allowing websites to retain technical state or preferences locally on your computer or mobile device.'
+          'Cookies and web storage (localStorage and sessionStorage) are small pieces of data stored on your device by your web browser to remember preferences and maintain site stability.'
         ]
       },
       {
-        title: '2. Actual Storage Technology Used by India Smart Tools',
+        title: '2. How India Smart Tools Uses Storage',
         content: [
-          'India Smart Tools follows strict data minimization principles. Currently:',
-          '• We do NOT deploy HTTP cookies.',
-          '• We do NOT deploy advertising cookies, marketing tracking pixels, or cross-site profiling tags.',
-          '• We do NOT load third-party analytics trackers.',
-          '• Strictly Necessary Session Storage: We use technical sessionStorage solely to maintain a temporary rate-limiting timestamp (5-second throttle) to prevent automated form submission flooding.'
+          '• Theme Preference (localStorage): Remembers whether you selected Light, Dark, or System mode.',
+          '• Tool Preferences (localStorage): Remembers your starred favorite tools and up to 8 recently opened tools.',
+          '• Rate Limiting (sessionStorage): Prevents spam on our contact forms.',
+          '• Service Worker Cache: Stores application assets for offline use.'
         ]
       },
       {
-        title: '3. Categories of Browser Storage',
+        title: '3. Zero Third-Party Advertising Trackers',
         content: [
-          '• Strictly Necessary (Active): Required for basic platform security, technical rate-limiting, and error-handling. Cannot be disabled without breaking website functionality.',
-          '• Preference Storage (Inactive / Future): Would retain user preferences such as dark mode or recent tool shortcuts. Not currently active.',
-          '• Analytics Cookies (Inactive / Future): Would measure anonymous page-view statistics to guide tool development. Not currently active. Will require explicit user consent if introduced.'
-        ]
-      },
-      {
-        title: '4. How to Manage or Clear Browser Storage',
-        content: [
-          'You can clear cookies and site data at any time via your browser settings:',
-          '• Google Chrome: Settings > Privacy and security > Clear browsing data > Cookies and other site data.',
-          '• Mozilla Firefox: Settings > Privacy & Security > Cookies and Site Data > Clear Data.',
-          '• Apple Safari: Settings > Safari > Advanced > Website Data > Remove All Website Data.'
+          'India Smart Tools does not deploy commercial marketing cookies, Facebook pixels, Google Ads trackers, or cross-site tracking beacons.'
         ]
       }
     ]
@@ -194,41 +155,25 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
     title: 'Disclaimer',
     slug: 'disclaimer',
     lastUpdated: 'October 2026',
-    description: 'Important legal disclaimers regarding calculator outputs, academic formulas, government guidelines, and health utilities.',
-    notice: 'LEGAL REVIEW RECOMMENDED — Please read this disclaimer carefully before relying on any calculation outputs or guidance.',
+    description: 'General informational disclaimer for all calculation models, converters, and document processors.',
+    notice: 'LEGAL REVIEW RECOMMENDED — Factual disclaimer of liability for mathematical approximations.',
     sections: [
       {
-        title: '1. Financial and Tax Calculators (EMI, SIP, GST, Salary, FD)',
+        title: '1. General Informational Notice',
         content: [
-          'Financial tools provided on India Smart Tools (including the EMI Calculator, SIP Calculator, GST Calculator, Salary Calculator, and Fixed Deposit Calculator) are mathematical simulation engines intended strictly for general educational and informational purposes.',
-          'They do NOT constitute certified financial, tax, accounting, or legal advice.',
-          'Tax laws, rebate rules (e.g. Section 87A), compounding frequencies, and bank lending rates in India are subject to legislative amendments and institutional discretion. Always consult a qualified Chartered Accountant (CA) or SEBI-registered Investment Advisor before making significant financial commitments.'
+          'The content, tools, calculators, and documentation provided on India Smart Tools are for general informational, educational, and computational assistance only.'
         ]
       },
       {
-        title: '2. Academic and Examination Calculators (Percentage, CGPA, Age)',
+        title: '2. Financial & Tax Calculations',
         content: [
-          'Our CGPA-to-Percentage converter uses the widely recognized CBSE formula (CGPA × 9.5). However, different autonomous colleges, state universities (such as VTU, Mumbai University, or AKTU), and recruitment commissions may maintain distinct official grading ordinances or conversion tables.',
-          'Age calculators calculate chronological age as on a cutoff date, but applicants must cross-check specific notification age relaxation rules (such as category-based cutoffs) in the official gazette.'
+          'Calculators for EMI, SIP, Fixed Deposits, GST, and In-Hand Salary use established mathematical equations and statutory tax slabs. Actual banking figures may vary due to discrete interest rounding, processing charges, or specific employer salary structures.'
         ]
       },
       {
-        title: '3. Document and Image Tools (JPG to PDF, Image Compressor, Resizer)',
+        title: '3. Academic & Document Compliance',
         content: [
-          'Presets for photo and signature dimensions (e.g., UPSC 350×350 px, SSC 200×230 px, <20 KB or <50 KB size limits) are calibrated based on publicly available portal brochures.',
-          'Government exam boards frequently update their server upload parameters without advance notice. You must independently inspect your output files against the official instruction manual before final form fee payment.'
-        ]
-      },
-      {
-        title: '4. Health and Fitness Utilities (BMI Calculator)',
-        content: [
-          'The BMI Calculator uses standard World Health Organization (WHO) and Asian-Indian population cutoffs for general reference. It is NOT a medical diagnosis, clinical evaluation, or personalized treatment plan. Consult a qualified medical practitioner for health advice.'
-        ]
-      },
-      {
-        title: '5. No Warranty & Limitation of Liability',
-        content: [
-          'India Smart Tools does not warrant the completeness, accuracy, or reliability of tool outputs. Under no circumstances will India Smart Tools or its creators be liable for missed recruitment deadlines, loan interest variations, tax penalties, or any loss resulting from reliance on this platform.'
+          'CGPA conversion factors and exam age eligibility criteria are based on standard Indian benchmarks (CBSE/AICTE/UPSC). Always verify final application criteria against official notification gazettes released by your target examining body.'
         ]
       }
     ]
@@ -237,78 +182,50 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
     title: 'Refund Policy',
     slug: 'refund-policy',
     lastUpdated: 'October 2026',
-    description: 'Information regarding payment processing and refund eligibility on India Smart Tools.',
-    notice: 'STATUS: NOT CURRENTLY APPLICABLE — ALL TOOLS ARE 100% FREE',
+    description: 'Statement regarding payments and transactions on India Smart Tools.',
     sections: [
       {
-        title: '1. Completely Free Utility Platform',
+        title: '1. 100% Free Platform Notice',
         content: [
-          'India Smart Tools is currently a 100% free online utility platform. We do not sell physical goods, software licenses, paid subscriptions, or premium memberships.',
-          'We do not operate any payment gateways, credit card processing, UPI payment collections, or bank transfers on this website.'
-        ]
-      },
-      {
-        title: '2. Non-Applicability of Refunds',
-        content: [
-          'Because no monetary transactions or charges occur on India Smart Tools, refunds and cancellations are NOT CURRENTLY APPLICABLE.',
-          'You will never be asked for credit card numbers, debit card PINs, UPI OTPs, or bank account credentials on this platform.'
-        ]
-      },
-      {
-        title: '3. Future Paid or Premium Features',
-        content: [
-          'If paid products, batch processing capabilities, or premium features are introduced in future iterations of India Smart Tools, this Refund Policy will be updated prior to launch to clearly outline:',
-          '• Authorized payment providers (e.g. Razorpay, Stripe, or UPI).',
-          '• Eligible refund conditions and statutory cancellation windows.',
-          '• Step-by-step refund submission procedures.',
-          '• Customer support contact details for payment disputes.'
+          'All utilities, tools, and converters on India Smart Tools are completely free to use. We do not charge fees, require paid subscriptions, or process credit card payments.',
+          'Because no monetary transactions occur on this platform, refunds are not applicable.'
         ]
       }
     ]
   }
 };
 
-export interface LegalPageProps {
-  type: LegalDocType;
-}
-
-export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
-  const doc = LEGAL_DOCS[type];
+export const LegalPage: React.FC<{ type: LegalDocType }> = ({ type }) => {
+  const doc = LEGAL_DOCS[type] || LEGAL_DOCS.privacy;
   const { showToast } = useToast();
-
-  // Cookie preferences state for Cookie Policy interactive manager
   const [preferences, setPreferences] = useState<ConsentPreferences>(getConsentPreferences());
   const [hasSavedPrefs, setHasSavedPrefs] = useState(false);
 
   useEffect(() => {
-    if (doc) {
-      updateSeoMetadata({
-        title: `${doc.title} – India Smart Tools`,
-        description: doc.description,
-        canonicalPath: `/${doc.slug}`,
-        jsonLd: getBreadcrumbListSchema([
-          { name: 'Home', item: '/' },
-          { name: 'Legal', item: '/privacy-policy' },
-          { name: doc.title, item: `/${doc.slug}` }
-        ])
-      });
-    }
-  }, [doc, type]);
+    updateSeoMetadata({
+      title: `${doc.title} – India Smart Tools`,
+      description: doc.description,
+      canonicalPath: `/${doc.slug}`,
+      jsonLd: getBreadcrumbListSchema([
+        { name: 'Home', item: '/' },
+        { name: 'Legal', item: '/privacy-policy' },
+        { name: doc.title, item: `/${doc.slug}` }
+      ])
+    });
+  }, [doc]);
 
   const handleSavePreferences = () => {
     setConsentPreferences(preferences);
     setHasSavedPrefs(true);
-    showToast('Your privacy preferences have been saved.', 'success');
+    showToast('Cookie preferences updated successfully.', 'success');
+    setTimeout(() => setHasSavedPrefs(false), 3000);
   };
 
   const handleResetPreferences = () => {
-    resetConsentPreferences();
-    setPreferences(getConsentPreferences());
-    setHasSavedPrefs(false);
-    showToast('Preferences reset to strictly necessary only.', 'info');
+    const fresh = resetConsentPreferences();
+    setPreferences(fresh);
+    showToast('Preferences reset to default values.', 'info');
   };
-
-  if (!doc) return null;
 
   return (
     <PageContainer maxWidth="4xl">
@@ -321,29 +238,30 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
       />
 
       <div className="space-y-8">
+        
         {/* Document Header */}
         <div>
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Transparency & Legal Documentation
+          <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            Legal Documentation
           </span>
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mt-1">
+          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100 tracking-tight mt-1">
             {doc.title}
           </h1>
-          <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 mt-2">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-2">
             <span>Effective Date: {doc.lastUpdated}</span>
             <span aria-hidden="true">·</span>
             <span>Version 1.0</span>
             <span aria-hidden="true">·</span>
-            <span className="text-slate-600 font-medium">India Smart Tools</span>
+            <span className="text-slate-600 dark:text-slate-300 font-medium">India Smart Tools</span>
           </div>
-          <p className="mt-3 text-sm text-slate-600 leading-relaxed max-w-2xl">
+          <p className="mt-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
             {doc.description}
           </p>
 
           {/* Legal Review / Status Notice */}
           {doc.notice && (
-            <div className="mt-4 p-3.5 bg-slate-100 rounded-xl border border-slate-200/80 flex items-start gap-2.5 text-xs text-slate-700">
-              <Info className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" aria-hidden="true" />
+            <div className="mt-4 p-3.5 bg-slate-100 dark:bg-slate-900/80 rounded-2xl border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
+              <Info className="w-4 h-4 text-slate-500 dark:text-sky-400 shrink-0 mt-0.5" aria-hidden="true" />
               <div className="leading-relaxed">
                 {doc.notice}
               </div>
@@ -353,31 +271,31 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
 
         {/* Interactive Cookie Preference Center on Cookie Policy Page */}
         {type === 'cookies' && (
-          <div className="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 space-y-6">
-            <div className="border-b border-slate-100 pb-4">
-              <div className="flex items-center gap-2 text-slate-900 font-semibold text-base">
-                <ShieldCheck className="w-5 h-5 text-slate-800" aria-hidden="true" />
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-6 transition-colors">
+            <div className="border-b border-slate-100 dark:border-slate-800 pb-4">
+              <div className="flex items-center gap-2 text-slate-900 dark:text-slate-100 font-semibold text-base">
+                <ShieldCheck className="w-5 h-5 text-slate-800 dark:text-sky-400" aria-hidden="true" />
                 <h2>Cookie & Browser Storage Preference Manager</h2>
               </div>
-              <p className="text-xs text-slate-500 mt-1">
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                 You have full control over non-essential browser storage. Notice that non-essential trackers are disabled by default.
               </p>
             </div>
 
             <div className="space-y-4">
               {/* Strictly Necessary */}
-              <div className="p-4 bg-slate-50 rounded-xl border border-slate-200/60 flex items-start justify-between gap-4">
+              <div className="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200/60 dark:border-slate-700/60 flex items-start justify-between gap-4">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs sm:text-sm font-semibold text-slate-900">
+                    <span className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100">
                       Strictly Necessary Storage
                     </span>
-                    <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-200 text-slate-700">
+                    <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
                       Always Required
                     </span>
                   </div>
-                  <p className="text-xs text-slate-600 leading-relaxed max-w-lg">
-                    Used strictly for essential technical rate-limiting and CSRF/spam protection on forms. Cannot be disabled without compromising site reliability.
+                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg">
+                    Used strictly for essential technical rate-limiting, offline service worker caching, and CSRF/spam protection.
                   </p>
                 </div>
                 <input
@@ -385,18 +303,18 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
                   checked={true}
                   disabled={true}
                   aria-label="Strictly necessary storage always enabled"
-                  className="mt-1 h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-900 cursor-not-allowed opacity-60"
+                  className="mt-1 h-4 w-4 rounded border-slate-300 dark:border-slate-700 text-slate-900 focus:ring-slate-900 cursor-not-allowed opacity-60"
                 />
               </div>
 
               {/* Preference Storage */}
-              <div className="p-4 bg-white rounded-xl border border-slate-200 flex items-start justify-between gap-4 hover:border-slate-300 transition-colors">
+              <div className="p-4 bg-white dark:bg-slate-800/80 rounded-xl border border-slate-200 dark:border-slate-700 flex items-start justify-between gap-4 hover:border-slate-300 dark:hover:border-slate-600 transition-colors">
                 <div className="space-y-1">
-                  <span className="text-xs sm:text-sm font-semibold text-slate-900">
-                    User Interface Preferences
+                  <span className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100">
+                    User Interface Preferences & Favorites
                   </span>
-                  <p className="text-xs text-slate-600 leading-relaxed max-w-lg">
-                    Allows the browser to remember UI choices (such as preferred calculator presets or theme settings). Currently inactive.
+                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg">
+                    Allows the browser to remember UI choices (such as dark/light mode preference, starred favorites, and recently used tools).
                   </p>
                 </div>
                 <input
@@ -405,32 +323,12 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
                   checked={preferences.preferences}
                   onChange={e => setPreferences({ ...preferences, preferences: e.target.checked })}
                   aria-label="Enable user interface preferences storage"
-                  className="mt-1 h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-900 cursor-pointer"
-                />
-              </div>
-
-              {/* Analytics Storage */}
-              <div className="p-4 bg-white rounded-xl border border-slate-200 flex items-start justify-between gap-4 hover:border-slate-300 transition-colors">
-                <div className="space-y-1">
-                  <span className="text-xs sm:text-sm font-semibold text-slate-900">
-                    Anonymous Usage Analytics
-                  </span>
-                  <p className="text-xs text-slate-600 leading-relaxed max-w-lg">
-                    Allows anonymous aggregation of popular tools to prioritize engineering features. India Smart Tools currently does not load any third-party analytics trackers.
-                  </p>
-                </div>
-                <input
-                  type="checkbox"
-                  id="analytics-storage-toggle"
-                  checked={preferences.analytics}
-                  onChange={e => setPreferences({ ...preferences, analytics: e.target.checked })}
-                  aria-label="Enable anonymous usage analytics"
-                  className="mt-1 h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-900 cursor-pointer"
+                  className="mt-1 h-4 w-4 rounded border-slate-300 dark:border-slate-700 text-slate-900 dark:text-sky-500 focus:ring-slate-900 cursor-pointer"
                 />
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100">
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100 dark:border-slate-800">
               <Button
                 variant="ghost"
                 size="sm"
@@ -441,7 +339,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
               </Button>
               <div className="flex items-center gap-2">
                 {hasSavedPrefs && (
-                  <span className="text-xs text-emerald-600 font-medium inline-flex items-center gap-1">
+                  <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium inline-flex items-center gap-1">
                     <CheckCircle2 className="w-3.5 h-3.5" /> Saved
                   </span>
                 )}
@@ -458,13 +356,13 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
         )}
 
         {/* Document Sections */}
-        <div className="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-10 divide-y divide-slate-100">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-10 divide-y divide-slate-100 dark:divide-slate-800 transition-colors">
           {doc.sections.map((section, idx) => (
             <div key={idx} className={idx === 0 ? 'pb-6' : 'py-6'}>
-              <h2 className="text-base font-semibold text-slate-900 mb-3">
+              <h2 className="text-base font-semibold text-slate-900 dark:text-slate-100 mb-3">
                 {section.title}
               </h2>
-              <div className="space-y-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
+              <div className="space-y-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                 {section.content.map((paragraph, pIdx) => (
                   <p key={pIdx}>{paragraph}</p>
                 ))}

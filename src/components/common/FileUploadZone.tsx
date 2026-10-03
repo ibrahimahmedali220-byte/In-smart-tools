@@ -1,7 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Upload, X, FileText, Image as ImageIcon, AlertCircle } from 'lucide-react';
-import { formatFileSize } from '../../utils/security/fileSecurity';
-import { Button } from './Button';
+import { Upload } from 'lucide-react';
 
 export interface FileUploadZoneProps {
   accept: string; // e.g. "image/jpeg,image/png,image/webp" or "application/pdf"
@@ -82,10 +80,10 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
           }
         }}
         aria-label={`${label}. Click or drop files here`}
-        className={`relative border-2 border-dashed rounded-2xl p-6 sm:p-10 text-center transition-all cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 ${
+        className={`relative border-2 border-dashed rounded-2xl p-6 sm:p-10 text-center transition-all cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-sky-400 ${
           isDragOver
-            ? 'border-slate-900 bg-slate-100/80 scale-[1.005]'
-            : 'border-slate-300 hover:border-slate-400 bg-slate-50/50 hover:bg-slate-50'
+            ? 'border-slate-900 dark:border-sky-400 bg-slate-100/80 dark:bg-slate-800/80 scale-[1.005]'
+            : 'border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 bg-slate-50/50 dark:bg-slate-900/40 hover:bg-slate-50 dark:hover:bg-slate-900/80'
         } ${disabled ? 'opacity-50 pointer-events-none' : ''}`}
       >
         <input
@@ -100,27 +98,27 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
         />
 
         <div className="flex flex-col items-center justify-center space-y-3">
-          <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200/80 shadow-sm flex items-center justify-center text-slate-700">
+          <div className="w-12 h-12 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 shadow-sm flex items-center justify-center text-slate-700 dark:text-slate-300">
             <Upload className="w-5 h-5" aria-hidden="true" />
           </div>
 
           <div className="space-y-1">
-            <p className="text-sm font-bold text-slate-900">
+            <p className="text-sm font-bold text-slate-900 dark:text-slate-100">
               {label}
             </p>
-            <p className="text-xs text-slate-500 max-w-sm mx-auto">
-              Drag & drop here, or <span className="text-slate-900 font-semibold underline">browse from your device</span>
+            <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
+              Drag & drop here, or <span className="text-slate-900 dark:text-sky-400 font-semibold underline">browse from your device</span>
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-1 text-[11px] text-slate-400 font-medium">
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-1 text-[11px] text-slate-400 dark:text-slate-500 font-medium">
             <span>Supported: {accept.replace(/image\//g, '').replace(/application\//g, '').toUpperCase()}</span>
             <span>·</span>
             <span>Max Size: {maxSizeMB} MB</span>
           </div>
 
           {helperText && (
-            <p className="text-[11px] text-slate-500 pt-1">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 pt-1">
               {helperText}
             </p>
           )}

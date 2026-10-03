@@ -56,7 +56,7 @@ export function isSafeUrl(url: unknown): boolean {
 
   // Allow standard http, https, mailto, tel
   try {
-    const parsed = new URL(clean, 'https://indiasmarttools.in');
+    const parsed = new URL(clean, 'https://smartlytools.vercel.app');
     return ['http:', 'https:', 'mailto:', 'tel:'].includes(parsed.protocol);
   } catch {
     return false;
@@ -74,23 +74,54 @@ export function sanitizeUrl(url: unknown, fallback: string = '/'): string {
 }
 
 // Client-side submission rate limiting map (In-Memory)
-const rateLimitMap = new Map<string, number>();
+const rateLimitMap = new Map<string, { count: number; firstAttempt: number; lastAttempt: number }>();
 
 /**
- * Client-side rate limiter / cooldown to prevent accidental form spamming
+ * Client-side rate limiter to prevent accidental form spamming
  */
-export function checkRateLimit(key: string, cooldownMs: number = 3000): { allowed: boolean; remainingSeconds: number } {
+export function checkRateLimit(
+  key: string,
+  maxAttemptsOrCooldown: number = 3000,
+  windowMs?: number
+): { allowed: boolean; remainingSeconds: number; resetIn: number } {
   const now = Date.now();
-  const lastAttempt = rateLimitMap.get(key) || 0;
+
+  // If windowMs is provided, treat as (key, maxAttempts, windowMs)
+  if (windowMs !== undefined) {
+    const maxAttempts = maxAttemptsOrCooldown;
+    const record = rateLimitMap.get(key) || { count: 0, firstAttempt: now, lastAttempt: now };
+
+    if (now - record.firstAttempt > windowMs) {
+      // Window expired, reset
+      rateLimitMap.set(key, { count: 1, firstAttempt: now, lastAttempt: now });
+      return { allowed: true, remainingSeconds: 0, resetIn: 0 };
+    }
+
+    if (record.count >= maxAttempts) {
+      const resetIn = Math.max(0, windowMs - (now - record.firstAttempt));
+      const remainingSeconds = Math.ceil(resetIn / 1000);
+      return { allowed: false, remainingSeconds, resetIn };
+    }
+
+    record.count += 1;
+    record.lastAttempt = now;
+    rateLimitMap.set(key, record);
+    return { allowed: true, remainingSeconds: 0, resetIn: 0 };
+  }
+
+  // Cooldown mode (key, cooldownMs)
+  const cooldownMs = maxAttemptsOrCooldown;
+  const record = rateLimitMap.get(key);
+  const lastAttempt = record ? record.lastAttempt : 0;
   const elapsed = now - lastAttempt;
 
   if (elapsed < cooldownMs) {
     const remainingSeconds = Math.ceil((cooldownMs - elapsed) / 1000);
-    return { allowed: false, remainingSeconds };
+    return { allowed: false, remainingSeconds, resetIn: cooldownMs - elapsed };
   }
 
-  rateLimitMap.set(key, now);
-  return { allowed: true, remainingSeconds: 0 };
+  rateLimitMap.set(key, { count: 1, firstAttempt: now, lastAttempt: now });
+  return { allowed: true, remainingSeconds: 0, resetIn: 0 };
 }
 
 /**

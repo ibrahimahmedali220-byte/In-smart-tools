@@ -9,7 +9,18 @@ import {
   PageSizeOption
 } from '../../../utils/processors/jpgToPdf';
 import { validateImageFile, formatFileSize } from '../../../utils/security/fileSecurity';
-import { FileText, Download, RotateCcw, Trash2, ArrowUp, ArrowDown, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import {
+  FileText,
+  Download,
+  RotateCcw,
+  Trash2,
+  ArrowUp,
+  ArrowDown,
+  ShieldCheck,
+  CheckCircle2,
+  Share2,
+  Send
+} from 'lucide-react';
 
 export const JpgToPdfComponent: React.FC = () => {
   const { showToast } = useToast();
@@ -18,7 +29,7 @@ export const JpgToPdfComponent: React.FC = () => {
   const [pageSize, setPageSize] = useState<PageSizeOption>('a4');
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
-  const [generatedPdf, setGeneratedPdf] = useState<{ url: string; filename: string; size: number } | null>(null);
+  const [generatedPdf, setGeneratedPdf] = useState<{ url: string; filename: string; size: number; blob: Blob } | null>(null);
 
   const handleFilesSelected = async (files: File[]) => {
     const validItems: ImageInputItem[] = [];
@@ -97,101 +108,144 @@ export const JpgToPdfComponent: React.FC = () => {
       setGeneratedPdf({
         url,
         filename: result.filename,
-        size: result.blob.size
+        size: result.blob.size,
+        blob: result.blob
       });
-      showToast('PDF created successfully!', 'success');
-    } catch (err: unknown) {
-      showToast(err instanceof Error ? err.message : 'Failed to generate PDF.', 'error');
+      showToast('PDF compiled successfully!', 'success');
+    } catch {
+      showToast('Failed to compile PDF document. Please try again.', 'error');
     } finally {
       setIsProcessing(false);
+      setProgress(0);
     }
+  };
+
+  // WhatsApp Share Handler for PDF
+  const handleShareWhatsApp = async () => {
+    if (!generatedPdf) return;
+
+    try {
+      const file = new File([generatedPdf.blob], generatedPdf.filename, { type: 'application/pdf' });
+      if (typeof navigator !== 'undefined' && navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: generatedPdf.filename,
+          text: `Here is the PDF document: ${generatedPdf.filename} (compiled with Smart Tools)`
+        });
+        showToast('PDF shared to WhatsApp / Apps!', 'success');
+        return;
+      }
+    } catch {
+      // Fallback
+    }
+
+    // Trigger download & open WhatsApp web
+    const a = document.createElement('a');
+    a.href = generatedPdf.url;
+    a.download = generatedPdf.filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(`I have created a PDF: ${generatedPdf.filename} using Smart Tools (https://smartlytools.vercel.app/tools/jpg-to-pdf)`)}`;
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
+    showToast('PDF downloaded! Opening WhatsApp to send...', 'info');
+  };
+
+  // Instagram Share Handler for PDF
+  const handleShareInstagram = async () => {
+    if (!generatedPdf) return;
+
+    try {
+      const file = new File([generatedPdf.blob], generatedPdf.filename, { type: 'application/pdf' });
+      if (typeof navigator !== 'undefined' && navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: generatedPdf.filename,
+          text: `PDF Document: ${generatedPdf.filename}`
+        });
+        showToast('Shared to Instagram / Apps!', 'success');
+        return;
+      }
+    } catch {
+      // Fallback
+    }
+
+    // Download file
+    const a = document.createElement('a');
+    a.href = generatedPdf.url;
+    a.download = generatedPdf.filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    showToast('PDF downloaded to your device for Instagram sharing.', 'info');
   };
 
   return (
     <div className="space-y-8">
       {/* Upload Zone */}
-      {items.length === 0 && !generatedPdf && (
-        <FileUploadZone
-          accept="image/jpeg,image/png,image/webp"
-          multiple
-          maxSizeMB={50}
-          label="Upload JPG, PNG or WebP Images"
-          helperText="Select one or multiple images to compile into a single organized PDF document."
-          onFilesSelected={handleFilesSelected}
-        />
-      )}
+      <FileUploadZone
+        accept="image/jpeg,image/png,image/webp"
+        multiple={true}
+        onFilesSelected={handleFilesSelected}
+        label="Upload Images (JPG, PNG, WebP)"
+        helperText="Select or drag and drop photos, scanned marksheets, identity cards, or certificates."
+      />
 
-      {/* Workspace when images are loaded */}
-      {items.length > 0 && !generatedPdf && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left: Reorderable Thumbnails & Image List (7 cols) */}
-          <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200/90 p-5 sm:p-6 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <div className="flex items-center gap-2">
-                <h2 className="text-sm font-bold text-slate-900">
-                  Selected Images ({items.length})
-                </h2>
-                <span className="text-xs text-slate-400">·</span>
-                <span className="text-xs text-slate-500">
-                  {formatFileSize(items.reduce((acc, curr) => acc + curr.size, 0))}
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FileUploadZone
-                  accept="image/jpeg,image/png,image/webp"
-                  multiple
-                  label="Add More"
-                  onFilesSelected={handleFilesSelected}
-                />
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleClearAll}
-                  icon={<Trash2 className="w-3.5 h-3.5" />}
-                >
-                  Clear All
-                </Button>
-              </div>
+      {/* Selected Items & Order */}
+      {items.length > 0 && (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Items List (7 cols) */}
+          <div className="lg:col-span-7 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 space-y-4 transition-colors">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+              <span className="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
+                Pages Order ({items.length} {items.length === 1 ? 'Image' : 'Images'})
+              </span>
+              <button
+                type="button"
+                onClick={handleClearAll}
+                className="text-xs text-red-600 dark:text-red-400 hover:text-red-700 font-semibold inline-flex items-center gap-1 cursor-pointer"
+              >
+                <Trash2 className="w-3.5 h-3.5" /> Clear All
+              </button>
             </div>
 
-            {/* Image Items List */}
-            <div className="space-y-2.5 max-h-[420px] overflow-y-auto pr-1">
+            <div className="space-y-2.5 max-h-[380px] overflow-y-auto pr-1">
               {items.map((item, idx) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between p-3 bg-slate-50/70 rounded-xl border border-slate-200/80 gap-3"
+                  className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/80 rounded-xl border border-slate-200 dark:border-slate-700 text-xs gap-3"
                 >
                   <div className="flex items-center gap-3 min-w-0">
+                    <span className="w-5 h-5 rounded-full bg-slate-900 dark:bg-sky-500 text-white dark:text-slate-950 font-bold text-[10px] flex items-center justify-center shrink-0">
+                      {idx + 1}
+                    </span>
                     <img
                       src={item.previewUrl}
                       alt={item.name}
-                      className="w-12 h-12 rounded-lg object-cover border border-slate-200 shrink-0"
+                      className="w-10 h-10 object-cover rounded-lg border border-slate-200 dark:border-slate-600 shrink-0 bg-white"
                     />
                     <div className="min-w-0">
-                      <p className="text-xs font-semibold text-slate-900 truncate">
-                        {item.name}
-                      </p>
-                      <p className="text-[11px] text-slate-500">
-                        {formatFileSize(item.size)} · Page {idx + 1}
-                      </p>
+                      <p className="font-semibold text-slate-900 dark:text-slate-100 truncate max-w-[160px] sm:max-w-xs">{item.name}</p>
+                      <p className="text-slate-400 text-[11px]">{formatFileSize(item.size)}</p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-1 shrink-0">
                     <button
                       type="button"
-                      onClick={() => handleMove(idx, 'up')}
                       disabled={idx === 0}
-                      className="p-1.5 text-slate-500 hover:text-slate-900 disabled:opacity-30 disabled:pointer-events-none"
+                      onClick={() => handleMove(idx, 'up')}
+                      className="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-30 cursor-pointer"
                       title="Move up"
                     >
                       <ArrowUp className="w-3.5 h-3.5" />
                     </button>
                     <button
                       type="button"
-                      onClick={() => handleMove(idx, 'down')}
                       disabled={idx === items.length - 1}
-                      className="p-1.5 text-slate-500 hover:text-slate-900 disabled:opacity-30 disabled:pointer-events-none"
+                      onClick={() => handleMove(idx, 'down')}
+                      className="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-30 cursor-pointer"
                       title="Move down"
                     >
                       <ArrowDown className="w-3.5 h-3.5" />
@@ -199,7 +253,7 @@ export const JpgToPdfComponent: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => handleRemove(item.id)}
-                      className="p-1.5 text-slate-400 hover:text-red-600"
+                      className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/40 text-red-600 dark:text-red-400 cursor-pointer"
                       title="Remove image"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -210,50 +264,59 @@ export const JpgToPdfComponent: React.FC = () => {
             </div>
           </div>
 
-          {/* Right: Layout Options & Action (5 cols) */}
-          <div className="lg:col-span-5 space-y-5">
-            <div className="bg-white rounded-2xl border border-slate-200/90 p-5 sm:p-6 space-y-5">
-              <h2 className="text-sm font-bold text-slate-900 pb-3 border-b border-slate-100">
-                Page Configuration
-              </h2>
+          {/* Configuration & Action (5 cols) */}
+          <div className="lg:col-span-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 space-y-6 transition-colors">
+            <h2 className="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 pb-3">
+              Document Options
+            </h2>
 
-              {/* Orientation */}
-              <div className="space-y-1.5">
-                <span className="text-xs font-semibold text-slate-700 block">Page Orientation</span>
-                <div className="grid grid-cols-3 gap-1.5">
-                  {(['portrait', 'landscape', 'auto'] as PageOrientation[]).map(o => (
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                  Page Orientation
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { id: 'portrait' as PageOrientation, label: 'Portrait (Standard)' },
+                    { id: 'landscape' as PageOrientation, label: 'Landscape' }
+                  ].map(opt => (
                     <button
-                      key={o}
+                      key={opt.id}
                       type="button"
-                      onClick={() => setOrientation(o)}
-                      className={`py-2 px-2 rounded-lg text-xs font-semibold capitalize border transition-all ${
-                        orientation === o
-                          ? 'bg-slate-900 text-white border-slate-900'
-                          : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                      onClick={() => setOrientation(opt.id)}
+                      className={`p-2.5 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
+                        orientation === opt.id
+                          ? 'bg-slate-900 dark:bg-sky-500 text-white dark:text-slate-950 border-slate-900 dark:border-sky-500 shadow-2xs'
+                          : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800'
                       }`}
                     >
-                      {o}
+                      {opt.label}
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Page Size */}
-              <div className="space-y-1.5">
-                <span className="text-xs font-semibold text-slate-700 block">Page Size</span>
-                <div className="grid grid-cols-3 gap-1.5">
-                  {(['a4', 'letter', 'fit'] as PageSizeOption[]).map(s => (
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                  Page Size
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { id: 'a4' as PageSizeOption, label: 'A4 Page' },
+                    { id: 'letter' as PageSizeOption, label: 'Letter' },
+                    { id: 'fit' as PageSizeOption, label: 'Fit Image' }
+                  ].map(opt => (
                     <button
-                      key={s}
+                      key={opt.id}
                       type="button"
-                      onClick={() => setPageSize(s)}
-                      className={`py-2 px-2 rounded-lg text-xs font-semibold uppercase border transition-all ${
-                        pageSize === s
-                          ? 'bg-slate-900 text-white border-slate-900'
-                          : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                      onClick={() => setPageSize(opt.id)}
+                      className={`p-2 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
+                        pageSize === opt.id
+                          ? 'bg-slate-900 dark:bg-sky-500 text-white dark:text-slate-950 border-slate-900 dark:border-sky-500 shadow-2xs'
+                          : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800'
                       }`}
                     >
-                      {s === 'fit' ? 'Fit Image' : s}
+                      {opt.label}
                     </button>
                   ))}
                 </div>
@@ -262,13 +325,13 @@ export const JpgToPdfComponent: React.FC = () => {
               {/* Processing Progress Indicator */}
               {isProcessing && (
                 <div className="space-y-1.5 pt-2">
-                  <div className="flex justify-between text-xs text-slate-600 font-medium">
+                  <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 font-medium">
                     <span>Compiling PDF document...</span>
                     <span>{progress}%</span>
                   </div>
-                  <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                     <div
-                      className="bg-slate-900 h-full transition-all duration-200"
+                      className="bg-slate-900 dark:bg-sky-500 h-full transition-all duration-200"
                       style={{ width: `${progress}%` }}
                     />
                   </div>
@@ -290,8 +353,8 @@ export const JpgToPdfComponent: React.FC = () => {
               </div>
             </div>
 
-            <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200/80 text-xs text-slate-600 flex items-start gap-2">
-              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" aria-hidden="true" />
+            <div className="p-3.5 bg-slate-50 dark:bg-slate-800/80 rounded-xl border border-slate-200/80 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300 flex items-start gap-2">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" aria-hidden="true" />
               <p>Your photos stay on your device. Compilation is executed 100% locally in browser memory using pdf-lib.</p>
             </div>
           </div>
@@ -300,23 +363,49 @@ export const JpgToPdfComponent: React.FC = () => {
 
       {/* Generated Result Card */}
       {generatedPdf && (
-        <div className="bg-white rounded-2xl border border-slate-200/90 p-8 text-center max-w-lg mx-auto space-y-5 animate-in fade-in duration-200">
-          <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-8 text-center max-w-lg mx-auto space-y-6 animate-in fade-in duration-200 transition-colors">
+          <div className="w-14 h-14 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-7 h-7" aria-hidden="true" />
           </div>
 
           <div className="space-y-1">
-            <h2 className="text-lg font-bold text-slate-900">Your PDF is Ready!</h2>
-            <p className="text-xs text-slate-500 font-mono">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Your PDF is Ready!</h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">
               {generatedPdf.filename} ({formatFileSize(generatedPdf.size)})
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+          {/* Direct WhatsApp & Instagram Share Buttons */}
+          <div className="space-y-2.5 pt-1">
+            <span className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider text-center">
+              Direct Share Options
+            </span>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={handleShareWhatsApp}
+                className="flex items-center justify-center gap-2 px-3.5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs shadow-xs transition-colors cursor-pointer"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span>WhatsApp</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleShareInstagram}
+                className="flex items-center justify-center gap-2 px-3.5 py-2.5 bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 hover:opacity-90 text-white rounded-xl font-bold text-xs shadow-xs transition-opacity cursor-pointer"
+              >
+                <Share2 className="w-3.5 h-3.5" />
+                <span>Instagram</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2 border-t border-slate-100 dark:border-slate-800">
             <a
               href={generatedPdf.url}
               download={generatedPdf.filename}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm px-6 py-2.5 rounded-xl shadow-sm transition-colors cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-sky-500 hover:bg-slate-800 dark:hover:bg-sky-600 text-white dark:text-slate-950 font-bold text-xs sm:text-sm px-6 py-2.5 rounded-xl shadow-sm transition-colors cursor-pointer"
             >
               <Download className="w-4 h-4" /> Download PDF
             </a>

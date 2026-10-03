@@ -81,12 +81,13 @@ export function hasConsentFor(category: 'preferences' | 'analytics'): boolean {
 /**
  * Resets consent preferences back to baseline (strictly necessary only).
  */
-export function resetConsentPreferences(): void {
-  if (typeof window === 'undefined') return;
+export function resetConsentPreferences(): ConsentPreferences {
+  if (typeof window === 'undefined') return DEFAULT_PREFERENCES;
   try {
     localStorage.removeItem(CONSENT_STORAGE_KEY);
     window.dispatchEvent(new CustomEvent('ist:consent_changed', { detail: DEFAULT_PREFERENCES }));
   } catch {
     // Graceful no-op
   }
+  return DEFAULT_PREFERENCES;
 }

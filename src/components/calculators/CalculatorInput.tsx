@@ -1,5 +1,4 @@
 import React from 'react';
-import { formatINR } from '../../utils/formatters/currency';
 
 export interface CalculatorInputProps {
   id: string;
@@ -51,13 +50,13 @@ export const CalculatorInput: React.FC<CalculatorInputProps> = ({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between gap-2">
-        <label htmlFor={id} className="text-xs sm:text-sm font-semibold text-slate-800 tracking-tight">
+        <label htmlFor={id} className="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 tracking-tight">
           {label}
         </label>
         {/* Direct numeric input */}
         <div className="relative flex items-center">
           {isPrefix && (
-            <span className="absolute left-3 text-xs sm:text-sm font-medium text-slate-500 pointer-events-none select-none">
+            <span className="absolute left-3 text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 pointer-events-none select-none">
               {unit}
             </span>
           )}
@@ -71,12 +70,12 @@ export const CalculatorInput: React.FC<CalculatorInputProps> = ({
             onChange={handleInputChange}
             aria-invalid={error ? 'true' : 'false'}
             aria-describedby={error ? `${id}-error` : helperText ? `${id}-helper` : undefined}
-            className={`w-32 sm:w-40 rounded-lg border bg-white py-1.5 text-right text-xs sm:text-sm font-semibold text-slate-900 transition-colors focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900 ${
+            className={`w-32 sm:w-40 rounded-xl border bg-white dark:bg-slate-900 py-1.5 text-right text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100 transition-colors focus:border-slate-900 dark:focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-slate-900 dark:focus:ring-sky-400 ${
               isPrefix ? 'pl-7 pr-3' : 'pl-3 pr-8'
-            } ${error ? 'border-red-500' : 'border-slate-300'}`}
+            } ${error ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'}`}
           />
           {!isPrefix && (
-            <span className="absolute right-3 text-xs sm:text-sm font-medium text-slate-500 pointer-events-none select-none">
+            <span className="absolute right-3 text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 pointer-events-none select-none">
               {unit}
             </span>
           )}
@@ -95,9 +94,9 @@ export const CalculatorInput: React.FC<CalculatorInputProps> = ({
             disabled={disabled}
             onChange={handleSliderChange}
             aria-label={`${label} slider`}
-            className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-900 focus:outline-none"
+            className="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-slate-900 dark:accent-sky-400 focus:outline-none"
           />
-          <div className="flex items-center justify-between text-[11px] text-slate-500 mt-1 select-none">
+          <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 mt-1 select-none">
             <span>{isPrefix ? `${unit}${min.toLocaleString('en-IN')}` : `${min} ${unit}`}</span>
             <span>{isPrefix ? `${unit}${max.toLocaleString('en-IN')}` : `${max} ${unit}`}</span>
           </div>
@@ -112,10 +111,10 @@ export const CalculatorInput: React.FC<CalculatorInputProps> = ({
               key={p.label}
               type="button"
               onClick={() => onChange(p.value)}
-              className={`text-[11px] px-2.5 py-1 rounded-md border font-medium transition-colors ${
+              className={`text-[11px] px-2.5 py-1 rounded-lg border font-medium transition-colors min-h-[30px] ${
                 value === p.value
-                  ? 'bg-slate-900 text-white border-slate-900'
-                  : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:text-slate-900'
+                  ? 'bg-slate-900 dark:bg-sky-500 text-white dark:text-slate-950 border-slate-900 dark:border-sky-500'
+                  : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               {p.label}
@@ -125,11 +124,11 @@ export const CalculatorInput: React.FC<CalculatorInputProps> = ({
       )}
 
       {error ? (
-        <p id={`${id}-error`} role="alert" className="text-xs text-red-600 font-medium">
+        <p id={`${id}-error`} role="alert" className="text-xs text-red-600 dark:text-red-400 font-medium">
           {error}
         </p>
       ) : helperText ? (
-        <p id={`${id}-helper`} className="text-xs text-slate-500">
+        <p id={`${id}-helper`} className="text-xs text-slate-500 dark:text-slate-400">
           {helperText}
         </p>
       ) : null}

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
-import { CheckCircle2, AlertCircle, Info, X } from 'lucide-react';
+import { CheckCircle2, AlertCircle, AlertTriangle, Info, X } from 'lucide-react';
 
-export type ToastType = 'success' | 'error' | 'info';
+export type ToastType = 'success' | 'error' | 'warning' | 'info';
 
 export interface Toast {
   id: string;
@@ -31,7 +31,7 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setToasts(prev => prev.filter(t => t.id !== id));
   }, []);
 
-  const showToast = useCallback((message: string, type: ToastType = 'info', duration: number = 3000) => {
+  const showToast = useCallback((message: string, type: ToastType = 'info', duration: number = 3500) => {
     const id = Math.random().toString(36).substring(2, 9);
     setToasts(prev => [...prev, { id, message, type, duration }]);
 
@@ -51,23 +51,26 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       >
         {toasts.map(toast => {
           const icons = {
-            success: <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />,
-            error: <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />,
-            info: <Info className="w-4 h-4 text-slate-700 shrink-0" />
+            success: <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />,
+            error: <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400 shrink-0" />,
+            warning: <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />,
+            info: <Info className="w-4 h-4 text-slate-700 dark:text-sky-400 shrink-0" />
           };
 
           return (
             <div
               key={toast.id}
-              className="pointer-events-auto flex items-center justify-between gap-3 p-3.5 bg-white text-slate-900 border border-slate-200/90 rounded-lg shadow-lg text-xs font-medium animate-in slide-in-from-bottom-3 duration-150"
+              role={toast.type === 'error' ? 'alert' : 'status'}
+              className="pointer-events-auto flex items-center justify-between gap-3 p-3.5 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border border-slate-200/90 dark:border-slate-800 rounded-xl shadow-xl text-xs font-medium animate-in slide-in-from-bottom-3 duration-150 motion-reduce:animate-none"
             >
               <div className="flex items-center gap-2.5">
                 {icons[toast.type || 'info']}
                 <span>{toast.message}</span>
               </div>
               <button
+                type="button"
                 onClick={() => removeToast(toast.id)}
-                className="text-slate-400 hover:text-slate-600 p-0.5 rounded"
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-md min-h-[36px] min-w-[36px] flex items-center justify-center"
                 aria-label="Dismiss notification"
               >
                 <X className="w-3.5 h-3.5" />

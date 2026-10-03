@@ -28,6 +28,9 @@ export interface FdResult {
   interestEarned: number;
   maturityAmount: number;
   effectiveRate: number;
+  effectiveYield?: number;
+  appliedRate?: number;
+  isSeniorCitizen?: boolean;
   principalPercent: number;
   interestPercent: number;
   tenureInYears: number;
@@ -42,6 +45,13 @@ export const COMPOUNDING_PERIODS: Record<CompoundingFrequency, { name: string; n
   half_yearly: { name: 'Half-Yearly', n: 2 },
   yearly: { name: 'Yearly', n: 1 }
 };
+
+export const COMPOUNDING_OPTIONS: { id: CompoundingFrequency; label: string }[] = [
+  { id: 'monthly', label: 'Monthly' },
+  { id: 'quarterly', label: 'Quarterly' },
+  { id: 'half_yearly', label: 'Half-Yearly' },
+  { id: 'yearly', label: 'Yearly' }
+];
 
 export function calculateFd(input: FdInput): FdResult {
   const principal = Math.max(0, input.principal || 0);
@@ -126,12 +136,18 @@ export function calculateFd(input: FdInput): FdResult {
   const interestEarned = Math.max(0, maturityAmount - principal);
   const principalPercent = maturityAmount > 0 ? Math.round((principal / maturityAmount) * 100) : 100;
   const interestPercent = Math.max(0, 100 - principalPercent);
+  const effectiveYield = (principal > 0 && tenureInYears > 0)
+    ? Math.round(((interestEarned / principal) / tenureInYears) * 10000) / 100
+    : Math.round(baseRate * 100) / 100;
 
   return {
     principal,
     interestEarned,
     maturityAmount,
     effectiveRate: Math.round(baseRate * 100) / 100,
+    appliedRate: Math.round(baseRate * 100) / 100,
+    effectiveYield,
+    isSeniorCitizen: Boolean(input.isSeniorCitizen),
     principalPercent,
     interestPercent,
     tenureInYears: Math.round(tenureInYears * 100) / 100,

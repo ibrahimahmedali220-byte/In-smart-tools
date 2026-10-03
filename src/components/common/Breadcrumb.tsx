@@ -14,10 +14,10 @@ export interface BreadcrumbProps {
 
 export const Breadcrumb: React.FC<BreadcrumbProps> = ({ items, className = '' }) => {
   return (
-    <nav aria-label="Breadcrumb" className={`text-xs text-slate-500 ${className}`}>
+    <nav aria-label="Breadcrumb" className={`text-xs text-slate-500 dark:text-slate-400 ${className}`}>
       <ol className="flex items-center flex-wrap gap-1.5 list-none p-0 m-0">
         <li>
-          <Link to="/" className="hover:text-slate-900 transition-colors">
+          <Link to="/" className="hover:text-slate-900 dark:hover:text-white transition-colors">
             Home
           </Link>
         </li>
@@ -27,13 +27,13 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({ items, className = '' })
 
           return (
             <li key={item.label} className="flex items-center gap-1.5">
-              <ChevronRight className="w-3 h-3 text-slate-400 shrink-0" aria-hidden="true" />
+              <ChevronRight className="w-3 h-3 text-slate-400 dark:text-slate-500 shrink-0" aria-hidden="true" />
               {isLast || !item.href ? (
-                <span className="font-semibold text-slate-900" aria-current={isLast ? 'page' : undefined}>
+                <span className="font-semibold text-slate-900 dark:text-slate-100" aria-current={isLast ? 'page' : undefined}>
                   {item.label}
                 </span>
               ) : (
-                <Link to={item.href} className="hover:text-slate-900 transition-colors">
+                <Link to={item.href} className="hover:text-slate-900 dark:hover:text-white transition-colors">
                   {item.label}
                 </Link>
               )}

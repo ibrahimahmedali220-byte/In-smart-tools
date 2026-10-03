@@ -33,9 +33,9 @@ export const SipCalculatorComponent: React.FC = () => {
       {/* Main Calculator Card */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Inputs (7 cols) */}
-        <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 space-y-6">
-          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-            <h2 className="text-base font-bold text-slate-900">Investment Strategy</h2>
+        <div className="lg:col-span-7 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-6 transition-colors">
+          <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+            <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">Investment Strategy</h2>
             <Button
               variant="ghost"
               size="sm"
@@ -59,38 +59,41 @@ export const SipCalculatorComponent: React.FC = () => {
             unit="₹"
             unitPosition="prefix"
             presets={[
+              { label: '₹1,000', value: 1000 },
               { label: '₹2,500', value: 2500 },
               { label: '₹5,000', value: 5000 },
               { label: '₹10,000', value: 10000 },
               { label: '₹25,000', value: 25000 }
             ]}
-            helperText="Monthly SIP installment"
           />
 
-          {/* Expected Annual Return */}
+          {/* Expected Return Rate */}
           <CalculatorInput
             id="sip-return"
-            label="Expected Annual Return"
+            label="Expected Annual Return (% p.a.)"
             value={annualReturn}
             onChange={setAnnualReturn}
-            min={1}
-            max={30}
-            step={0.5}
+            min={1.0}
+            max={30.0}
+            step={0.1}
             unit="%"
             unitPosition="suffix"
             presets={[
-              { label: '10% (Conservative)', value: 10 },
-              { label: '12% (Balanced)', value: 12 },
-              { label: '15% (Aggressive)', value: 15 }
+              { label: '8% (Debt)', value: 8.0 },
+              { label: '12% (Index)', value: 12.0 },
+              { label: '14% (Flexi-cap)', value: 14.0 },
+              { label: '16% (Small-cap)', value: 16.0 }
             ]}
-            helperText="Historical mutual fund returns typically range between 10%–14%"
+            helperText="Past market averages range from 11% to 15% across broad Indian equity indices over 7+ years."
           />
 
-          {/* Investment Duration */}
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs sm:text-sm font-semibold text-slate-800">Time Horizon</span>
-              <div className="flex bg-slate-100 p-0.5 rounded-lg border border-slate-200">
+          {/* Duration */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200">
+                Investment Duration Unit
+              </span>
+              <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-lg border border-slate-200/60 dark:border-slate-700">
                 <button
                   type="button"
                   onClick={() => {
@@ -99,10 +102,10 @@ export const SipCalculatorComponent: React.FC = () => {
                       setDurationUnit('years');
                     }
                   }}
-                  className={`text-xs px-3 py-1 font-medium rounded-md transition-colors ${
+                  className={`text-xs px-2.5 py-1 rounded font-medium transition-colors ${
                     durationUnit === 'years'
-                      ? 'bg-white text-slate-900 shadow-sm font-semibold'
-                      : 'text-slate-600 hover:text-slate-900'
+                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-2xs font-semibold'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
                   Years
@@ -115,10 +118,10 @@ export const SipCalculatorComponent: React.FC = () => {
                       setDurationUnit('months');
                     }
                   }}
-                  className={`text-xs px-3 py-1 font-medium rounded-md transition-colors ${
+                  className={`text-xs px-2.5 py-1 rounded font-medium transition-colors ${
                     durationUnit === 'months'
-                      ? 'bg-white text-slate-900 shadow-sm font-semibold'
-                      : 'text-slate-600 hover:text-slate-900'
+                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-2xs font-semibold'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
                   Months
@@ -128,11 +131,11 @@ export const SipCalculatorComponent: React.FC = () => {
 
             <CalculatorInput
               id="sip-duration"
-              label={`Investment Duration (${durationUnit === 'years' ? 'Years' : 'Months'})`}
+              label={durationUnit === 'years' ? 'Time Horizon (Years)' : 'Time Horizon (Months)'}
               value={duration}
               onChange={setDuration}
               min={1}
-              max={durationUnit === 'years' ? 35 : 420}
+              max={durationUnit === 'years' ? 40 : 480}
               step={1}
               unit={durationUnit === 'years' ? 'Yrs' : 'Mos'}
               unitPosition="suffix"
@@ -146,113 +149,116 @@ export const SipCalculatorComponent: React.FC = () => {
                       { label: '20 Yrs', value: 20 }
                     ]
                   : [
+                      { label: '12 Mos', value: 12 },
                       { label: '36 Mos', value: 36 },
-                      { label: '60 Mos', value: 60 },
-                      { label: '120 Mos', value: 120 }
+                      { label: '60 Mos', value: 60 }
                     ]
               }
             />
           </div>
         </div>
 
-        {/* Right Results Column (5 cols) */}
+        {/* Right Summary Results (5 cols) */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-6 transition-colors">
             <div>
-              <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">
-                Estimated Maturity Wealth
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                Expected Future Value
               </span>
-              <div className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-1">
-                {formatINR(result.estimatedFinalValue)}
+              <div className="text-3xl sm:text-4xl font-extrabold text-emerald-700 dark:text-emerald-400 tracking-tight mt-1">
+                {formatINR(result.totalMaturityAmount)}
               </div>
-              <p className="text-xs text-slate-400 mt-1">
-                Projected value after {duration} {durationUnit} of compounding
-              </p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Total estimated wealth accumulated</p>
             </div>
 
-            <div className="border-t border-slate-800 pt-5 space-y-3">
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-slate-400">Total Invested Amount</span>
-                <span className="font-semibold text-white">{formatINR(result.totalInvested)}</span>
+            <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-3 text-xs sm:text-sm">
+              <div className="flex justify-between items-center text-slate-600 dark:text-slate-400">
+                <span>Invested Amount</span>
+                <span className="font-semibold text-slate-900 dark:text-slate-100">{formatINR(result.totalInvested)}</span>
               </div>
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-slate-400">Estimated Wealth Gain</span>
-                <span className="font-semibold text-emerald-400">+{formatINR(result.estimatedReturns)}</span>
+              <div className="flex justify-between items-center text-slate-600 dark:text-slate-400">
+                <span>Estimated Returns (Wealth Gain)</span>
+                <span className="font-semibold text-emerald-700 dark:text-emerald-400">+{formatINR(result.estimatedReturns)}</span>
+              </div>
+              <div className="flex justify-between items-center text-slate-900 dark:text-slate-100 font-bold pt-2 border-t border-slate-100 dark:border-slate-800 text-sm sm:text-base">
+                <span>Wealth Multiplier</span>
+                <span>{result.wealthMultiplier}x Total Invested</span>
               </div>
             </div>
 
-            {/* Visual breakdown bar */}
-            <div className="border-t border-slate-800 pt-5">
-              <div className="text-xs font-semibold text-slate-400 mb-2">Growth Distribution</div>
-              <div className="w-full h-3 rounded-full overflow-hidden flex bg-slate-800">
-                <div style={{ width: `${result.investedPercent}%` }} className="bg-white" />
-                <div style={{ width: `${result.returnsPercent}%` }} className="bg-emerald-500" />
+            {/* Visual Wealth Gain Distribution */}
+            <div className="space-y-2 pt-2">
+              <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <span>Investment Ratio</span>
               </div>
-              <div className="flex justify-between text-xs text-slate-300 mt-2">
-                <span className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 bg-white rounded-sm inline-block" /> Invested ({result.investedPercent}%)
+              <div className="w-full h-3 rounded-full overflow-hidden flex bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <div
+                  style={{ width: `${result.investedPercent}%` }}
+                  className="bg-slate-900 dark:bg-sky-500 transition-all duration-300"
+                  title={`Invested: ${result.investedPercent}%`}
+                />
+                <div
+                  style={{ width: `${result.returnsPercent}%` }}
+                  className="bg-emerald-600 dark:bg-emerald-500 transition-all duration-300"
+                  title={`Gains: ${result.returnsPercent}%`}
+                />
+              </div>
+              <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 pt-1">
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-slate-900 dark:bg-sky-500" />
+                  Invested ({result.investedPercent}%)
                 </span>
-                <span className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 bg-emerald-500 rounded-sm inline-block" /> Returns ({result.returnsPercent}%)
+                <span className="flex items-center gap-1 font-semibold text-emerald-700 dark:text-emerald-400">
+                  <span className="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-500" />
+                  Returns ({result.returnsPercent}%)
                 </span>
               </div>
             </div>
-          </div>
 
-          {/* Contextual Legal Disclaimer */}
-          <div className="p-4 bg-slate-100 rounded-xl border border-slate-200 text-xs text-slate-600 flex items-start gap-2.5">
-            <AlertCircle className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" aria-hidden="true" />
-            <p className="leading-relaxed">
-              Returns shown are estimates based on the rate entered and are not guaranteed. Actual investment returns can vary depending on market conditions.
-            </p>
-          </div>
-
-          {/* Yearly Growth Toggle */}
-          <div className="bg-white rounded-xl border border-slate-200/90 p-4 flex items-center justify-between">
-            <div className="flex items-center gap-2.5 text-xs text-slate-700 font-medium">
-              <Table className="w-4 h-4 text-slate-600" />
-              <span>Year-by-Year Growth Table</span>
+            <div className="pt-2">
+              <Button
+                variant={showYearlyBreakdown ? 'secondary' : 'outline'}
+                size="sm"
+                fullWidth
+                onClick={() => setShowYearlyBreakdown(!showYearlyBreakdown)}
+                icon={<Table className="w-4 h-4" />}
+              >
+                {showYearlyBreakdown ? 'Hide Yearly Growth Breakdown' : 'View Yearly Growth Breakdown'}
+              </Button>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowYearlyBreakdown(!showYearlyBreakdown)}
-            >
-              {showYearlyBreakdown ? 'Hide Table' : 'View Table'}
-            </Button>
           </div>
         </div>
       </div>
 
-      {/* Year-by-Year Table */}
+      {/* Yearly Growth Progression Table */}
       {showYearlyBreakdown && (
-        <div className="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 space-y-4 animate-in fade-in duration-200">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div>
-              <h3 className="text-base font-bold text-slate-900">Yearly Wealth Accumulation</h3>
-              <p className="text-xs text-slate-500 mt-0.5">
-                Principal invested vs estimated compounding returns over time
-              </p>
-            </div>
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-4 animate-in fade-in-0 duration-200 transition-colors">
+          <div className="pb-3 border-b border-slate-100 dark:border-slate-800">
+            <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+              <span>Year-by-Year Wealth Progression</span>
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              Watch compounding accelerate returns over a {result.durationMonths} month horizon.
+            </p>
           </div>
 
-          <div className="overflow-x-auto -mx-6 sm:mx-0 px-6 sm:px-0">
-            <table className="w-full text-xs text-left text-slate-700 min-w-[450px]">
-              <thead className="bg-slate-50 text-slate-900 font-semibold border-b border-slate-200">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs text-slate-600 dark:text-slate-400">
+              <thead className="bg-slate-50 dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 font-semibold border-b border-slate-200 dark:border-slate-700">
                 <tr>
-                  <th scope="col" className="py-3 px-3">Year</th>
-                  <th scope="col" className="py-3 px-3">Total Invested</th>
-                  <th scope="col" className="py-3 px-3">Estimated Wealth</th>
-                  <th scope="col" className="py-3 px-3 text-right">Wealth Gain</th>
+                  <th className="py-2.5 px-3">End of Year</th>
+                  <th className="py-2.5 px-3 text-right">Cumulative Invested</th>
+                  <th className="py-2.5 px-3 text-right">Accumulated Gains</th>
+                  <th className="py-2.5 px-3 text-right">Total Portfolio Value</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
-                {result.yearlyBreakdown.map(row => (
-                  <tr key={row.year} className="hover:bg-slate-50/70 transition-colors">
-                    <td className="py-2.5 px-3 font-semibold text-slate-900">Year {row.year}</td>
-                    <td className="py-2.5 px-3 text-slate-800">{formatINR(row.investedAmount)}</td>
-                    <td className="py-2.5 px-3 font-semibold text-slate-900">{formatINR(row.estimatedWealth)}</td>
-                    <td className="py-2.5 px-3 text-right text-emerald-700 font-medium">+{formatINR(row.returnsEarned)}</td>
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-mono text-[11px] sm:text-xs">
+                {result.yearlyBreakdown.map((row) => (
+                  <tr key={row.year} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
+                    <td className="py-2.5 px-3 font-sans font-medium text-slate-900 dark:text-slate-100">Year {row.year}</td>
+                    <td className="py-2.5 px-3 text-right text-slate-900 dark:text-slate-100">{formatINR(row.invested)}</td>
+                    <td className="py-2.5 px-3 text-right text-emerald-700 dark:text-emerald-400">+{formatINR(row.returns)}</td>
+                    <td className="py-2.5 px-3 text-right text-slate-900 dark:text-slate-100 font-bold">{formatINR(row.totalValue)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -260,6 +266,14 @@ export const SipCalculatorComponent: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* SEBI Compliance Notice */}
+      <div className="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-400 flex items-start gap-2.5">
+        <AlertCircle className="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0 mt-0.5" aria-hidden="true" />
+        <p className="leading-relaxed">
+          <strong>Mutual Fund Disclaimer:</strong> Mutual fund investments are subject to market risks. Please read all scheme-related documents carefully before investing. Calculation results assume a constant periodic rate of return for illustrative purposes. Actual market returns fluctuate based on portfolio asset allocations.
+        </p>
+      </div>
     </div>
   );
 };

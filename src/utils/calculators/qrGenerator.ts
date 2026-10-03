@@ -7,8 +7,9 @@
  * - Email (mailto:)
  * - Phone (tel:)
  * - Wi-Fi (WIFI: standard)
+ * - Custom Logo / Center Image Embedding
  * 
- * Zero server logging, 100% in-browser generation using QRCode.
+ * Zero server logging, 100% in-browser generation using QRCode and Canvas.
  */
 
 import QRCode from 'qrcode';
@@ -145,5 +146,111 @@ export async function generateQrSvgString(content: string, options: QrOptions = 
       dark: '#0f172a',
       light: '#ffffff'
     }
+  });
+}
+
+/**
+ * Generates QR Code PNG Data URL with an embedded center custom logo / photo
+ */
+export async function generateQrWithLogo(
+  content: string,
+  options: QrOptions = {},
+  logoDataUrl?: string,
+  logoSizeRatio: number = 0.22
+): Promise<string> {
+  const { width = 350, margin = 2 } = options;
+
+  if (typeof document === 'undefined' || !logoDataUrl) {
+    return generateQrPngDataUrl(content, { ...options, width, margin });
+  }
+
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = width;
+
+  // Use High error correction ('H') when embedding a logo so 30% error resilience guarantees scannability
+  await QRCode.toCanvas(canvas, content, {
+    width,
+    margin,
+    errorCorrectionLevel: 'H',
+    color: {
+      dark: '#0f172a',
+      light: '#ffffff'
+    }
+  });
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return canvas.toDataURL('image/png');
+
+  return new Promise<string>((resolve) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      try {
+        const logoTargetW = width * Math.min(Math.max(logoSizeRatio, 0.15), 0.28);
+        const aspect = img.height / img.width;
+        let drawWidth = logoTargetW;
+        let drawHeight = logoTargetW * aspect;
+
+        if (drawHeight > width * 0.28) {
+          drawHeight = width * 0.28;
+          drawWidth = drawHeight / aspect;
+        }
+
+        const cx = width / 2;
+        const cy = width / 2;
+        const x = cx - drawWidth / 2;
+        const y = cy - drawHeight / 2;
+
+        const pad = 6;
+        const bgX = x - pad;
+        const bgY = y - pad;
+        const bgW = drawWidth + pad * 2;
+        const bgH = drawHeight + pad * 2;
+        const radius = 8;
+
+        ctx.save();
+        ctx.fillStyle = '#ffffff';
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
+        ctx.shadowBlur = 8;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 2;
+
+        // Draw background white badge
+        ctx.beginPath();
+        if (typeof ctx.roundRect === 'function') {
+          ctx.roundRect(bgX, bgY, bgW, bgH, radius);
+        } else {
+          ctx.rect(bgX, bgY, bgW, bgH);
+        }
+        ctx.fill();
+
+        ctx.shadowColor = 'transparent';
+        ctx.strokeStyle = '#cbd5e1'; // slate-300
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Clip and paint image
+        ctx.beginPath();
+        if (typeof ctx.roundRect === 'function') {
+          ctx.roundRect(x, y, drawWidth, drawHeight, radius - 2);
+        } else {
+          ctx.rect(x, y, drawWidth, drawHeight);
+        }
+        ctx.clip();
+        ctx.drawImage(img, x, y, drawWidth, drawHeight);
+        ctx.restore();
+
+        resolve(canvas.toDataURL('image/png'));
+      } catch {
+        resolve(canvas.toDataURL('image/png'));
+      }
+    };
+
+    img.onerror = () => {
+      resolve(canvas.toDataURL('image/png'));
+    };
+
+    img.src = logoDataUrl;
   });
 }

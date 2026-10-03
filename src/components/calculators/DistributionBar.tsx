@@ -21,14 +21,14 @@ export const DistributionBar: React.FC<DistributionBarProps> = ({
   return (
     <div className={`space-y-3 ${className}`}>
       {title && (
-        <div className="flex items-center justify-between text-xs font-semibold text-slate-700">
+        <div className="flex items-center justify-between text-xs font-semibold text-slate-700 dark:text-slate-300">
           <span>{title}</span>
         </div>
       )}
 
       {/* Visual Stacked Bar */}
       <div
-        className="w-full h-3 rounded-full overflow-hidden flex bg-slate-100 border border-slate-200"
+        className="w-full h-3 rounded-full overflow-hidden flex bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
         role="progressbar"
         aria-label={title}
       >
@@ -46,12 +46,12 @@ export const DistributionBar: React.FC<DistributionBarProps> = ({
       <div className="grid grid-cols-2 gap-3 pt-1">
         {items.map((item, idx) => (
           <div key={idx} className="space-y-0.5">
-            <div className="flex items-center gap-1.5 text-xs text-slate-600">
+            <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400">
               <span className={`w-2.5 h-2.5 rounded-sm ${item.color} shrink-0`} aria-hidden="true" />
               <span className="truncate">{item.label}</span>
-              <span className="font-semibold text-slate-900 ml-auto">{item.percentage}%</span>
+              <span className="font-semibold text-slate-900 dark:text-slate-100 ml-auto">{item.percentage}%</span>
             </div>
-            <div className="text-xs sm:text-sm font-bold text-slate-900 pl-4">
+            <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 pl-4">
               {item.amount}
             </div>
           </div>

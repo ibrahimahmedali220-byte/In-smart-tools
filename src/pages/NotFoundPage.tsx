@@ -25,19 +25,19 @@ export const NotFoundPage: React.FC = () => {
 
   return (
     <PageContainer maxWidth="md" className="text-center py-12 sm:py-20">
-      <div className="w-16 h-16 rounded-2xl bg-slate-100 text-slate-800 flex items-center justify-center mx-auto mb-6">
-        <Compass className="w-8 h-8 text-slate-700" />
+      <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-sky-400 flex items-center justify-center mx-auto mb-6">
+        <Compass className="w-8 h-8 text-slate-700 dark:text-slate-300" />
       </div>
 
-      <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+      <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
         Error 404
       </span>
 
-      <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mt-1">
+      <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight mt-1">
         Page Not Found
       </h1>
 
-      <p className="mt-3 text-sm text-slate-600 leading-relaxed max-w-sm mx-auto">
+      <p className="mt-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-sm mx-auto">
         The tool or link you followed may have moved or does not exist. Search for any tool or explore popular shortcuts below.
       </p>
 
@@ -47,8 +47,8 @@ export const NotFoundPage: React.FC = () => {
       </div>
 
       {/* Popular Shortcuts */}
-      <div className="mt-8 pt-6 border-t border-slate-200">
-        <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
+      <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
+        <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3">
           Popular Online Tools
         </p>
         <div className="flex flex-wrap items-center justify-center gap-2">
@@ -56,10 +56,10 @@ export const NotFoundPage: React.FC = () => {
             <Link
               key={tool.route}
               to={tool.route}
-              className="text-xs font-medium text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-lg transition-colors inline-flex items-center gap-1"
+              className="text-xs font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-lg transition-colors inline-flex items-center gap-1 min-h-[36px]"
             >
               <span>{tool.name}</span>
-              <ArrowRight className="w-3 h-3 text-slate-400" />
+              <ArrowRight className="w-3 h-3 text-slate-400 dark:text-slate-500" />
             </Link>
           ))}
         </div>

@@ -25,20 +25,20 @@ export const AboutPage: React.FC = () => {
       <div className="space-y-12">
         {/* Header */}
         <div>
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+          <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
             About Our Mission
           </span>
-          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight mt-1">
+          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100 tracking-tight mt-1">
             About India Smart Tools
           </h1>
-          <p className="mt-3 text-base text-slate-600 leading-relaxed">
+          <p className="mt-3 text-base text-slate-600 dark:text-slate-400 leading-relaxed">
             India Smart Tools is built on a simple conviction: essential everyday digital calculations, file formatting, and academic tools should be fast, completely free, and respectful of user privacy.
           </p>
         </div>
 
         {/* Story & Context */}
-        <div className="bg-white rounded-2xl border border-slate-200/90 p-8 sm:p-10 space-y-6 text-sm text-slate-600 leading-relaxed">
-          <h2 className="text-xl font-bold text-slate-900 tracking-tight">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-8 sm:p-10 space-y-6 text-sm text-slate-600 dark:text-slate-400 leading-relaxed transition-colors">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
             Why India Smart Tools Was Built
           </h2>
           <p>
@@ -54,58 +54,54 @@ export const AboutPage: React.FC = () => {
 
         {/* Guiding Principles */}
         <div>
-          <h2 className="text-xl font-bold text-slate-900 tracking-tight mb-6">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 tracking-tight mb-6">
             Our Core Principles
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div className="bg-white p-6 rounded-xl border border-slate-200">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-800 mb-3">
-                <Zap className="w-5 h-5" />
-              </div>
-              <h3 className="text-sm font-semibold text-slate-900">High-Speed Performance</h3>
-              <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
-                Zero bloat. Instant page loads on 4G and 5G connections across India.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl border border-slate-200">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-800 mb-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="p-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-sky-400 flex items-center justify-center">
                 <Shield className="w-5 h-5" />
               </div>
-              <h3 className="text-sm font-semibold text-slate-900">Privacy First</h3>
-              <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
-                Client-side document and image processing. Photos, marksheets, and signatures stay on your device.
+              <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">Zero Server Uploads</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Calculations and image operations execute on your device in browser memory. We never receive or store your certificates or financial inputs.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-xl border border-slate-200">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-800 mb-3">
+            <div className="p-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-sky-400 flex items-center justify-center">
+                <Zap className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">Zero Distractions</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                No subscription paywalls, no forced account signups, no countdown timers, and no fake download traps.
+              </p>
+            </div>
+
+            <div className="p-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-sky-400 flex items-center justify-center">
                 <HeartHandshake className="w-5 h-5" />
               </div>
-              <h3 className="text-sm font-semibold text-slate-900">Indian Standards</h3>
-              <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
-                Curated specifically for Indian tax slabs, bank compounding schedules, university grading formulas, and portal upload constraints.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl border border-slate-200">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-800 mb-3">
-                <Check className="w-5 h-5" />
-              </div>
-              <h3 className="text-sm font-semibold text-slate-900">Free & Transparent</h3>
-              <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
-                No hidden subscription gates or artificial limitations on basic utilities.
+              <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">Offline & Accessible</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Installable Progressive Web App (PWA) with light and dark mode, optimized for high performance across all 4G/5G Indian mobile networks.
               </p>
             </div>
           </div>
         </div>
 
-        {/* Contact CTA */}
-        <div className="pt-6 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-slate-500">
-          <span>Have an idea or feedback to make the platform better?</span>
-          <Link to="/contact" className="text-slate-900 font-semibold hover:underline">
-            Get in touch with us →
+        {/* Explore CTA */}
+        <div className="bg-slate-900 dark:bg-slate-800 text-white p-8 sm:p-10 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-md">
+          <div>
+            <h3 className="text-lg font-bold">Ready to try our tools?</h3>
+            <p className="text-xs text-slate-300 mt-1">Explore our complete catalog of 20 fast online utilities.</p>
+          </div>
+          <Link
+            to="/tools"
+            className="px-5 py-2.5 bg-white text-slate-900 dark:bg-sky-400 dark:text-slate-950 rounded-xl font-semibold text-xs hover:bg-slate-100 dark:hover:bg-sky-300 transition-colors text-center shrink-0 min-h-[44px] flex items-center justify-center"
+          >
+            Browse All Tools →
           </Link>
         </div>
       </div>

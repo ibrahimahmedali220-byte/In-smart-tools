@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
-    "test": "tsx src/utils/calculators/runTests.ts && tsx src/utils/calculators/runStudentTests.ts && tsx src/utils/processors/documentProcessors.test.ts && tsx src/utils/calculators/runEverydayTests.ts && tsx src/utils/discovery/runDiscoveryTests.ts"
+    "test": "tsx src/utils/calculators/runTests.ts && tsx src/utils/calculators/runStudentTests.ts && tsx src/utils/processors/documentProcessors.test.ts && tsx src/utils/calculators/runEverydayTests.ts && tsx src/utils/discovery/runDiscoveryTests.ts && tsx src/utils/pwa/runPwaTests.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
@@ -28,6 +28,7 @@
     "vite": "^8.3.0"
   },
   "devDependencies": {
+    "@types/express": "^4.17.21",
     "@types/node": "^22.14.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
@@ -36,6 +37,6 @@
     "tailwindcss": "^4.3.3",
     "tsx": "^4.21.0",
     "typescript": "^7.0.2",
-    "@types/express": "^4.17.21"
+    "vite-plugin-pwa": "^2.0.0"
   }
 }

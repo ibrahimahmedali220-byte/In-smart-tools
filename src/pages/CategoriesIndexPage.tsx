@@ -27,10 +27,10 @@ export const CategoriesIndexPage: React.FC = () => {
 
       {/* Header */}
       <div className="max-w-3xl mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
           Browse by Category
         </h1>
-        <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+        <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
           Four dedicated tool suites built specifically for Indian financial planning, academic success, document compliance, and daily tasks.
         </p>
       </div>
@@ -42,7 +42,7 @@ export const CategoriesIndexPage: React.FC = () => {
           return (
             <div
               key={category.id}
-              className="bg-white rounded-xl border border-slate-200/90 p-6 flex flex-col justify-between"
+              className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 flex flex-col justify-between transition-colors"
             >
               <div>
                 <CategoryCard
@@ -54,8 +54,8 @@ export const CategoriesIndexPage: React.FC = () => {
                 />
 
                 {/* List of included tools */}
-                <div className="mt-4 pt-4 border-t border-slate-100">
-                  <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 block mb-2">
+                <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-2">
                     Included Tools
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -63,7 +63,7 @@ export const CategoriesIndexPage: React.FC = () => {
                       <Link
                         key={tool.id}
                         to={tool.route}
-                        className="text-xs bg-slate-50 hover:bg-slate-100 text-slate-700 px-2.5 py-1 rounded border border-slate-200/60 transition-colors"
+                        className="text-xs bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-lg border border-slate-200/60 dark:border-slate-700 transition-colors"
                       >
                         {tool.name}
                       </Link>
@@ -75,7 +75,7 @@ export const CategoriesIndexPage: React.FC = () => {
               <div className="mt-6 pt-3 flex justify-end">
                 <Link
                   to={category.route}
-                  className="inline-flex items-center text-xs font-semibold text-slate-900 hover:text-slate-700 gap-1.5"
+                  className="inline-flex items-center text-xs font-semibold text-slate-900 dark:text-sky-400 hover:text-slate-700 dark:hover:text-sky-300 gap-1.5 min-h-[36px]"
                 >
                   <span>Open {category.name} Suite</span>
                   <ArrowRight className="w-3.5 h-3.5" />

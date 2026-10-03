@@ -36,6 +36,12 @@ export interface SalaryResult {
   monthlyCtc: number;
   annualGross: number;
   monthlyGross: number;
+  monthlyBasic: number;
+  monthlyInHand: number;
+  annualInHand: number;
+  monthlyEpflDeduction: number;
+  monthlyPt: number;
+  monthlyTds: number;
   deductions: SalaryDeductionBreakdown;
   inHandAnnual: number;
   inHandMonthly: number;
@@ -126,6 +132,12 @@ export function calculateSalary(input: SalaryInput): SalaryResult {
       monthlyCtc: 0,
       annualGross: 0,
       monthlyGross: 0,
+      monthlyBasic: 0,
+      monthlyInHand: 0,
+      annualInHand: 0,
+      monthlyEpflDeduction: 0,
+      monthlyPt: 0,
+      monthlyTds: 0,
       deductions: {
         employeePfAnnual: 0,
         employeePfMonthly: 0,
@@ -199,6 +211,12 @@ export function calculateSalary(input: SalaryInput): SalaryResult {
     monthlyCtc,
     annualGross: grossAnnual,
     monthlyGross: grossMonthly,
+    monthlyBasic: basicMonthly,
+    monthlyInHand: inHandMonthly,
+    annualInHand: inHandAnnual,
+    monthlyEpflDeduction: pfMonthly,
+    monthlyPt: ptMonthly,
+    monthlyTds: estimatedTaxMonthly,
     deductions: {
       employeePfAnnual: pfAnnual,
       employeePfMonthly: pfMonthly,

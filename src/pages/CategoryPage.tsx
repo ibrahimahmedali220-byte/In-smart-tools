@@ -5,7 +5,7 @@ import { ToolGrid } from '../components/common/ToolGrid';
 import { IconResolver } from '../components/common/IconResolver';
 import { CATEGORIES, getCategoryById, getToolsByCategory, searchTools } from '../data/tools';
 import { ToolCategory } from '../types/tool';
-import { Link, useRouter } from '../router/Router';
+import { Link } from '../router/Router';
 import { updateSeoMetadata, getBreadcrumbListSchema } from '../utils/seo';
 import { NotFoundPage } from './NotFoundPage';
 import { Search, X } from 'lucide-react';
@@ -59,34 +59,34 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId }) => {
       />
 
       {/* Category Hero / Header */}
-      <div className="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 md:p-10 mb-8 shadow-sm">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 md:p-10 mb-8 shadow-sm transition-colors">
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-xl bg-slate-900 text-white flex items-center justify-center shrink-0 shadow-sm">
+          <div className="w-12 h-12 rounded-xl bg-slate-900 dark:bg-sky-500 text-white dark:text-slate-950 flex items-center justify-center shrink-0 shadow-sm">
             <IconResolver name={category.icon} className="w-6 h-6" />
           </div>
           <div>
-            <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+            <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
               <span>Category Suite</span>
               <span aria-hidden="true">·</span>
-              <span className="text-emerald-700 font-bold">{allCategoryTools.length} Tools Ready</span>
+              <span className="text-emerald-700 dark:text-emerald-400 font-bold">{allCategoryTools.length} Tools Ready</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mt-1">
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight mt-1">
               {category.name}
             </h1>
-            <p className="mt-2 text-sm text-slate-600 max-w-2xl leading-relaxed">
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
               {category.description} All tools run 100% client-side in your browser for instant performance and absolute privacy.
             </p>
           </div>
         </div>
 
         {/* Quick jump to other categories */}
-        <div className="mt-6 pt-5 border-t border-slate-100 flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-slate-400 font-medium">Other categories:</span>
+        <div className="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center gap-2 text-xs">
+          <span className="text-slate-400 dark:text-slate-500 font-medium">Other categories:</span>
           {otherCategories.map(cat => (
             <Link
               key={cat.id}
               to={cat.route}
-              className="text-slate-600 hover:text-slate-900 px-2.5 py-1 rounded-md bg-slate-50 hover:bg-slate-100 border border-slate-200/60 transition-colors"
+              className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white px-2.5 py-1 rounded-lg bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200/60 dark:border-slate-700 transition-colors"
             >
               {cat.name}
             </Link>
@@ -97,29 +97,29 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId }) => {
       {/* In-category Search & Filter Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h2 className="text-lg font-bold text-slate-900 tracking-tight">
+          <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 tracking-tight">
             Tools in this Suite
           </h2>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             Showing {filteredTools.length} of {allCategoryTools.length} {category.name.toLowerCase()}
           </p>
         </div>
 
         <div className="relative w-full sm:w-64 shrink-0">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 dark:text-slate-500 pointer-events-none" />
           <input
             type="text"
             value={filterQuery}
             onChange={e => setFilterQuery(e.target.value.slice(0, 50))}
             placeholder={`Search ${category.name.toLowerCase()}...`}
             aria-label={`Filter ${category.name} tools`}
-            className="w-full bg-white border border-slate-300 rounded-xl pl-8 pr-8 py-1.5 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-slate-900 shadow-sm"
+            className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-8 pr-8 py-2 text-xs text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-sky-400 focus:border-slate-900 dark:focus:border-sky-400 shadow-2xs min-h-[36px]"
           />
           {filterQuery && (
             <button
               type="button"
               onClick={() => setFilterQuery('')}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 text-slate-400 hover:text-slate-600 rounded"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded min-h-[28px] min-w-[28px] flex items-center justify-center"
               aria-label="Clear filter"
             >
               <X className="w-3.5 h-3.5" />

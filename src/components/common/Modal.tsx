@@ -64,7 +64,7 @@ export const Modal: React.FC<ModalProps> = ({
     >
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-slate-900/60 dark:bg-black/70 backdrop-blur-xs transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -72,24 +72,26 @@ export const Modal: React.FC<ModalProps> = ({
       {/* Modal Card */}
       <div
         ref={modalRef}
-        className={`relative w-full ${maxWidthClasses[maxWidth]} bg-white rounded-xl shadow-xl border border-slate-200 z-10 overflow-hidden transform transition-all animate-in fade-in-0 zoom-in-95 duration-150`}
+        className={`relative w-full ${maxWidthClasses[maxWidth]} bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 z-10 overflow-hidden transform transition-all animate-in fade-in-0 zoom-in-95 duration-150`}
       >
         {(title || description) && (
-          <div className="flex items-start justify-between px-6 pt-5 pb-4 border-b border-slate-100">
+          <div className="flex items-start justify-between px-6 pt-5 pb-4 border-b border-slate-100 dark:border-slate-800">
             <div>
               {title && (
-                <h3 id="modal-title" className="text-base font-semibold text-slate-900">
+                <h3 id="modal-title" className="text-base font-bold text-slate-900 dark:text-slate-100 tracking-tight">
                   {title}
                 </h3>
               )}
               {description && (
-                <p id="modal-desc" className="mt-1 text-xs text-slate-500">{description}</p>
+                <p id="modal-desc" className="mt-1 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  {description}
+                </p>
               )}
             </div>
             <button
               ref={closeBtnRef}
               onClick={onClose}
-              className="text-slate-400 hover:text-slate-700 transition-colors p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900"
+              className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-sky-400"
               aria-label="Close dialog"
             >
               <X className="w-5 h-5" aria-hidden="true" />
@@ -97,7 +99,7 @@ export const Modal: React.FC<ModalProps> = ({
           </div>
         )}
 
-        <div className="p-6">{children}</div>
+        <div className="p-6 text-slate-900 dark:text-slate-100">{children}</div>
       </div>
     </div>
   );

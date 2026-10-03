@@ -7,4 +7,4 @@ Disallow: /api/
 Disallow: /dist/
 
 # Sitemap location
-Sitemap: https://indiasmarttools.in/sitemap.xml
+Sitemap: https://smartlytools.vercel.app/sitemap.xml

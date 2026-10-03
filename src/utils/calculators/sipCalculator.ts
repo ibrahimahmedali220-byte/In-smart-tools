@@ -22,12 +22,18 @@ export interface SipYearlyBreakdown {
   investedAmount: number;
   estimatedWealth: number;
   returnsEarned: number;
+  invested: number;
+  returns: number;
+  totalValue: number;
 }
 
 export interface SipResult {
   totalInvested: number;
   estimatedReturns: number;
   estimatedFinalValue: number;
+  totalMaturityAmount: number;
+  wealthMultiplier: number;
+  durationMonths: number;
   investedPercent: number;
   returnsPercent: number;
   yearlyBreakdown: SipYearlyBreakdown[];
@@ -47,6 +53,9 @@ export function calculateSip(input: SipInput): SipResult {
       totalInvested: 0,
       estimatedReturns: 0,
       estimatedFinalValue: 0,
+      totalMaturityAmount: 0,
+      wealthMultiplier: 1,
+      durationMonths: 0,
       investedPercent: 100,
       returnsPercent: 0,
       yearlyBreakdown: [],
@@ -61,6 +70,9 @@ export function calculateSip(input: SipInput): SipResult {
       totalInvested: 0,
       estimatedReturns: 0,
       estimatedFinalValue: 0,
+      totalMaturityAmount: 0,
+      wealthMultiplier: 1,
+      durationMonths: 0,
       investedPercent: 100,
       returnsPercent: 0,
       yearlyBreakdown: [],
@@ -85,6 +97,9 @@ export function calculateSip(input: SipInput): SipResult {
         totalInvested,
         estimatedReturns: 0,
         estimatedFinalValue: totalInvested,
+        totalMaturityAmount: totalInvested,
+        wealthMultiplier: 1,
+        durationMonths: totalMonths,
         investedPercent: 100,
         returnsPercent: 0,
         yearlyBreakdown: [],
@@ -119,14 +134,22 @@ export function calculateSip(input: SipInput): SipResult {
       year: y,
       investedAmount: currentInvested,
       estimatedWealth: currentWealth,
-      returnsEarned: Math.max(0, currentWealth - currentInvested)
+      returnsEarned: Math.max(0, currentWealth - currentInvested),
+      invested: currentInvested,
+      returns: Math.max(0, currentWealth - currentInvested),
+      totalValue: currentWealth
     });
   }
+
+  const wealthMultiplier = totalInvested > 0 ? Math.round((estimatedFinalValue / totalInvested) * 10) / 10 : 1;
 
   return {
     totalInvested,
     estimatedReturns,
     estimatedFinalValue,
+    totalMaturityAmount: estimatedFinalValue,
+    wealthMultiplier,
+    durationMonths: totalMonths,
     investedPercent,
     returnsPercent,
     yearlyBreakdown,

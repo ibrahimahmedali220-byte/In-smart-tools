@@ -6,25 +6,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>India Smart Tools – Simple Tools for Everyday India</title>
     <meta name="description" content="Simple, fast and free online utility platform for students, job seekers, creators and everyday users across India." />
+    <link rel="canonical" href="https://smartlytools.vercel.app/" />
+    
+    <!-- Open Graph / Social Media -->
     <meta property="og:title" content="India Smart Tools – Simple Tools for Everyday India" />
     <meta property="og:description" content="Simple, fast and free online utility platform for students, job seekers, creators and everyday users across India." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/og-image.svg" />
+    <meta property="og:url" content="https://smartlytools.vercel.app/" />
+    <meta property="og:image" content="https://smartlytools.vercel.app/og-image.svg" />
+    
+    <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="/og-image.svg" />
+    <meta name="twitter:url" content="https://smartlytools.vercel.app/" />
+    <meta name="twitter:title" content="India Smart Tools – Simple Tools for Everyday India" />
+    <meta name="twitter:description" content="Simple, fast and free online utility platform for students, job seekers, creators and everyday users across India." />
+    <meta name="twitter:image" content="https://smartlytools.vercel.app/og-image.svg" />
+    
     <meta name="robots" content="index, follow" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="theme-color" content="#0f172a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Smart Tools" />
+    
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2455309165032618"
+     crossorigin="anonymous"></script>
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "India Smart Tools",
+        "url": "https://smartlytools.vercel.app",
+        "description": "Simple, fast and free online utility platform for students, job seekers, creators and everyday users across India.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://smartlytools.vercel.app/tools?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('ist_theme') || 'system';
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var isDark = saved === 'dark' || (saved === 'system' && prefersDark);
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.colorScheme = 'dark';
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.style.colorScheme = 'light';
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
-  <body class="bg-slate-50 text-slate-900 antialiased font-sans selection:bg-slate-900 selection:text-white">
+  <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 antialiased font-sans selection:bg-slate-900 selection:text-white dark:selection:bg-slate-100 dark:selection:text-slate-900 transition-colors duration-150">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

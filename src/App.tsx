@@ -5,10 +5,13 @@
 
 import React from 'react';
 import { RouterProvider, useRouter } from './router/Router';
+import { ThemeProvider } from './hooks/useTheme';
 import { ToastProvider } from './components/common/Toast';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
+import { PWAUpdateBanner } from './components/common/PWAUpdateBanner';
+import { OfflineIndicator } from './components/common/OfflineIndicator';
 
 // Pages
 import { HomePage } from './pages/HomePage';
@@ -100,12 +103,14 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-150">
       <Header />
-      <div className="flex-1">
+      <main className="flex-1">
         {renderRoute()}
-      </div>
+      </main>
       <Footer />
+      <PWAUpdateBanner />
+      <OfflineIndicator />
     </div>
   );
 };
@@ -113,11 +118,13 @@ const AppContent: React.FC = () => {
 export default function App() {
   return (
     <ErrorBoundary>
-      <RouterProvider>
-        <ToastProvider>
-          <AppContent />
-        </ToastProvider>
-      </RouterProvider>
+      <ThemeProvider>
+        <RouterProvider>
+          <ToastProvider>
+            <AppContent />
+          </ToastProvider>
+        </RouterProvider>
+      </ThemeProvider>
     </ErrorBoundary>
   );
 }

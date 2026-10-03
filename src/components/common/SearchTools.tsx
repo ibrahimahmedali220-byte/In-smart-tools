@@ -91,7 +91,7 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
     <div className={`relative flex flex-col w-full ${className}`}>
       {/* Input row */}
       <div className="relative flex items-center">
-        <Search className="absolute left-3.5 w-4 h-4 text-slate-400 pointer-events-none" />
+        <Search className="absolute left-3.5 w-4 h-4 text-slate-400 dark:text-slate-500 pointer-events-none" />
         <input
           ref={inputRef}
           type="text"
@@ -101,7 +101,7 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
           autoFocus={autoFocus}
           maxLength={100}
           placeholder={placeholder}
-          className="w-full bg-white border border-slate-300 rounded-lg pl-10 pr-10 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-slate-900 transition-shadow"
+          className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-10 pr-10 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-sky-400 focus:border-slate-900 dark:focus:border-sky-400 transition-shadow"
           role="combobox"
           aria-expanded={results.length > 0}
           aria-controls="search-results-list"
@@ -114,7 +114,7 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
               setQuery('');
               inputRef.current?.focus();
             }}
-            className="absolute right-3 p-1 text-slate-400 hover:text-slate-600 rounded"
+            className="absolute right-3 p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded min-h-[36px] min-w-[36px] flex items-center justify-center"
             aria-label="Clear search input"
           >
             <X className="w-4 h-4" />
@@ -128,7 +128,7 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
           ref={resultsRef}
           id="search-results-list"
           role="listbox"
-          className="mt-2 w-full bg-white rounded-lg border border-slate-200 shadow-lg max-h-80 overflow-y-auto divide-y divide-slate-100 z-30"
+          className="mt-2 w-full bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xl max-h-80 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800 z-30"
         >
           {results.length > 0 ? (
             results.map((tool, idx) => {
@@ -142,23 +142,25 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
                   onMouseEnter={() => setSelectedIndex(idx)}
                   onClick={() => handleSelectTool(tool)}
                   className={`flex items-center justify-between p-3.5 cursor-pointer transition-colors ${
-                    isSelected ? 'bg-slate-100/90 text-slate-900' : 'hover:bg-slate-50 text-slate-800'
+                    isSelected
+                      ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white'
+                      : 'hover:bg-slate-50 dark:hover:bg-slate-800/60 text-slate-800 dark:text-slate-200'
                   }`}
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-8 h-8 rounded-md bg-slate-100 flex items-center justify-center text-slate-700 shrink-0">
+                    <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-700 dark:text-slate-300 shrink-0">
                       <IconResolver name={tool.icon} className="w-4 h-4" />
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-semibold text-slate-900 truncate">
+                        <span className="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">
                           {tool.name}
                         </span>
-                        <span className="text-[11px] text-slate-500 font-medium">
+                        <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
                           {categoryNames[tool.category]}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-500 truncate mt-0.5 max-w-md">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5 max-w-md">
                         {tool.description}
                       </p>
                     </div>
@@ -166,19 +168,19 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
 
                   <div className="flex items-center gap-2 shrink-0 ml-3">
                     {isSelected && (
-                      <span className="hidden sm:inline-flex items-center text-[10px] text-slate-400 font-medium gap-0.5">
+                      <span className="hidden sm:inline-flex items-center text-[10px] text-slate-400 dark:text-slate-500 font-medium gap-0.5">
                         <CornerDownLeft className="w-3 h-3" /> Select
                       </span>
                     )}
-                    <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
+                    <ArrowRight className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
                   </div>
                 </div>
               );
             })
           ) : (
-            <div className="p-8 text-center text-slate-500">
-              <p className="text-sm font-medium text-slate-900">No tools found matching &ldquo;{query}&rdquo;</p>
-              <p className="mt-1 text-xs text-slate-500">
+            <div className="p-8 text-center text-slate-500 dark:text-slate-400">
+              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">No tools found matching &ldquo;{query}&rdquo;</p>
+              <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                 Try searching for &ldquo;loan&rdquo;, &ldquo;pdf&rdquo;, &ldquo;marks&rdquo;, &ldquo;age&rdquo;, or &ldquo;qr&rdquo;.
               </p>
             </div>
@@ -188,9 +190,9 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
 
       {/* Suggested quick searches if query is empty and in modal */}
       {variant === 'modal' && !query.trim() && (
-        <div className="mt-4 pt-3 border-t border-slate-100">
-          <p className="text-xs font-semibold text-slate-500 mb-2 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-slate-400" /> Popular Quick Searches
+        <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
+          <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" /> Popular Quick Searches
           </p>
           <div className="flex flex-wrap gap-2">
             {['EMI Calculator', 'SIP Calculator', 'JPG to PDF', 'PDF Compressor', 'CGPA Calculator', 'Age Calculator', 'QR Generator'].map(term => (
@@ -198,7 +200,7 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
                 key={term}
                 type="button"
                 onClick={() => setQuery(term)}
-                className="px-2.5 py-1 text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md transition-colors"
+                className="px-2.5 py-1.5 text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg transition-colors min-h-[32px]"
               >
                 {term}
               </button>
@@ -220,16 +222,16 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
         aria-label="Search tools"
       >
         <div
-          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"
+          className="fixed inset-0 bg-slate-900/60 dark:bg-black/70 backdrop-blur-xs transition-opacity"
           onClick={onClose}
           aria-hidden="true"
         />
-        <div className="relative w-full max-w-xl bg-white rounded-xl shadow-2xl border border-slate-200 p-4 sm:p-5 z-10 animate-in fade-in-0 zoom-in-95 duration-150">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+        <div className="relative w-full max-w-xl bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 z-10 animate-in fade-in-0 zoom-in-95 duration-150">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-3">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               India Smart Tools Search
             </span>
-            <span className="text-[11px] text-slate-400">ESC to close</span>
+            <span className="text-[11px] text-slate-400 dark:text-slate-500">ESC to close</span>
           </div>
           {searchBox}
         </div>

@@ -41,7 +41,14 @@
 - [x] Build LoadingState component (`src/components/common/LoadingState.tsx`)
 - [x] Build ErrorState component (`src/components/common/ErrorState.tsx`)
 - [x] Build 404 Not Found page (`src/pages/NotFoundPage.tsx`)
-- [ ] Dark mode theme toggle and persistent storage
+- [x] Dark mode theme toggle (Light / Dark / System), zero-flash inline script, and persistent storage (`src/utils/theme/themeManager.ts`, `src/components/common/ThemeToggle.tsx`, `src/hooks/useTheme.tsx`)
+- [x] Progressive Web App (PWA) manifest with standard icons 192x192, 512x512, and maskable (`public/manifest.json`, `vite.config.ts`, `vite-plugin-pwa`)
+- [x] In-App PWA Install Prompt with platform detection and iOS guide (`src/components/common/PWAInstallButton.tsx`, `src/hooks/usePWAInstall.ts`)
+- [x] Safe PWA Update Banner with user-controlled refresh (`src/components/common/PWAUpdateBanner.tsx`, `src/hooks/usePWAUpdate.ts`)
+- [x] Global Online/Offline connection status detection and non-blocking banner (`src/components/common/OfflineIndicator.tsx`, `src/hooks/useOnlineStatus.ts`)
+- [x] Global skeleton loading system and loading feedback (`src/components/common/Skeleton.tsx`, `src/components/common/LoadingState.tsx`)
+- [x] Offline client-side capability verified for all 20 tools with zero remote server dependency
+- [x] Automated unit test suite with 227 passing assertions across 6 suites (`npm test`)
 
 ---
 

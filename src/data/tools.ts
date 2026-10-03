@@ -2,6 +2,24 @@ import { ToolCategory, ToolItem, CategoryItem } from '../types/tool';
 
 export const CATEGORIES: CategoryItem[] = [
   {
+    id: 'everyday',
+    name: 'Everyday Tools',
+    slug: 'everyday',
+    tagline: 'Practical utilities for daily digital productivity',
+    description: 'Instant QR generation with logo, secure passwords, date math, metric conversions, and health metrics.',
+    icon: 'Sparkles',
+    route: '/tools/everyday'
+  },
+  {
+    id: 'documents',
+    name: 'Document Tools',
+    slug: 'documents',
+    tagline: 'Privacy-focused file compressors and format converters',
+    description: 'Client-first PDF and image processing built for job applications, government portals, and exam submissions.',
+    icon: 'FileText',
+    route: '/tools/documents'
+  },
+  {
     id: 'finance',
     name: 'Finance Tools',
     slug: 'finance',
@@ -18,29 +36,55 @@ export const CATEGORIES: CategoryItem[] = [
     description: 'Fast grade converters, study focus timers, age checkers, and text analysis tools for Indian learners.',
     icon: 'GraduationCap',
     route: '/tools/student'
-  },
-  {
-    id: 'documents',
-    name: 'Document Tools',
-    slug: 'documents',
-    tagline: 'Privacy-focused file compressors and format converters',
-    description: 'Client-first PDF and image processing built for job applications, government portals, and exam submissions.',
-    icon: 'FileText',
-    route: '/tools/documents'
-  },
-  {
-    id: 'everyday',
-    name: 'Everyday Tools',
-    slug: 'everyday',
-    tagline: 'Practical utilities for daily digital productivity',
-    description: 'Instant QR generation, secure passwords, date math, metric conversions, and health metrics.',
-    icon: 'Sparkles',
-    route: '/tools/everyday'
   }
 ];
 
 export const TOOLS: ToolItem[] = [
-  // 1. Finance Tools
+  // Top Featured Tools: QR Code Generator & JPG to PDF (Position 1 & 2)
+  {
+    id: 'qr-generator',
+    name: 'QR Code Generator',
+    slug: 'qr-generator',
+    category: 'everyday',
+    description: 'Create customized, high-resolution QR codes with custom center logos for UPI payments, website URLs, Wi-Fi passwords, and WhatsApp sharing.',
+    icon: 'QrCode',
+    keywords: ['qr code', 'qr generator', 'upi qr', 'gpay', 'phonepe', 'wifi qr', 'vcard', 'barcode', 'logo qr'],
+    status: 'implemented',
+    route: '/tools/qr-generator',
+    summary: 'Instant QR code creator with logo embedding, UPI payment and WhatsApp sharing',
+    targetAudience: ['Shopkeepers', 'Event hosts', 'Freelancers', 'Small merchants'],
+    plannedFeatures: [
+      'UPI payment QR: Preset Payee VPA, name, and optional fixed amount',
+      'Upload brand logo / picture embedded directly in the center of the QR code',
+      'Direct WhatsApp and Instagram sharing options with high error resilience',
+      'Download in crisp PNG and scalable SVG formats'
+    ],
+    seoTitle: 'Free QR Code Generator with Logo – UPI, URL & Wi-Fi QR Codes | India Smart Tools',
+    seoDescription: 'Generate custom QR codes online for free with logo embedding. Create UPI payment QRs, Wi-Fi access codes, and links with WhatsApp sharing.'
+  },
+  {
+    id: 'jpg-to-pdf',
+    name: 'JPG to PDF',
+    slug: 'jpg-to-pdf',
+    category: 'documents',
+    description: 'Combine multiple JPG, JPEG, and PNG images into a single clean PDF document securely inside your browser with WhatsApp sharing.',
+    icon: 'FileImage',
+    keywords: ['jpg to pdf', 'image to pdf', 'photo to pdf', 'convert', 'document', 'aadhaar', 'pan card', 'marksheet', 'pdf maker'],
+    status: 'implemented',
+    route: '/tools/jpg-to-pdf',
+    summary: 'Fast in-browser photo-to-PDF compiler with page reordering and direct sharing',
+    targetAudience: ['Job portal applicants', 'Students submitting scanned assignments', 'Office administrators'],
+    plannedFeatures: [
+      '100% Client-side conversion: Photos never upload to external servers',
+      'Drag-and-drop reordering of multiple pages before compilation',
+      'Direct WhatsApp and social sharing options',
+      'Orientation controls: Portrait and Landscape per page'
+    ],
+    seoTitle: 'JPG to PDF Converter Online | India Smart Tools',
+    seoDescription: 'Convert JPG images to PDF documents online for free. 100% private, runs in browser, perfect for marksheets and certificates.'
+  },
+
+  // Finance Tools (Directly below Top Tools)
   {
     id: 'emi-calculator',
     name: 'EMI Calculator',
@@ -118,119 +162,119 @@ export const TOOLS: ToolItem[] = [
     targetAudience: ['Job offer evaluators', 'Salaried employees', 'HR teams'],
     plannedFeatures: [
       'New vs Old tax regime comparison for FY 2025-26 / 2026-27',
-      'Standard deduction, EPF (12%), and state Professional Tax deduction deduction',
-      'HRA, NPS, and standard allowance breakdown',
-      'Side-by-side net pay difference preview'
+      'Standard deduction (₹75,000 for New Regime), Section 87A rebate and Professional Tax deduction',
+      'Customizable Basic Pay percentage and PF options',
+      'Detailed itemized deduction breakdown table'
     ],
-    seoTitle: 'In-Hand Salary Calculator (CTC to Monthly Pay) | India Smart Tools',
-    seoDescription: 'Calculate monthly take-home salary from total CTC in India. Detailed deductions for PF, PT, and income tax regimes.'
+    seoTitle: 'In-Hand Salary Calculator (New vs Old Regime) | India Smart Tools',
+    seoDescription: 'Calculate take-home salary from CTC in India. Compare New vs Old tax regimes with EPF, PT, and income tax breakdown.'
   },
   {
     id: 'fd-calculator',
     name: 'FD Calculator',
     slug: 'fd-calculator',
     category: 'finance',
-    description: 'Compute maturity amounts and interest earnings on fixed deposits across major Indian public and private sector banks.',
-    icon: 'PiggyBank',
-    keywords: ['fd', 'fixed deposit', 'term deposit', 'interest', 'maturity', 'senior citizen', 'post office', 'bank fd'],
+    description: 'Calculate Fixed Deposit maturity amount and earned interest across Indian banks and post offices with quarterly compounding.',
+    icon: 'Landmark',
+    keywords: ['fd', 'fixed deposit', 'interest', 'maturity', 'bank fd', 'sbi fd', 'post office', 'term deposit', 'senior citizen'],
     status: 'implemented',
     route: '/tools/fd-calculator',
-    summary: 'Quarterly compounding fixed deposit maturity estimator',
-    targetAudience: ['Senior citizens', 'Conservative savers', 'Post office depositors'],
+    summary: 'Bank & Post Office FD maturity solver with compounding options',
+    targetAudience: ['Conservative savers', 'Senior citizens', 'Fixed income planners'],
     plannedFeatures: [
-      'Standard compounding cycles: Quarterly, Monthly, Half-yearly, Cumulative',
-      'Senior citizen preferential interest rate toggle (+0.50% / +0.75%)',
-      'TDS threshold applicability indicators',
-      'Comparison table of interest earned across tenure intervals'
+      'Compounding frequency options: Monthly, Quarterly (standard in Indian banks), Half-Yearly, Yearly',
+      'Special Senior Citizen preferential interest rate toggle (+0.50%)',
+      'Cumulative (re-investment) vs Non-Cumulative payout options',
+      'Maturity date projection from deposit date'
     ],
-    seoTitle: 'FD Calculator – Fixed Deposit Maturity & Interest | India Smart Tools',
-    seoDescription: 'Calculate Fixed Deposit maturity value and interest earnings across Indian banks with quarterly compounding and senior citizen rates.'
+    seoTitle: 'Fixed Deposit (FD) Calculator – Maturity & Interest | India Smart Tools',
+    seoDescription: 'Calculate bank and post office fixed deposit (FD) maturity values, interest earned, and quarterly compounding in India.'
   },
 
-  // 2. Student Tools
+  // Student Tools
   {
     id: 'percentage-calculator',
     name: 'Percentage Calculator',
     slug: 'percentage-calculator',
     category: 'student',
-    description: 'Solve board exam marks percentages, percentage increase or decrease, and marks needed to hit target percentage goals.',
+    description: 'Calculate marks percentage, aggregate scores across subjects, percentage increase/decrease, and discount values.',
     icon: 'Percent',
-    keywords: ['percentage', 'percent', 'marks', 'exam', 'cbse', 'icse', 'state board', 'ratio', 'score'],
+    keywords: ['percentage', 'marks percentage', 'exam marks', 'score', 'discount', 'aggregate', 'board exam', 'cbse'],
     status: 'implemented',
     route: '/tools/percentage-calculator',
-    summary: 'Multi-mode academic and general percentage solver',
-    targetAudience: ['School students', 'College aspirants', 'Competitive examinees'],
+    summary: 'Exam score percentage, subject aggregate, and percentage changes',
+    targetAudience: ['School students', 'College applicants', 'Shoppers calculating discounts'],
     plannedFeatures: [
-      'Exam marks percentage: Total marks obtained vs maximum marks',
-      'Subject-wise marks aggregate calculator with grade threshold preview',
-      'Percentage increase/decrease and difference calculators',
-      'Reverse calculator: Find required marks in remaining paper to achieve target'
+      'Exam marks percentage solver (Total Marks vs Obtained Marks)',
+      'Multi-subject aggregate grade sheet calculator (Add up to 10 subjects)',
+      'Percentage change calculator: Increase, decrease, and difference',
+      'Reverse percentage solver: Find original value from percentage'
     ],
-    seoTitle: 'Percentage Calculator — Calculate Percentages Easily | India Smart Tools',
-    seoDescription: 'Calculate exam percentages, marks increments, and grade requirements for CBSE, ICSE, and state board exams.'
+    seoTitle: 'Percentage Calculator – Exam Marks & Aggregate Scores | India Smart Tools',
+    seoDescription: 'Calculate exam marks percentage, multi-subject aggregate scores, and percentage increase or decrease instantly.'
   },
   {
     id: 'cgpa-calculator',
     name: 'CGPA Calculator',
     slug: 'cgpa-calculator',
     category: 'student',
-    description: 'Convert university CGPA / SGPA to percentage using standard Indian university formulas (CBSE 9.5x, VTU, Mumbai Univ, AKTU).',
-    icon: 'Award',
-    keywords: ['cgpa', 'sgpa', 'percentage', 'grade', 'gpa', 'university', 'vtu', 'aktu', 'cbse', 'engineering', 'college'],
+    description: 'Convert Cumulative Grade Point Average (CGPA) and SGPA to percentage using CBSE (9.5x) or university-specific grading scales.',
+    icon: 'GraduationCap',
+    keywords: ['cgpa', 'sgpa', 'cgpa to percentage', 'gpa converter', 'cbse cgpa', 'university grades', 'grading scale'],
     status: 'implemented',
     route: '/tools/cgpa-calculator',
-    summary: 'Standard Indian university CGPA-to-Percentage converter',
-    targetAudience: ['College students', 'Job applicants filling government forms', 'Campus recruits'],
+    summary: 'CGPA to percentage converter with CBSE and custom scale support',
+    targetAudience: ['University students', 'CBSE high schoolers', 'Graduates applying for jobs'],
     plannedFeatures: [
-      'Preset formula presets: CBSE (x 9.5), VTU (CGPA - 0.75) x 10, Mumbai Univ, AKTU, and custom (x - y) * z',
-      'Semester-wise SGPA weighted credit points calculator',
-      'Official conversion certificate format copy text for job forms',
-      'Direct output formatted for TCS, Infosys, and UPSC portal requirements'
+      'Standard CBSE formula: CGPA x 9.5 = Percentage',
+      'Custom university multiplier support (e.g. 10x, 9.0x, VTU, AKTU scales)',
+      'Semester SGPA to cumulative CGPA aggregate calculator',
+      'Equivalent classification output: Distinction, First Class, Second Class'
     ],
-    seoTitle: 'CGPA Calculator — Calculate CGPA Easily | India Smart Tools',
-    seoDescription: 'Convert CGPA and SGPA to percentage according to CBSE 9.5 multiplier, VTU, AKTU, and state university conversion formulas.'
+    seoTitle: 'CGPA to Percentage Calculator (CBSE & University Scales) | India Smart Tools',
+    seoDescription: 'Convert CGPA to percentage using official CBSE multiplier (9.5) or custom university grading formulas easily.'
   },
   {
     id: 'age-calculator',
     name: 'Age Calculator',
     slug: 'age-calculator',
     category: 'student',
-    description: 'Determine exact age in years, months, and days for government recruitment forms (UPSC, SSC, Banking, Railways) as of cutoff dates.',
+    description: 'Calculate precise chronological age in years, months, weeks, and days, including exact eligibility age on a specific cutoff date.',
     icon: 'Calendar',
-    keywords: ['age', 'dob', 'date of birth', 'upsc', 'ssc', 'railways', 'government job', 'cutoff date', 'eligibility'],
+    keywords: ['age calculator', 'date of birth', 'dob', 'how old am i', 'govt exam eligibility', 'cutoff date', 'age in days'],
     status: 'implemented',
     route: '/tools/age-calculator',
-    summary: 'Exact chronological age calculator with exam cutoff verification',
-    targetAudience: ['Sarkari job aspirants', 'College admissions applicants', 'Passport applicants'],
+    summary: 'Precise chronological age and government exam cutoff eligibility solver',
+    targetAudience: ['Government job applicants (UPSC, SSC, Banking)', 'School admission seekers', 'Curious individuals'],
     plannedFeatures: [
-      'Exact age breakdown: Years, months, weeks, days, hours, and minutes',
-      'Cutoff date eligibility calculator (e.g., "Age as on 1st August 2026")',
-      'Countdown to next upcoming birthday',
-      'Leap year aware precise day counter'
+      'Exact age calculation in Years, Months, and Days from Date of Birth',
+      'Target cutoff date mode for exam eligibility verification (e.g., Age as on 1st August)',
+      'Total lived duration breakdown: Months, Weeks, Days, Hours, and Minutes',
+      'Next birthday countdown timer and day of the week'
     ],
-    seoTitle: 'Age Calculator — Calculate Your Exact Age | India Smart Tools',
-    seoDescription: 'Free online Age Calculator to check exact age as on exam cutoff dates for UPSC, SSC, IBPS, and state government applications.'
+    seoTitle: 'Age Calculator — Exact Age on Specific Cutoff Date | India Smart Tools',
+    seoDescription: 'Calculate your exact age in years, months, and days. Check exam eligibility on specific cutoff dates for UPSC, SSC, and state exams.'
   },
   {
     id: 'study-timer',
     name: 'Study Timer',
     slug: 'study-timer',
     category: 'student',
-    description: 'Distraction-free Pomodoro and custom interval timer configured for intense revision sprints and deep exam prep sessions.',
-    icon: 'Timer',
-    keywords: ['study timer', 'pomodoro', 'focus', 'stopwatch', 'revision', 'exam prep', 'productivity', 'interval'],
+    description: 'Boost academic focus and retention with a Pomodoro study timer, interval break cues, and session tracking.',
+    icon: 'Clock',
+    keywords: ['study timer', 'pomodoro', 'focus timer', 'exam prep', 'study sessions', 'productivity', 'interval timer'],
     status: 'implemented',
     route: '/tools/study-timer',
-    summary: 'Focused 25/5 study interval timer with ambient tone cues',
-    targetAudience: ['Competitive exam aspirants', 'Coders', 'Remote students'],
+    summary: 'Distraction-free Pomodoro study timer with break alerts',
+    targetAudience: ['Competitive exam aspirants (JEE, NEET, UPSC)', 'College students', 'Self-directed learners'],
     plannedFeatures: [
-      'Classic Pomodoro (25 min focus / 5 min short break / 15 min long break)',
-      'Custom interval presets for 50/10 and 90-minute deep work cycles',
-      'Subtle browser notification bells and visual completion states',
-      'Session streak counter stored locally without account requirements'
+      'Standard 25-min study / 5-min break Pomodoro intervals with sound notifications',
+      'Custom interval configuration (e.g. 50-min study / 10-min break)',
+      'Session counter tracking completed study rounds per day',
+      'Full-screen distraction-free focus mode with dark background'
     ],
-    seoTitle: 'Study Timer — Free Online Study Timer | India Smart Tools',
-    seoDescription: 'Distraction-free online study timer with custom intervals and breaks designed for Indian competitive exam aspirants.'
+    seoTitle: 'Study Timer & Pomodoro for Exam Preparation | India Smart Tools',
+    seoDescription: 'Stay focused during exam prep with this free online Pomodoro study timer. Custom intervals, break alerts, and full-screen mode.'
   },
   {
     id: 'word-counter',
@@ -254,28 +298,7 @@ export const TOOLS: ToolItem[] = [
     seoDescription: 'Count words, characters, sentences, and reading time instantly. Ideal for academic essays, SOPs, and competitive exams.'
   },
 
-  // 3. Document Tools
-  {
-    id: 'jpg-to-pdf',
-    name: 'JPG to PDF',
-    slug: 'jpg-to-pdf',
-    category: 'documents',
-    description: 'Combine multiple JPG, JPEG, and PNG images into a single clean PDF document securely inside your browser.',
-    icon: 'FileImage',
-    keywords: ['jpg to pdf', 'image to pdf', 'photo to pdf', 'convert', 'document', 'aadhaar', 'pan card', 'marksheet'],
-    status: 'implemented',
-    route: '/tools/jpg-to-pdf',
-    summary: 'Fast in-browser photo-to-PDF compiler with page reordering',
-    targetAudience: ['Job portal applicants', 'Students submitting scanned assignments', 'Office administrators'],
-    plannedFeatures: [
-      '100% Client-side conversion: Photos never upload to external servers',
-      'Drag-and-drop reordering of multiple pages before compilation',
-      'Page margin adjustments (None, Small, Standard A4)',
-      'Orientation controls: Portrait and Landscape per page'
-    ],
-    seoTitle: 'JPG to PDF Converter Online | India Smart Tools',
-    seoDescription: 'Convert JPG images to PDF documents online for free. 100% private, runs in browser, perfect for marksheets and certificates.'
-  },
+  // Document Tools (remaining)
   {
     id: 'pdf-to-jpg',
     name: 'PDF to JPG',
@@ -361,28 +384,7 @@ export const TOOLS: ToolItem[] = [
     seoDescription: 'Resize photos to exact pixel dimensions (350x350, 200x230) and passport dimensions for Indian online government applications.'
   },
 
-  // 4. Everyday Tools
-  {
-    id: 'qr-generator',
-    name: 'QR Code Generator',
-    slug: 'qr-generator',
-    category: 'everyday',
-    description: 'Create customized, high-resolution QR codes for UPI payments, website URLs, Wi-Fi passwords, and contact vCards.',
-    icon: 'QrCode',
-    keywords: ['qr code', 'qr generator', 'upi qr', 'gpay', 'phonepe', 'wifi qr', 'vcard', 'barcode'],
-    status: 'implemented',
-    route: '/tools/qr-generator',
-    summary: 'Instant QR code creator with UPI payment and Wi-Fi presets',
-    targetAudience: ['Shopkeepers', 'Event hosts', 'Freelancers', 'Small merchants'],
-    plannedFeatures: [
-      'UPI payment QR: Preset Payee VPA, name, and optional fixed amount',
-      'URL, plain text, Wi-Fi credentials, and contact vCard generation',
-      'Download in crisp PNG and scalable SVG formats',
-      'High error correction option (Level H) for printed QR durability'
-    ],
-    seoTitle: 'Free QR Code Generator – UPI, URL & Wi-Fi QR Codes | India Smart Tools',
-    seoDescription: 'Generate custom QR codes online for free. Create UPI payment QRs, Wi-Fi access codes, links, and vCards instantly.'
-  },
+  // Everyday Tools (remaining)
   {
     id: 'password-generator',
     name: 'Password Generator',

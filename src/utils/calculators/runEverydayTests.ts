@@ -40,8 +40,8 @@ assert(urlValid.isValid, 'QR: https URL is valid');
 const urlHttp = validateQrUrl('http://example.com');
 assert(urlHttp.isValid, 'QR: http URL is valid');
 
-const urlNoScheme = validateQrUrl('indiasmarttools.in');
-assert(urlNoScheme.isValid && urlNoScheme.sanitizedUrl === 'https://indiasmarttools.in', 'QR: Auto-prepends https://');
+const urlNoScheme = validateQrUrl('smartlytools.vercel.app');
+assert(urlNoScheme.isValid && urlNoScheme.sanitizedUrl === 'https://smartlytools.vercel.app', 'QR: Auto-prepends https://');
 
 const urlJs = validateQrUrl('javascript:alert(1)');
 assert(!urlJs.isValid, 'QR: Blocks javascript: scheme');
@@ -62,7 +62,7 @@ async function testQrAsync() {
   const png = await generateQrPngDataUrl('Hello World', { width: 200 });
   assert(png.startsWith('data:image/png;base64,'), 'QR: Generates valid PNG Data URL');
 
-  const svg = await generateQrSvgString('https://indiasmarttools.in', { width: 250 });
+  const svg = await generateQrSvgString('https://smartlytools.vercel.app', { width: 250 });
   assert(svg.includes('<svg') && svg.includes('</svg>'), 'QR: Generates valid SVG markup');
 }
 

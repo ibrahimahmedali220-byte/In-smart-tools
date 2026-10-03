@@ -37,7 +37,7 @@ export function getBaseUrl(): string {
     }
     return window.location.origin;
   }
-  return 'https://indiasmarttools.in';
+  return 'https://smartlytools.vercel.app';
 }
 
 /**
@@ -182,10 +182,10 @@ export function getBreadcrumbListSchema(
  * Generates Schema.org WebApplication structured data for individual tools
  */
 export function getWebApplicationSchema(
-  name: string,
-  description: string,
-  category: string,
-  route: string,
+  nameOrTool: string | { name: string; description: string; category: string; route: string },
+  description?: string,
+  category?: string,
+  route?: string,
   baseUrl: string = getBaseUrl()
 ): Record<string, unknown> {
   const applicationCategories: Record<string, string> = {
@@ -195,13 +195,30 @@ export function getWebApplicationSchema(
     everyday: 'UtilitiesApplication'
   };
 
+  let name = '';
+  let desc = '';
+  let cat = '';
+  let path = '';
+
+  if (typeof nameOrTool === 'object' && nameOrTool !== null) {
+    name = nameOrTool.name;
+    desc = nameOrTool.description;
+    cat = nameOrTool.category;
+    path = nameOrTool.route;
+  } else {
+    name = nameOrTool || '';
+    desc = description || '';
+    cat = category || '';
+    path = route || '';
+  }
+
   return {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name,
-    url: `${baseUrl}${route}`,
-    description,
-    applicationCategory: applicationCategories[category] || 'UtilitiesApplication',
+    url: `${baseUrl}${path.startsWith('/') ? path : `/${path}`}`,
+    description: desc,
+    applicationCategory: applicationCategories[cat] || 'UtilitiesApplication',
     operatingSystem: 'All',
     browserRequirements: 'Requires JavaScript. Requires HTML5.',
     offers: {

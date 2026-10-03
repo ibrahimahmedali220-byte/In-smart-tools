@@ -38,51 +38,52 @@ export const SalaryCalculatorComponent: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* Financial Year & Regime Selectors */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-4 rounded-xl border border-slate-200/90">
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200/90 dark:border-slate-800 transition-colors">
         <div className="flex items-center gap-2">
-          <label htmlFor="salary-fy-select" className="text-xs font-semibold text-slate-700">Financial Year:</label>
+          <label htmlFor="salary-fy-select" className="text-xs font-semibold text-slate-700 dark:text-slate-300">Financial Year:</label>
           <select
             id="salary-fy-select"
             value={financialYear}
             onChange={e => setFinancialYear(e.target.value as FinancialYear)}
-            className="text-xs font-bold bg-slate-50 border border-slate-300 rounded-md px-2.5 py-1.5 text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+            className="text-xs font-bold bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-slate-900 dark:focus:ring-sky-400"
           >
             <option value="FY 2025-26">FY 2025-26 (AY 2026-27)</option>
             <option value="FY 2026-27">FY 2026-27 (AY 2027-28)</option>
           </select>
         </div>
 
-        <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-lg border border-slate-200">
+        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
           <button
             type="button"
             onClick={() => setRegime('new')}
-            className={`text-xs px-3 py-1 font-semibold rounded-md transition-colors ${
+            className={`text-xs px-3 py-1.5 font-semibold rounded-lg transition-colors min-h-[32px] ${
               regime === 'new'
-                ? 'bg-white text-slate-900 shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-2xs font-bold'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            New Regime (Default)
+            New Tax Regime (Default)
           </button>
           <button
             type="button"
             onClick={() => setRegime('old')}
-            className={`text-xs px-3 py-1 font-semibold rounded-md transition-colors ${
+            className={`text-xs px-3 py-1.5 font-semibold rounded-lg transition-colors min-h-[32px] ${
               regime === 'old'
-                ? 'bg-white text-slate-900 shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-2xs font-bold'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            Old Regime
+            Old Tax Regime
           </button>
         </div>
       </div>
 
+      {/* Main Workspace */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Inputs (7 cols) */}
-        <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 space-y-6">
-          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-            <h2 className="text-base font-bold text-slate-900">CTC & Salary Structure</h2>
+        <div className="lg:col-span-7 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-6 transition-colors">
+          <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+            <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">Annual CTC Structure</h2>
             <Button
               variant="ghost"
               size="sm"
@@ -94,128 +95,132 @@ export const SalaryCalculatorComponent: React.FC = () => {
             </Button>
           </div>
 
-          {/* Annual CTC Input */}
-          <CalculatorInput
-            id="salary-ctc"
-            label="Annual Cost to Company (CTC)"
-            value={annualCtc}
-            onChange={setAnnualCtc}
-            min={100000}
-            max={50000000}
-            step={50000}
-            unit="₹"
-            unitPosition="prefix"
-            presets={[
-              { label: '₹6L', value: 600000 },
-              { label: '₹9L', value: 900000 },
-              { label: '₹15L', value: 1500000 },
-              { label: '₹25L', value: 2500000 }
-            ]}
-            helperText="Total annual package mentioned in your employment contract"
-          />
+          <div className="space-y-6">
+            {/* CTC Input */}
+            <CalculatorInput
+              id="salary-ctc"
+              label="Annual Cost to Company (CTC)"
+              value={annualCtc}
+              onChange={setAnnualCtc}
+              min={100000}
+              max={20000000}
+              step={25000}
+              unit="₹"
+              presets={[
+                { label: '₹4.5 Lakh', value: 450000 },
+                { label: '₹6 Lakh', value: 600000 },
+                { label: '₹9 Lakh', value: 900000 },
+                { label: '₹12 Lakh', value: 1200000 },
+                { label: '₹15 Lakh', value: 1500000 },
+                { label: '₹25 Lakh', value: 2500000 }
+              ]}
+              helperText={`Monthly Gross: ${formatINR(result.monthlyGross)}`}
+            />
 
-          {/* Collapsible Advanced Salary Customization */}
-          <div className="border border-slate-200 rounded-xl overflow-hidden">
-            <button
-              type="button"
-              onClick={() => setShowAdvanced(!showAdvanced)}
-              className="w-full px-4 py-3 bg-slate-50 flex items-center justify-between text-xs font-semibold text-slate-800 hover:bg-slate-100 transition-colors"
-            >
-              <span>Customize Basic Pay & Professional Tax</span>
-              {showAdvanced ? <ChevronUp className="w-4 h-4 text-slate-500" /> : <ChevronDown className="w-4 h-4 text-slate-500" />}
-            </button>
+            {/* Customization Accordion */}
+            <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => setShowAdvanced(!showAdvanced)}
+                className="flex items-center justify-between w-full text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white py-1"
+              >
+                <span>Customize Basic Pay & Professional Tax (Optional)</span>
+                {showAdvanced ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              </button>
 
-            {showAdvanced && (
-              <div className="p-4 bg-white space-y-4 border-t border-slate-200">
-                <CalculatorInput
-                  id="salary-basic"
-                  label="Annual Basic Pay (Defaults to 40% of CTC)"
-                  value={customBasic > 0 ? customBasic : Math.round(annualCtc * 0.40)}
-                  onChange={setCustomBasic}
-                  min={50000}
-                  max={annualCtc}
-                  step={10000}
-                  unit="₹"
-                  unitPosition="prefix"
-                  helperText="EPF (12%) is deducted from this Basic Pay"
-                />
+              {showAdvanced && (
+                <div className="mt-4 p-4 bg-slate-50 dark:bg-slate-800/80 rounded-xl border border-slate-200/80 dark:border-slate-700 space-y-4 animate-in fade-in-0 duration-150">
+                  <CalculatorInput
+                    id="salary-custom-basic"
+                    label="Custom Monthly Basic Salary (Defaults to 40% of Gross)"
+                    value={customBasic}
+                    onChange={setCustomBasic}
+                    min={0}
+                    max={1000000}
+                    step={1000}
+                    unit="₹"
+                    helperText={customBasic > 0 ? `Custom basic set to ${formatINR(customBasic)}/mo` : `Auto: ${formatINR(result.monthlyBasic)}/mo`}
+                  />
 
-                <CalculatorInput
-                  id="salary-pt"
-                  label="Monthly Professional Tax (PT)"
-                  value={customPt}
-                  onChange={setCustomPt}
-                  min={0}
-                  max={500}
-                  step={50}
-                  unit="₹"
-                  unitPosition="prefix"
-                  helperText="Standard across most states is ₹200/month"
-                />
-              </div>
-            )}
-          </div>
-
-          {/* Regime explanation callout */}
-          <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 flex items-start gap-2.5">
-            <Info className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" aria-hidden="true" />
-            <p className="leading-relaxed">
-              {regime === 'new'
-                ? 'Under the New Tax Regime, salaried employees get a flat ₹75,000 standard deduction and Section 87A rebate for taxable income up to ₹7,00,000 (making CTC up to ₹7.75L zero tax).'
-                : 'Under the Old Tax Regime, standard deduction is ₹50,000 with Section 87A rebate up to ₹5,00,000.'}
-            </p>
+                  <CalculatorInput
+                    id="salary-custom-pt"
+                    label="Monthly Professional Tax (Standard ₹200)"
+                    value={customPt}
+                    onChange={setCustomPt}
+                    min={0}
+                    max={2500}
+                    step={50}
+                    unit="₹"
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Right Output Section (5 cols) */}
+        {/* Right In-Hand Salary Summary (5 cols) */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-6 transition-colors">
             <div>
-              <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">
-                Estimated Monthly In-Hand Pay
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                Monthly Take-Home Pay
               </span>
-              <div className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-1 text-emerald-400">
-                {formatINR(result.inHandMonthly)}
+              <div className="text-3xl sm:text-4xl font-extrabold text-emerald-700 dark:text-emerald-400 tracking-tight mt-1">
+                {formatINR(result.monthlyInHand)}
               </div>
-              <p className="text-xs text-slate-400 mt-1">
-                Net take-home credited to your bank account each month
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                Annual In-Hand: {formatINR(result.annualInHand)}
               </p>
             </div>
 
-            {/* Deductions Breakdown */}
-            <div className="border-t border-slate-800 pt-5 space-y-2.5 text-xs sm:text-sm">
-              <div className="flex justify-between items-center text-slate-300">
-                <span>Monthly Gross CTC</span>
-                <span className="font-semibold text-white">{formatINR(result.monthlyGross)}</span>
-              </div>
-              <div className="flex justify-between items-center text-slate-400">
-                <span>Employee PF (12% of Basic)</span>
-                <span className="text-amber-400">-{formatINR(result.deductions.employeePfMonthly)}</span>
-              </div>
-              <div className="flex justify-between items-center text-slate-400">
-                <span>Professional Tax (PT)</span>
-                <span className="text-amber-400">-{formatINR(result.deductions.professionalTaxMonthly)}</span>
-              </div>
-              <div className="flex justify-between items-center text-slate-400">
-                <span>Estimated Income Tax (TDS)</span>
-                <span className="text-amber-400">-{formatINR(result.deductions.incomeTaxMonthly)}</span>
+            {/* Itemized Deductions */}
+            <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2.5 text-xs sm:text-sm">
+              <div className="flex justify-between items-center text-slate-600 dark:text-slate-400">
+                <span>Gross Monthly CTC</span>
+                <span className="font-semibold text-slate-900 dark:text-slate-100">{formatINR(result.monthlyGross)}</span>
               </div>
 
-              <div className="border-t border-slate-800 pt-2.5 flex justify-between items-center font-bold text-sm">
-                <span className="text-white">Annual In-Hand Total</span>
-                <span className="text-emerald-400">{formatINR(result.inHandAnnual)}</span>
+              <div className="flex justify-between items-center text-slate-600 dark:text-slate-400">
+                <span>Employee PF (12% of Basic)</span>
+                <span className="font-mono text-red-600 dark:text-red-400">-{formatINR(result.monthlyEpflDeduction)}</span>
+              </div>
+
+              <div className="flex justify-between items-center text-slate-600 dark:text-slate-400">
+                <span>Professional Tax (PT)</span>
+                <span className="font-mono text-red-600 dark:text-red-400">-{formatINR(result.monthlyPt)}</span>
+              </div>
+
+              <div className="flex justify-between items-center text-slate-600 dark:text-slate-400">
+                <span>Estimated Monthly Income Tax (TDS)</span>
+                <span className="font-mono text-red-600 dark:text-red-400">-{formatINR(result.monthlyTds)}</span>
+              </div>
+
+              <div className="flex justify-between items-center text-slate-900 dark:text-slate-100 font-bold pt-3 border-t border-slate-100 dark:border-slate-800 text-sm sm:text-base">
+                <span>Net In-Hand (Per Month)</span>
+                <span>{formatINR(result.monthlyInHand)}</span>
               </div>
             </div>
-          </div>
 
-          {/* Contextual Legal Disclaimer */}
-          <div className="p-4 bg-slate-100 rounded-xl border border-slate-200 text-xs text-slate-600 flex items-start gap-2.5">
-            <AlertCircle className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" aria-hidden="true" />
-            <p className="leading-relaxed">
-              Salary and tax calculations are estimates based on the information and assumptions entered. Actual salary, deductions and tax liability may vary. Verify important tax information with official sources or a qualified professional.
-            </p>
+            {/* Tax Regime Information Note */}
+            <div className="p-3.5 bg-slate-50 dark:bg-slate-800/80 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-400 space-y-1">
+              <div className="flex items-center gap-1 font-semibold text-slate-900 dark:text-slate-100">
+                <Info className="w-3.5 h-3.5 text-slate-700 dark:text-sky-400" />
+                <span>{regime === 'new' ? 'New Tax Regime (Section 115BAC)' : 'Old Tax Regime'}</span>
+              </div>
+              <p className="text-[11px] leading-relaxed">
+                Standard deduction of ₹75,000 applied. Nil tax applies up to ₹7,00,000 taxable income under Section 87A rebate.
+              </p>
+            </div>
           </div>
         </div>
+      </div>
+
+      {/* Disclaimers */}
+      <div className="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-400 flex items-start gap-2.5">
+        <AlertCircle className="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0 mt-0.5" aria-hidden="true" />
+        <p className="leading-relaxed">
+          <strong>Statutory Note:</strong> This calculator provides mathematical estimates of monthly net take-home pay based on standard Indian corporate pay structures and Central Board of Direct Taxes (CBDT) tax slabs. Actual payroll numbers may vary depending on voluntary NPS contributions (80CCD), medical insurance deductions (80D), and specific corporate gratuity provisions.
+        </p>
       </div>
     </div>
   );

@@ -3,6 +3,9 @@ import { ErrorState } from './ErrorState';
 
 interface Props {
   children: ReactNode;
+  fallback?: ReactNode;
+  onReset?: () => void;
+  inline?: boolean;
 }
 
 interface State {
@@ -26,20 +29,44 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   private handleRetry = () => {
+    if (this.props.onReset) {
+      this.props.onReset();
+    }
     this.setState({ hasError: false });
-    window.location.reload();
   };
 
   public render() {
     if (this.state.hasError) {
+      if (this.props.fallback) {
+        return this.props.fallback;
+      }
+
+      if (this.props.inline) {
+        return (
+          <div className="p-4">
+            <ErrorState
+              title="Tool failed to load"
+              message="We encountered an issue with this tool. Your other pages and tools remain operational."
+              onRetry={this.handleRetry}
+              showHomeButton={false}
+              showToolsButton={true}
+            />
+          </div>
+        );
+      }
+
       return (
-        <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4">
           <div className="max-w-lg w-full">
             <ErrorState
               title="An unexpected error occurred"
-              message="We encountered an issue displaying this page. Your data is safe. Please refresh or return to the homepage."
-              onRetry={this.handleRetry}
+              message="We encountered an issue displaying this page. Your data is safe. Please refresh or return to the directory."
+              onRetry={() => {
+                this.setState({ hasError: false });
+                if (typeof window !== 'undefined') window.location.reload();
+              }}
               showHomeButton={true}
+              showToolsButton={true}
             />
           </div>
         </div>
