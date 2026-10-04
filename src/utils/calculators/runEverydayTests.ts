@@ -8,6 +8,7 @@ import {
   formatWifiPayload,
   formatEmailPayload,
   formatPhonePayload,
+  formatSecretImageViewerUrl,
   generateQrPngDataUrl,
   generateQrSvgString
 } from './qrGenerator';
@@ -40,8 +41,8 @@ assert(urlValid.isValid, 'QR: https URL is valid');
 const urlHttp = validateQrUrl('http://example.com');
 assert(urlHttp.isValid, 'QR: http URL is valid');
 
-const urlNoScheme = validateQrUrl('smartlytools.vercel.app');
-assert(urlNoScheme.isValid && urlNoScheme.sanitizedUrl === 'https://smartlytools.vercel.app', 'QR: Auto-prepends https://');
+const urlNoScheme = validateQrUrl('www.smartlytools.cyou');
+assert(urlNoScheme.isValid && urlNoScheme.sanitizedUrl === 'https://www.smartlytools.cyou', 'QR: Auto-prepends https://');
 
 const urlJs = validateQrUrl('javascript:alert(1)');
 assert(!urlJs.isValid, 'QR: Blocks javascript: scheme');
@@ -58,11 +59,14 @@ assert(emailPayload === 'mailto:user@example.com?subject=Hello%20World&body=Test
 const phonePayload = formatPhonePayload('+91 (987) 654-3210');
 assert(phonePayload === 'tel:+919876543210', 'QR: Cleans telephone number');
 
+const secretViewerUrl = formatSecretImageViewerUrl('Secret Photo', 'sec_123');
+assert(secretViewerUrl.includes('/tools/qr-generator?secretView=sec_123'), 'QR: Formats secret image viewer URL');
+
 async function testQrAsync() {
   const png = await generateQrPngDataUrl('Hello World', { width: 200 });
   assert(png.startsWith('data:image/png;base64,'), 'QR: Generates valid PNG Data URL');
 
-  const svg = await generateQrSvgString('https://smartlytools.vercel.app', { width: 250 });
+  const svg = await generateQrSvgString('https://www.smartlytools.cyou', { width: 250 });
   assert(svg.includes('<svg') && svg.includes('</svg>'), 'QR: Generates valid SVG markup');
 }
 

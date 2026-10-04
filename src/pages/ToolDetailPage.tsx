@@ -11,6 +11,7 @@ import { updateSeoMetadata, getBreadcrumbListSchema, getWebApplicationSchema } f
 import { safeClipboardCopy } from '../utils/security';
 import { NotFoundPage } from './NotFoundPage';
 import { useToast } from '../components/common/Toast';
+import { BackButton } from '../components/common/BackButton';
 
 // Financial Calculator Components (Part 6)
 import { EmiCalculatorComponent } from '../components/calculators/EmiCalculatorComponent';
@@ -39,6 +40,7 @@ import { PasswordGeneratorComponent } from '../components/calculators/everyday/P
 import { UnitConverterComponent } from '../components/calculators/everyday/UnitConverterComponent';
 import { DateDifferenceComponent } from '../components/calculators/everyday/DateDifferenceComponent';
 import { BmiCalculatorComponent } from '../components/calculators/everyday/BmiCalculatorComponent';
+import { PrivateCallingComponent } from '../components/calling/PrivateCallingComponent';
 
 import {
   Layers,
@@ -401,15 +403,18 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
 
   return (
     <PageContainer>
-      {/* Breadcrumb Navigation */}
-      <Breadcrumb
-        items={[
-          { label: 'Tools', href: '/tools' },
-          { label: category ? category.name : tool.category, href: category ? category.route : '/tools' },
-          { label: tool.name, href: tool.route }
-        ]}
-        className="mb-6"
-      />
+      {/* Navigation Top Bar: Back Button & Breadcrumbs */}
+      <div className="flex items-center justify-between gap-4 mb-6">
+        <Breadcrumb
+          items={[
+            { label: 'Tools', href: '/tools' },
+            { label: category ? category.name : tool.category, href: category ? category.route : '/tools' },
+            { label: tool.name, href: tool.route }
+          ]}
+          className="mb-0"
+        />
+        <BackButton fallbackUrl="/tools" label="Back to Tools" />
+      </div>
 
       <div className="space-y-8">
         
@@ -502,6 +507,7 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
           {tool.slug === 'unit-converter' && <UnitConverterComponent />}
           {tool.slug === 'date-difference' && <DateDifferenceComponent />}
           {tool.slug === 'bmi-calculator' && <BmiCalculatorComponent />}
+          {tool.slug === 'private-calling' && <PrivateCallingComponent />}
         </ErrorBoundary>
 
         {/* How It Works & Mathematical Formula (For Implemented Tools) */}
@@ -538,8 +544,8 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
           </div>
         )}
 
-        {/* Architectural Placeholder / Blueprint (Only for tools not yet implemented) */}
-        {!isImplementedTool && (
+        {/* Architectural Placeholder / Blueprint (Only for tools not yet implemented, excluding private-calling) */}
+        {!isImplementedTool && tool.slug !== 'private-calling' && (
           <>
             <div className="p-4 sm:p-5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-start gap-3">

@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Search, X, ArrowRight, CornerDownLeft, Sparkles } from 'lucide-react';
+import { Search, X, ArrowRight, CornerDownLeft, Sparkles, History, Trash2 } from 'lucide-react';
 import { ToolItem } from '../../types/tool';
 import { searchTools, getAllTools } from '../../data/tools';
 import { useRouter } from '../../router/Router';
 import { IconResolver } from './IconResolver';
+import { useUserPreferences } from '../../hooks/useUserPreferences';
 
 export interface SearchToolsProps {
   variant?: 'inline' | 'modal';
@@ -24,9 +25,11 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
 }) => {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isInputFocused, setIsInputFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
   const { navigate } = useRouter();
+  const { recentSearches, recordSearch, removeSearch, clearRecentSearches } = useUserPreferences();
 
   const allTools = useMemo(() => getAllTools(), []);
 
@@ -63,6 +66,8 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
       e.preventDefault();
       if (results[selectedIndex]) {
         handleSelectTool(results[selectedIndex]);
+      } else if (query.trim().length >= 2) {
+        recordSearch(query);
       }
     } else if (e.key === 'Escape') {
       e.preventDefault();
@@ -75,9 +80,18 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
   };
 
   const handleSelectTool = (tool: ToolItem) => {
+    if (query.trim().length >= 2) {
+      recordSearch(query.trim());
+    }
     navigate(tool.route);
     setQuery('');
     if (onClose) onClose();
+  };
+
+  const handleRecentSearchClick = (searchTerm: string) => {
+    setQuery(searchTerm);
+    recordSearch(searchTerm);
+    inputRef.current?.focus();
   };
 
   const categoryNames: Record<string, string> = {
@@ -96,6 +110,11 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
           ref={inputRef}
           type="text"
           value={query}
+          onFocus={() => setIsInputFocused(true)}
+          onBlur={() => {
+            // Slight delay so click on recent chips registers before closing
+            setTimeout(() => setIsInputFocused(false), 200);
+          }}
           onChange={e => setQuery(e.target.value.slice(0, 100))}
           onKeyDown={handleKeyDown}
           autoFocus={autoFocus}
@@ -114,7 +133,7 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
               setQuery('');
               inputRef.current?.focus();
             }}
-            className="absolute right-3 p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded min-h-[36px] min-w-[36px] flex items-center justify-center"
+            className="absolute right-3 p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded min-h-[36px] min-w-[36px] flex items-center justify-center cursor-pointer"
             aria-label="Clear search input"
           >
             <X className="w-4 h-4" />
@@ -188,23 +207,83 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
         </div>
       )}
 
-      {/* Suggested quick searches if query is empty and in modal */}
-      {variant === 'modal' && !query.trim() && (
-        <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
-          <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" /> Popular Quick Searches
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {['EMI Calculator', 'SIP Calculator', 'JPG to PDF', 'PDF Compressor', 'CGPA Calculator', 'Age Calculator', 'QR Generator'].map(term => (
-              <button
-                key={term}
-                type="button"
-                onClick={() => setQuery(term)}
-                className="px-2.5 py-1.5 text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg transition-colors min-h-[32px]"
-              >
-                {term}
-              </button>
-            ))}
+      {/* Suggested & Recent Searches if query is empty and in modal or focused */}
+      {(!query.trim() && (variant === 'modal' || isInputFocused)) && (
+        <div className="mt-3 p-3.5 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-lg space-y-3 z-20">
+          {/* User's Recent Searches from Local Storage */}
+          {recentSearches.length > 0 && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
+                  <History className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
+                  <span>Recent Searches</span>
+                </span>
+                <button
+                  type="button"
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    clearRecentSearches();
+                  }}
+                  className="text-[11px] text-slate-400 hover:text-red-600 dark:hover:text-red-400 transition-colors flex items-center gap-1 cursor-pointer"
+                >
+                  <Trash2 className="w-3 h-3" /> Clear
+                </button>
+              </div>
+
+              <div className="flex flex-wrap gap-1.5">
+                {recentSearches.map(term => (
+                  <div
+                    key={term}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 rounded-lg transition-colors group cursor-pointer"
+                  >
+                    <button
+                      type="button"
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        handleRecentSearchClick(term);
+                      }}
+                      className="cursor-pointer"
+                    >
+                      {term}
+                    </button>
+                    <button
+                      type="button"
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        removeSearch(term);
+                      }}
+                      className="text-slate-400 hover:text-red-600 dark:hover:text-red-400 transition-colors p-0.5"
+                      title="Remove from history"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Popular Quick Searches */}
+          <div className={recentSearches.length > 0 ? 'pt-2 border-t border-slate-100 dark:border-slate-800' : ''}>
+            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" /> Popular Searches
+            </p>
+            <div className="flex flex-wrap gap-1.5">
+              {['QR Generator', 'JPG to PDF', 'EMI Calculator', 'SIP Calculator', 'PDF Compressor', 'CGPA Calculator', 'Age Calculator'].map(term => (
+                <button
+                  key={term}
+                  type="button"
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    handleRecentSearchClick(term);
+                  }}
+                  className="px-2.5 py-1 text-xs bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer"
+                >
+                  {term}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       )}

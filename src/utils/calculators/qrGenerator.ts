@@ -7,14 +7,15 @@
  * - Email (mailto:)
  * - Phone (tel:)
  * - Wi-Fi (WIFI: standard)
- * - Custom Logo / Center Image Embedding
+ * - Custom Logo / Center Image Embedding (Visible, Ghost Watermark, or Invisible/Stealth Secret Mode)
+ * - Secret Image Scan-to-View Payload & Viewer
  * 
  * Zero server logging, 100% in-browser generation using QRCode and Canvas.
  */
 
 import QRCode from 'qrcode';
 
-export type QrDataType = 'text' | 'url' | 'email' | 'phone' | 'wifi';
+export type QrDataType = 'text' | 'url' | 'email' | 'phone' | 'wifi' | 'secret_image';
 export type QrErrorCorrectionLevel = 'L' | 'M' | 'Q' | 'H';
 
 export interface WifiConfig {
@@ -28,6 +29,12 @@ export interface EmailConfig {
   to: string;
   subject?: string;
   body?: string;
+}
+
+export interface SecretImageConfig {
+  title?: string;
+  message?: string;
+  imageDataUrl: string;
 }
 
 export interface QrOptions {
@@ -117,6 +124,18 @@ export function formatPhonePayload(phone: string): string {
 }
 
 /**
+ * Formats a scan-to-view secret image URL
+ */
+export function formatSecretImageViewerUrl(title: string = 'Secret Image', id: string = ''): string {
+  const baseUrl = typeof window !== 'undefined' && window.location.origin
+    ? window.location.origin
+    : 'https://www.smartlytools.cyou';
+  
+  const cleanId = id || Math.random().toString(36).substring(2, 9);
+  return `${baseUrl}/tools/qr-generator?secretView=${encodeURIComponent(cleanId)}&t=${encodeURIComponent(title)}`;
+}
+
+/**
  * Generates PNG Data URL in-browser
  */
 export async function generateQrPngDataUrl(content: string, options: QrOptions = {}): Promise<string> {
@@ -151,17 +170,21 @@ export async function generateQrSvgString(content: string, options: QrOptions = 
 
 /**
  * Generates QR Code PNG Data URL with an embedded center custom logo / photo
+ * Supports visible badge, ghost watermark, or stealth/invisible mode (where logo is not visibly blocking matrix).
  */
 export async function generateQrWithLogo(
   content: string,
   options: QrOptions = {},
   logoDataUrl?: string,
-  logoSizeRatio: number = 0.22
+  logoSizeRatio: number = 0.22,
+  logoOpacity: number = 1.0,
+  isStealth: boolean = false
 ): Promise<string> {
   const { width = 350, margin = 2 } = options;
 
-  if (typeof document === 'undefined' || !logoDataUrl) {
-    return generateQrPngDataUrl(content, { ...options, width, margin });
+  // If stealth/invisible mode is enabled or logoOpacity is 0, render a pristine standard QR code that scans cleanly
+  if (typeof document === 'undefined' || !logoDataUrl || isStealth || logoOpacity <= 0) {
+    return generateQrPngDataUrl(content, { ...options, width, margin, errorCorrectionLevel: 'H' });
   }
 
   const canvas = document.createElement('canvas');
@@ -210,25 +233,29 @@ export async function generateQrWithLogo(
         const radius = 8;
 
         ctx.save();
-        ctx.fillStyle = '#ffffff';
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
-        ctx.shadowBlur = 8;
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 2;
+        ctx.globalAlpha = Math.max(0.1, Math.min(1.0, logoOpacity));
 
-        // Draw background white badge
-        ctx.beginPath();
-        if (typeof ctx.roundRect === 'function') {
-          ctx.roundRect(bgX, bgY, bgW, bgH, radius);
-        } else {
-          ctx.rect(bgX, bgY, bgW, bgH);
+        if (logoOpacity >= 0.5) {
+          ctx.fillStyle = '#ffffff';
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
+          ctx.shadowBlur = 8;
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 2;
+
+          // Draw background white badge
+          ctx.beginPath();
+          if (typeof ctx.roundRect === 'function') {
+            ctx.roundRect(bgX, bgY, bgW, bgH, radius);
+          } else {
+            ctx.rect(bgX, bgY, bgW, bgH);
+          }
+          ctx.fill();
+
+          ctx.shadowColor = 'transparent';
+          ctx.strokeStyle = '#cbd5e1'; // slate-300
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
         }
-        ctx.fill();
-
-        ctx.shadowColor = 'transparent';
-        ctx.strokeStyle = '#cbd5e1'; // slate-300
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
 
         // Clip and paint image
         ctx.beginPath();

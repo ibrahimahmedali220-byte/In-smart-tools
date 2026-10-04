@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { PageContainer } from '../components/common/PageContainer';
 import { Breadcrumb } from '../components/common/Breadcrumb';
+import { BackButton } from '../components/common/BackButton';
 import { Link } from '../router/Router';
 import { updateSeoMetadata, getBreadcrumbListSchema } from '../utils/seo';
 import { Check, Shield, Zap, HeartHandshake } from 'lucide-react';
@@ -20,7 +21,10 @@ export const AboutPage: React.FC = () => {
 
   return (
     <PageContainer maxWidth="4xl">
-      <Breadcrumb items={[{ label: 'About', href: '/about' }]} className="mb-6" />
+      <div className="flex items-center justify-between gap-4 mb-6">
+        <Breadcrumb items={[{ label: 'About', href: '/about' }]} className="mb-0" />
+        <BackButton fallbackUrl="/" label="Back to Home" />
+      </div>
 
       <div className="space-y-12">
         {/* Header */}

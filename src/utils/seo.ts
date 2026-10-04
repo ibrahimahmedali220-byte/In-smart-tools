@@ -37,7 +37,7 @@ export function getBaseUrl(): string {
     }
     return window.location.origin;
   }
-  return 'https://smartlytools.vercel.app';
+  return 'https://www.smartlytools.cyou';
 }
 
 /**

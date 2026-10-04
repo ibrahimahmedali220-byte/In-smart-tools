@@ -24,6 +24,10 @@ import {
   GraduationCap,
   FileText,
   Sparkles,
+  PhoneCall,
+  PhoneForwarded,
+  Lock,
+  Shield,
   HelpCircle
 } from 'lucide-react';
 
@@ -51,7 +55,11 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   Landmark,
   GraduationCap,
   FileText,
-  Sparkles
+  Sparkles,
+  PhoneCall,
+  PhoneForwarded,
+  Lock,
+  Shield
 };
 
 export interface IconResolverProps {

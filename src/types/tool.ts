@@ -11,6 +11,7 @@ export interface ToolItem {
   icon: string;
   keywords: string[];
   status: ToolStatus;
+  badge?: string;
   route: string;
   summary?: string;
   targetAudience?: string[];

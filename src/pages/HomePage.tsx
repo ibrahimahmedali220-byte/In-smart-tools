@@ -5,13 +5,14 @@ import { CategoryCard } from '../components/common/CategoryCard';
 import { ToolCard } from '../components/common/ToolCard';
 import { PWAInstallButton } from '../components/common/PWAInstallButton';
 import { CATEGORIES, TOOLS } from '../data/tools';
-import { Link } from '../router/Router';
+import { Link, useRouter } from '../router/Router';
 import { updateSeoMetadata, getWebSiteSchema } from '../utils/seo';
-import { ShieldCheck, Zap, Laptop, ArrowRight, Star } from 'lucide-react';
+import { ShieldCheck, Zap, Laptop, ArrowRight, Star, History, Trash2, Clock } from 'lucide-react';
 import { useUserPreferences } from '../hooks/useUserPreferences';
 
 export const HomePage: React.FC = () => {
-  const { favoriteTools, recentTools } = useUserPreferences();
+  const { favoriteTools, recentTools, recentSearches, removeSearch, clearRecentSearches, clearRecentTools } = useUserPreferences();
+  const { navigate } = useRouter();
 
   useEffect(() => {
     updateSeoMetadata({
@@ -26,6 +27,9 @@ export const HomePage: React.FC = () => {
   const featuredTools = ['qr-generator', 'jpg-to-pdf', 'emi-calculator', 'sip-calculator', 'percentage-calculator', 'age-calculator']
     .map(slug => TOOLS.find(t => t.slug === slug))
     .filter(Boolean) as typeof TOOLS;
+
+  // Last 5 accessed tools for quick access
+  const lastFiveRecentTools = recentTools.slice(0, 5);
 
   return (
     <div className="flex flex-col">
@@ -45,12 +49,50 @@ export const HomePage: React.FC = () => {
           <div className="mt-8 sm:mt-10 max-w-2xl mx-auto text-left shadow-sm rounded-2xl">
             <SearchTools
               variant="inline"
-              placeholder="Search by tool name or keyword (e.g. loan, photo, gst, age, qr)..."
+              placeholder="Search by tool name or keyword (e.g. qr, pdf, loan, photo, gst)..."
             />
           </div>
 
+          {/* User's Recent Search History Bar (Local Storage) */}
+          {recentSearches.length > 0 && (
+            <div className="mt-4 max-w-2xl mx-auto flex flex-wrap items-center justify-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 animate-in fade-in duration-150">
+              <span className="text-slate-400 dark:text-slate-500 font-medium flex items-center gap-1">
+                <History className="w-3.5 h-3.5 text-slate-400" /> Recent searches:
+              </span>
+              {recentSearches.map(term => (
+                <div
+                  key={term}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-300 transition-colors shadow-2xs group"
+                >
+                  <Link
+                    to={`/tools?q=${encodeURIComponent(term)}`}
+                    className="font-medium hover:text-slate-950 dark:hover:text-white"
+                  >
+                    {term}
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => removeSearch(term)}
+                    className="text-slate-400 hover:text-red-600 dark:hover:text-red-400 ml-0.5 cursor-pointer"
+                    title={`Remove "${term}" from recent searches`}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={clearRecentSearches}
+                className="text-[11px] text-slate-400 hover:text-red-600 dark:hover:text-red-400 underline ml-1 cursor-pointer"
+                title="Clear all recent searches"
+              >
+                Clear
+              </button>
+            </div>
+          )}
+
           {/* Quick Category Jump Bar */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-600 dark:text-slate-400">
             <span className="text-slate-400 dark:text-slate-500 font-medium">Quick categories:</span>
             {CATEGORIES.map(category => (
               <Link
@@ -71,7 +113,103 @@ export const HomePage: React.FC = () => {
         {/* PWA Install Promo Card (suppresses automatically if installed or unsupported) */}
         <PWAInstallButton variant="card" />
 
-        {/* Section 1: Browse by Category */}
+        {/* Dedicated "Recently Used" Section (Stores last 5 accessed tools in localStorage) */}
+        {lastFiveRecentTools.length > 0 && (
+          <section className="bg-gradient-to-br from-slate-50 to-indigo-50/30 dark:from-slate-900 dark:to-slate-900/90 rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-6 shadow-2xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800 gap-2">
+              <div className="flex items-center gap-2">
+                <Clock className="w-5 h-5 text-sky-600 dark:text-sky-400" />
+                <div>
+                  <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
+                    Recently Used Tools
+                  </h2>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    Your last {lastFiveRecentTools.length} accessed tools stored locally for quick access.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={clearRecentTools}
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 hover:text-red-600 dark:text-slate-400 dark:hover:text-red-400 transition-colors cursor-pointer"
+                  title="Clear recently accessed tools history"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Clear History</span>
+                </button>
+                <Link
+                  to="/tools"
+                  className="text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-colors"
+                >
+                  All Tools →
+                </Link>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+              {lastFiveRecentTools.map(tool => (
+                <ToolCard key={tool.id} tool={tool} isRecent={true} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Section 1: Featured Essential Tools (QR Code Generator & JPG to PDF at Top #1 and #2, above Categories) */}
+        <section>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-2">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
+                Featured Tools
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+                Top utilities including QR Code Generator, JPG to PDF, and financial calculators.
+              </p>
+            </div>
+            <Link
+              to="/tools"
+              className="inline-flex items-center text-xs font-semibold text-slate-800 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white gap-1 transition-colors"
+            >
+              <span>Browse all 20 tools</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {featuredTools.map(tool => (
+              <ToolCard key={tool.id} tool={tool} />
+            ))}
+          </div>
+        </section>
+
+        {/* Favorites Section (if user has favorites) */}
+        {favoriteTools.length > 0 && (
+          <section className="bg-slate-50/80 dark:bg-slate-900/60 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-6">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+              <div className="flex items-center gap-2">
+                <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
+                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 tracking-tight">
+                  Your Starred Favorites
+                </h2>
+              </div>
+              <Link
+                to="/tools"
+                className="text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-colors"
+              >
+                Manage in Directory →
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {favoriteTools.map(tool => (
+                <ToolCard key={tool.id} tool={tool} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Section 2: Browse by Category (Placed below Featured Tools) */}
         <section>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-2">
             <div>
@@ -100,59 +238,6 @@ export const HomePage: React.FC = () => {
                   toolCount: TOOLS.filter(t => t.category === category.id).length
                 }}
               />
-            ))}
-          </div>
-        </section>
-
-        {/* Section 1.5: Quick Access (Shown only if user has favorites or recent tools) */}
-        {(favoriteTools.length > 0 || recentTools.length > 0) && (
-          <section className="bg-slate-50/80 dark:bg-slate-900/60 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-6">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
-              <div className="flex items-center gap-2">
-                <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
-                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 tracking-tight">
-                  Your Quick Access Tools
-                </h2>
-              </div>
-              <Link
-                to="/tools"
-                className="text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-colors"
-              >
-                Manage in Directory →
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {(favoriteTools.length > 0 ? favoriteTools : recentTools).slice(0, 3).map(tool => (
-                <ToolCard key={tool.id} tool={tool} />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Section 2: Featured Essential Tools */}
-        <section>
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-2">
-            <div>
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
-                Featured Tools
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-                Essential calculators, converters, and document utilities.
-              </p>
-            </div>
-            <Link
-              to="/tools"
-              className="inline-flex items-center text-xs font-semibold text-slate-800 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white gap-1 transition-colors"
-            >
-              <span>Browse all 20 tools</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {featuredTools.map(tool => (
-              <ToolCard key={tool.id} tool={tool} />
             ))}
           </div>
         </section>

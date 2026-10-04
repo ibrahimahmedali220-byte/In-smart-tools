@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PageContainer } from '../../components/common/PageContainer';
 import { Breadcrumb } from '../../components/common/Breadcrumb';
+import { BackButton } from '../../components/common/BackButton';
 import { Button } from '../../components/common/Button';
 import { updateSeoMetadata, getBreadcrumbListSchema } from '../../utils/seo';
 import {
@@ -23,7 +24,7 @@ interface LegalDocConfig {
   sections: { title: string; content: string[] }[];
 }
 
-const PRIVACY_CONTACT_EMAIL = import.meta.env.VITE_PRIVACY_EMAIL || 'privacy@smartlytools.vercel.app (Configured Contact Inbox)';
+const PRIVACY_CONTACT_EMAIL = import.meta.env.VITE_PRIVACY_EMAIL || 'privacy@smartlytools.cyou (Configured Contact Inbox)';
 
 const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
   privacy: {
@@ -96,7 +97,7 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
       {
         title: '1. Acceptance of Terms',
         content: [
-          'By accessing and using India Smart Tools (smartlytools.vercel.app), you agree to be bound by these Terms of Service. If you do not agree with these terms, you should discontinue using the website.'
+          'By accessing and using India Smart Tools (smartlytools.cyou), you agree to be bound by these Terms of Service. If you do not agree with these terms, you should discontinue using the website.'
         ]
       },
       {
@@ -229,13 +230,16 @@ export const LegalPage: React.FC<{ type: LegalDocType }> = ({ type }) => {
 
   return (
     <PageContainer maxWidth="4xl">
-      <Breadcrumb
-        items={[
-          { label: 'Legal', href: '/privacy-policy' },
-          { label: doc.title, href: `/${doc.slug}` }
-        ]}
-        className="mb-6"
-      />
+      <div className="flex items-center justify-between gap-4 mb-6">
+        <Breadcrumb
+          items={[
+            { label: 'Legal', href: '/privacy-policy' },
+            { label: doc.title, href: `/${doc.slug}` }
+          ]}
+          className="mb-0"
+        />
+        <BackButton fallbackUrl="/" label="Back to Home" />
+      </div>
 
       <div className="space-y-8">
         

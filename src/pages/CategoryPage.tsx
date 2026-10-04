@@ -8,6 +8,7 @@ import { ToolCategory } from '../types/tool';
 import { Link } from '../router/Router';
 import { updateSeoMetadata, getBreadcrumbListSchema } from '../utils/seo';
 import { NotFoundPage } from './NotFoundPage';
+import { BackButton } from '../components/common/BackButton';
 import { Search, X } from 'lucide-react';
 
 export interface CategoryPageProps {
@@ -49,14 +50,17 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId }) => {
 
   return (
     <PageContainer>
-      {/* Breadcrumb */}
-      <Breadcrumb
-        items={[
-          { label: 'Tools', href: '/tools' },
-          { label: category.name, href: category.route }
-        ]}
-        className="mb-6"
-      />
+      {/* Navigation Top Bar: Back Button & Breadcrumbs */}
+      <div className="flex items-center justify-between gap-4 mb-6">
+        <Breadcrumb
+          items={[
+            { label: 'Tools', href: '/tools' },
+            { label: category.name, href: category.route }
+          ]}
+          className="mb-0"
+        />
+        <BackButton fallbackUrl="/categories" label="Back to Categories" />
+      </div>
 
       {/* Category Hero / Header */}
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 md:p-10 mb-8 shadow-sm transition-colors">

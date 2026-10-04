@@ -6,7 +6,11 @@ import {
   toggleFavoriteTool,
   getRecentTools,
   recordToolVisit,
-  clearRecentTools
+  clearRecentTools,
+  getRecentSearches,
+  recordSearchQuery,
+  removeRecentSearch,
+  clearRecentSearches
 } from '../utils/storage/preferences';
 import { ToolItem } from '../types/tool';
 
@@ -14,11 +18,13 @@ export function useUserPreferences() {
   const [favoriteIds, setFavoriteIds] = useState<string[]>(() => getFavoriteToolIds());
   const [favoriteTools, setFavoriteTools] = useState<ToolItem[]>(() => getFavoriteTools());
   const [recentTools, setRecentTools] = useState<ToolItem[]>(() => getRecentTools());
+  const [recentSearches, setRecentSearches] = useState<string[]>(() => getRecentSearches());
 
   const syncState = useCallback(() => {
     setFavoriteIds(getFavoriteToolIds());
     setFavoriteTools(getFavoriteTools());
     setRecentTools(getRecentTools());
+    setRecentSearches(getRecentSearches());
   }, []);
 
   useEffect(() => {
@@ -29,7 +35,11 @@ export function useUserPreferences() {
 
     // Listen for storage events from other tabs
     const handleStorage = (e: StorageEvent) => {
-      if (e.key === 'ist_favorites' || e.key === 'ist_recent_tools') {
+      if (
+        e.key === 'ist_favorites' ||
+        e.key === 'ist_recent_tools' ||
+        e.key === 'ist_recent_searches'
+      ) {
         syncState();
       }
     };
@@ -61,13 +71,29 @@ export function useUserPreferences() {
     clearRecentTools();
   }, []);
 
+  const recordSearch = useCallback((query: string) => {
+    recordSearchQuery(query);
+  }, []);
+
+  const removeSearch = useCallback((query: string) => {
+    removeRecentSearch(query);
+  }, []);
+
+  const clearSearches = useCallback(() => {
+    clearRecentSearches();
+  }, []);
+
   return {
     favoriteIds,
     favoriteTools,
     recentTools,
+    recentSearches,
     isFavorite: isFav,
     toggleFavorite: toggleFav,
     recordToolVisit: recordVisit,
-    clearRecentTools: clearRecent
+    clearRecentTools: clearRecent,
+    recordSearch,
+    removeSearch,
+    clearRecentSearches: clearSearches
   };
 }

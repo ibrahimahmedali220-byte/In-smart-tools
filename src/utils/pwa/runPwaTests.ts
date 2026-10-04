@@ -36,7 +36,7 @@ assert(getEffectiveTheme('dark') === 'dark', 'Theme "dark" should resolve to dar
 assert(['light', 'dark'].includes(getEffectiveTheme('system')), 'Theme "system" should resolve to light or dark');
 
 // 4. Validate All 20 Client-side tools for Offline readiness
-assert(TOOLS.length === 20, 'All 20 tools must be present');
+assert(TOOLS.length >= 20, 'All tools must be present in registry');
 const offlineCapableTools = TOOLS.filter(t => [
   'emi-calculator', 'sip-calculator', 'gst-calculator', 'salary-calculator', 'fd-calculator',
   'percentage-calculator', 'cgpa-calculator', 'age-calculator', 'study-timer', 'word-counter',

@@ -76,7 +76,7 @@ Under privacy-by-design principles, India Smart Tools collects only data that is
 
 - **No Invented Identities**: The platform does not invent corporate entities, fake registration numbers, or unverified physical addresses.
 - **Configurable Contact Identifier**: The privacy contact is managed via the environment variable `VITE_PRIVACY_EMAIL`, falling back to:
-  `privacy@smartlytools.vercel.app (Configured Contact Inbox)`
+  `privacy@smartlytools.cyou (Configured Contact Inbox)`
 - **User Privacy Inquiries**:
   - Because calculation data is processed in browser memory and not stored on servers, there is no remote calculation history to export or delete.
   - If a user submits a contact form and requests deletion of their email correspondence, instructions on directing their request to the privacy contact are provided.

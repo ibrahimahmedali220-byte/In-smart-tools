@@ -147,7 +147,7 @@ export const JpgToPdfComponent: React.FC = () => {
     a.click();
     document.body.removeChild(a);
 
-    const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(`I have created a PDF: ${generatedPdf.filename} using Smart Tools (https://smartlytools.vercel.app/tools/jpg-to-pdf)`)}`;
+    const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(`I have created a PDF: ${generatedPdf.filename} using Smart Tools (https://www.smartlytools.cyou/tools/jpg-to-pdf)`)}`;
     window.open(waUrl, '_blank', 'noopener,noreferrer');
     showToast('PDF downloaded! Opening WhatsApp to send...', 'info');
   };
@@ -183,6 +183,17 @@ export const JpgToPdfComponent: React.FC = () => {
 
   return (
     <div className="space-y-8">
+      {/* 100% Client-Side Privacy Shield Reassurance */}
+      <div className="p-3.5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/80 rounded-2xl flex items-center justify-between gap-3 text-xs text-emerald-800 dark:text-emerald-300">
+        <div className="flex items-center gap-2 font-medium">
+          <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+          <span><strong>100% On-Device Privacy:</strong> Images are compiled into PDF entirely in your browser using WebAssembly. No files are uploaded to any server.</span>
+        </div>
+        <span className="shrink-0 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-200/70 dark:bg-emerald-900/60 text-emerald-900 dark:text-emerald-200">
+          Client-First
+        </span>
+      </div>
+
       {/* Upload Zone */}
       <FileUploadZone
         accept="image/jpeg,image/png,image/webp"

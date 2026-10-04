@@ -78,7 +78,7 @@ The following routes are explicitly marked with `<meta name="robots" content="no
 
 - **Implementation**: Managed by `updateSeoMetadata()` in `src/utils/seo.ts`.
 - **Query Stripping**: Any search query (`?q=...`), pagination parameters, or tracking tags (`?utm_source=...`) are stripped from `<link rel="canonical">` and `og:url` to avoid creating thousands of duplicate indexed variants.
-- **Protocol & Domain**: Uses production domain resolution via `VITE_SITE_URL` environment variable, falling back safely to `window.location.origin` or `https://smartlytools.vercel.app`.
+- **Protocol & Domain**: Uses production domain resolution via `VITE_SITE_URL` environment variable, falling back safely to `window.location.origin` or `https://www.smartlytools.cyou`.
 - **URL Sanitization**: Validates URLs with `isSafeUrl()` before injecting into DOM to prevent header injection.
 
 ---
@@ -109,7 +109,7 @@ Implemented dynamically via `<script id="seo-structured-data" type="application/
 3. **`robots.txt` (`/public/robots.txt`)**:
    - Grants full crawl permission to legitimate search engine bots across all public routes.
    - Restricts internal build artifacts and API endpoints.
-   - References `https://smartlytools.vercel.app/sitemap.xml`.
+   - References `https://www.smartlytools.cyou/sitemap.xml`.
 4. **`sitemap.xml` (`/public/sitemap.xml`)**:
    - Standard XML sitemap with all 35 canonical URLs, priority weighting (1.0 for home, 0.8 for tools, 0.5 for company), and update frequencies.
 5. **`llms.txt` (`/public/llms.txt`)**:
@@ -132,9 +132,9 @@ Implemented dynamically via `<script id="seo-structured-data" type="application/
 
 When deploying to the live production domain:
 1. **Custom Domain Variable**:
-   - Configure `VITE_SITE_URL="https://smartlytools.vercel.app"` in production environment settings.
+   - Configure `VITE_SITE_URL="https://www.smartlytools.cyou"` in production environment settings.
 2. **Sitemap and Robots Domain Replacement**:
-   - Production domain is configured as `https://smartlytools.vercel.app/` in `/public/sitemap.xml` and `/public/robots.txt`.
+   - Production domain is configured as `https://www.smartlytools.cyou/` in `/public/sitemap.xml` and `/public/robots.txt`.
 3. **Google Search Console**:
    - Submit `https://yourdomain.com/sitemap.xml` to Google Search Console for accelerated discovery.
 4. **Bing Webmaster Tools**:

@@ -468,6 +468,28 @@ export const TOOLS: ToolItem[] = [
     ],
     seoTitle: 'BMI Calculator (WHO & Asian-Indian Cutoffs) | India Smart Tools',
     seoDescription: 'Calculate your Body Mass Index (BMI) with Asian-Indian adjusted cutoffs. Check healthy weight range and health categories.'
+  },
+  {
+    id: 'private-calling',
+    name: 'Private Calling',
+    slug: 'private-calling',
+    category: 'everyday',
+    description: 'Talk without sharing your personal phone number.',
+    badge: 'COMING SOON',
+    icon: 'PhoneCall',
+    keywords: ['private calling', 'masked call', 'anonymous call', 'hide number', 'privacy call', 'virtual number', 'proxy call', 'secure call'],
+    status: 'in_development',
+    route: '/tools/private-calling',
+    summary: 'Secure masked-calling system using authorized calling infrastructure',
+    targetAudience: ['Privacy-conscious callers', 'Online marketplace buyers & sellers', 'Freelancers & gig workers', 'Delivery coordinators'],
+    plannedFeatures: [
+      'Encrypted voice session routing through licensed telecom proxies',
+      'Secure SMS OTP number verification before call session initiation',
+      'Dynamic proxy allocation preventing direct phone number disclosure',
+      'Anti-abuse rate limiting, spam prevention, and scam reporting controls'
+    ],
+    seoTitle: 'Private Calling — Smartly Tools | Coming Soon',
+    seoDescription: 'Private Calling by Smartly Tools is a planned privacy-focused calling feature designed to help users communicate without unnecessarily exposing their personal phone numbers.'
   }
 ];
 

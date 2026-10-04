@@ -4,9 +4,11 @@ import { formatINR } from '../../utils/formatters/currency';
 import { CalculatorInput } from './CalculatorInput';
 import { DistributionBar } from './DistributionBar';
 import { Button } from '../common/Button';
-import { RotateCcw, Table, Layers } from 'lucide-react';
+import { RotateCcw, Table, Layers, Printer, Download } from 'lucide-react';
+import { useToast } from '../common/Toast';
 
 export const EmiCalculatorComponent: React.FC = () => {
+  const { showToast } = useToast();
   const [principal, setPrincipal] = useState<number>(2500000); // ₹25 Lakhs default
   const [rate, setRate] = useState<number>(8.5); // 8.5% default home loan rate
   const [tenure, setTenure] = useState<number>(20); // 20 years default
@@ -21,6 +23,14 @@ export const EmiCalculatorComponent: React.FC = () => {
       tenureUnit
     });
   }, [principal, rate, tenure, tenureUnit]);
+
+  const handlePrintStatement = () => {
+    setShowAmortization(true);
+    setTimeout(() => {
+      window.print();
+      showToast('Opening print/PDF statement window...', 'info');
+    }, 150);
+  };
 
   const handleReset = () => {
     setPrincipal(2500000);
@@ -211,8 +221,8 @@ export const EmiCalculatorComponent: React.FC = () => {
               />
             </div>
 
-            {/* Toggle Amortization View */}
-            <div className="pt-2">
+            {/* Toggle Amortization View & Export PDF */}
+            <div className="pt-2 space-y-2">
               <Button
                 variant={showAmortization ? 'secondary' : 'outline'}
                 size="sm"
@@ -221,6 +231,16 @@ export const EmiCalculatorComponent: React.FC = () => {
                 icon={<Table className="w-4 h-4" />}
               >
                 {showAmortization ? 'Hide Amortization Schedule' : 'View Yearly Amortization Schedule'}
+              </Button>
+
+              <Button
+                variant="outline"
+                size="sm"
+                fullWidth
+                onClick={handlePrintStatement}
+                icon={<Printer className="w-4 h-4" />}
+              >
+                Export PDF / Printable Statement
               </Button>
             </div>
           </div>

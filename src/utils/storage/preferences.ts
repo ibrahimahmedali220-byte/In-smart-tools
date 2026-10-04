@@ -1,10 +1,10 @@
 /**
  * User Preferences & Client Storage Management
  * 
- * Manages Favorite Tools and Recently Used Tools in browser localStorage.
+ * Manages Favorite Tools, Recently Used Tools, and Recent Tool Searches in browser localStorage.
  * 
  * Strict Privacy & Security Standards:
- * - Only stores validated tool IDs and timestamps.
+ * - Only stores validated tool IDs, search query strings, and timestamps.
  * - Never stores calculation inputs, financial numbers, passwords, or personal documents.
  * - Validates all data retrieved from localStorage against active registry before use.
  * - Graceful in-memory fallback if localStorage is disabled or throws SecurityError.
@@ -15,7 +15,9 @@ import { ToolItem } from '../../types/tool';
 
 const FAVORITES_KEY = 'ist_favorites';
 const RECENT_TOOLS_KEY = 'ist_recent_tools';
+const RECENT_SEARCHES_KEY = 'ist_recent_searches';
 const MAX_RECENT_TOOLS = 8;
+const MAX_RECENT_SEARCHES = 6;
 
 export interface RecentToolEntry {
   toolId: string;
@@ -25,6 +27,7 @@ export interface RecentToolEntry {
 // In-memory fallback if localStorage is blocked or unavailable
 let memoryFavorites: string[] = [];
 let memoryRecentTools: RecentToolEntry[] = [];
+let memoryRecentSearches: string[] = [];
 
 function isLocalStorageAvailable(): boolean {
   try {
@@ -190,6 +193,82 @@ export function clearRecentTools(): void {
     }
   } else {
     memoryRecentTools = [];
+  }
+
+  notifyPreferencesChanged();
+}
+
+/**
+ * 3. RECENT SEARCHES API
+ */
+
+export function getRecentSearches(): string[] {
+  if (!HAS_STORAGE) return [...memoryRecentSearches];
+
+  try {
+    const raw = window.localStorage.getItem(RECENT_SEARCHES_KEY);
+    if (!raw) return [];
+
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+
+    // Filter strictly to non-empty strings
+    const validSearches = parsed
+      .filter((item): item is string => typeof item === 'string' && item.trim().length > 0)
+      .map(item => item.trim().slice(0, 60));
+
+    return Array.from(new Set(validSearches)).slice(0, MAX_RECENT_SEARCHES);
+  } catch {
+    return [];
+  }
+}
+
+export function recordSearchQuery(rawQuery: string): void {
+  const query = rawQuery.trim().slice(0, 60);
+  if (!query || query.length < 2) return;
+
+  const current = getRecentSearches().filter(q => q.toLowerCase() !== query.toLowerCase());
+  const updated = [query, ...current].slice(0, MAX_RECENT_SEARCHES);
+
+  if (HAS_STORAGE) {
+    try {
+      window.localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated));
+    } catch {
+      memoryRecentSearches = updated;
+    }
+  } else {
+    memoryRecentSearches = updated;
+  }
+
+  notifyPreferencesChanged();
+}
+
+export function removeRecentSearch(queryToRemove: string): void {
+  const current = getRecentSearches();
+  const updated = current.filter(q => q.toLowerCase() !== queryToRemove.trim().toLowerCase());
+
+  if (HAS_STORAGE) {
+    try {
+      window.localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated));
+    } catch {
+      memoryRecentSearches = updated;
+    }
+  } else {
+    memoryRecentSearches = updated;
+  }
+
+  notifyPreferencesChanged();
+}
+
+export function clearRecentSearches(): void {
+  if (HAS_STORAGE) {
+    try {
+      window.localStorage.removeItem(RECENT_SEARCHES_KEY);
+    } catch {
+      memoryRecentSearches = [];
+    }
+  } else {
+    memoryRecentSearches = [];
   }
 
   notifyPreferencesChanged();

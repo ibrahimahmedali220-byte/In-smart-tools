@@ -4,7 +4,7 @@
 ## About
 India Smart Tools is an Indian all-in-one online utility platform providing fast, free, and privacy-first digital tools. Built specifically for students, job applicants, creators, small business owners, and everyday households across India.
 
-- **Primary URL**: https://smartlytools.vercel.app
+- **Primary URL**: https://www.smartlytools.cyou
 - **Platform Type**: Client-side Web Application (Privacy-first, zero cloud retention of user documents)
 - **Target Audience**: Indian students, job seekers, creators, small business owners, professionals
 
@@ -16,6 +16,7 @@ India Smart Tools is an Indian all-in-one online utility platform providing fast
 - **Unit Converter** (/tools/unit-converter): Standard metric conversions plus traditional Indian land units (Bigha, Guntha, Gaj, Ground, Marla).
 - **Date Difference** (/tools/date-difference): Calculates calendar day and working business day duration between dates.
 - **BMI Calculator** (/tools/bmi-calculator): Body Mass Index calculated with WHO and Asian-Indian adjusted health cutoffs.
+- **Private Calling** (/tools/private-calling): Masked, privacy-first calling system under development using authorized telecom infrastructure.
 
 ### 2. Document Tools (/tools/documents)
 - **JPG to PDF** (/tools/jpg-to-pdf): In-browser photo to PDF document compiler with direct WhatsApp and social sharing.
@@ -39,8 +40,8 @@ India Smart Tools is an Indian all-in-one online utility platform providing fast
 - **Word Counter** (/tools/word-counter): Character, word, sentence, and paragraph counter with reading time and SOP length checks.
 
 ## Contact & Support
-- **General Inquiries**: https://smartlytools.vercel.app/contact
-- **Bug Reporting**: https://smartlytools.vercel.app/support/report-problem
-- **Suggest a Tool**: https://smartlytools.vercel.app/support/suggest-tool
-- **Privacy Policy**: https://smartlytools.vercel.app/privacy-policy
-- **Terms of Service**: https://smartlytools.vercel.app/terms
+- **General Inquiries**: https://www.smartlytools.cyou/contact
+- **Bug Reporting**: https://www.smartlytools.cyou/support/report-problem
+- **Suggest a Tool**: https://www.smartlytools.cyou/support/suggest-tool
+- **Privacy Policy**: https://www.smartlytools.cyou/privacy-policy
+- **Terms of Service**: https://www.smartlytools.cyou/terms

@@ -15,6 +15,8 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, className = '', isRece
   const { isFavorite, toggleFavorite } = useUserPreferences();
   const isFav = isFavorite(tool.id);
 
+  const isComingSoon = Boolean(tool.badge) || tool.status === 'in_development' || tool.status === 'planned';
+
   const categoryNames: Record<string, string> = {
     finance: 'Finance',
     student: 'Student',
@@ -44,7 +46,13 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, className = '', isRece
             <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium">
               <span>{categoryNames[tool.category] || tool.category}</span>
               <span aria-hidden="true" className="text-slate-300 dark:text-slate-700">·</span>
-              <span className="text-emerald-700 dark:text-emerald-400 font-medium">Ready</span>
+              {isComingSoon ? (
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase bg-sky-100 text-sky-800 dark:bg-sky-950/70 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
+                  {tool.badge || 'COMING SOON'}
+                </span>
+              ) : (
+                <span className="text-emerald-700 dark:text-emerald-400 font-medium">Ready</span>
+              )}
             </div>
 
             {/* Accessible Favorite Star Button */}
@@ -53,7 +61,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, className = '', isRece
               onClick={handleFavoriteClick}
               aria-label={isFav ? `Remove ${tool.name} from favorites` : `Add ${tool.name} to favorites`}
               aria-pressed={isFav}
-              className={`p-1.5 rounded-lg border transition-all min-h-[36px] min-w-[36px] flex items-center justify-center ${
+              className={`p-1.5 rounded-lg border transition-all min-h-[36px] min-w-[36px] flex items-center justify-center cursor-pointer ${
                 isFav
                   ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-700/60 text-amber-500 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900/50'
                   : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-600'
@@ -78,9 +86,9 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, className = '', isRece
 
       {/* Footer subtle hint */}
       <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 font-medium">
-        <span>{isRecent ? 'Recently Used' : '100% In-Browser'}</span>
+        <span>{isComingSoon ? 'Privacy Architecture' : isRecent ? 'Recently Used' : '100% In-Browser'}</span>
         <span className="text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-sky-400 font-medium transition-colors">
-          Open Tool →
+          {isComingSoon ? 'Learn More →' : 'Open Tool →'}
         </span>
       </div>
     </Link>

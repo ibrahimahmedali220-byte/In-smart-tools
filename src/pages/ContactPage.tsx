@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PageContainer } from '../components/common/PageContainer';
 import { Breadcrumb } from '../components/common/Breadcrumb';
+import { BackButton } from '../components/common/BackButton';
 import { Button } from '../components/common/Button';
 import { Input } from '../components/common/Input';
 import { useToast } from '../components/common/Toast';
@@ -9,7 +10,7 @@ import { sanitizeString, isValidEmail, checkRateLimit } from '../utils/security'
 import { Mail, MessageSquare, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { Link } from '../router/Router';
 
-const CONTACT_EMAIL_PLACEHOLDER = import.meta.env.VITE_CONTACT_EMAIL || 'support@smartlytools.vercel.app (Configured Contact Inbox)';
+const CONTACT_EMAIL_PLACEHOLDER = import.meta.env.VITE_CONTACT_EMAIL || 'support@smartlytools.cyou (Configured Contact Inbox)';
 
 export const ContactPage: React.FC = () => {
   const { showToast } = useToast();
@@ -93,7 +94,10 @@ export const ContactPage: React.FC = () => {
 
   return (
     <PageContainer maxWidth="4xl">
-      <Breadcrumb items={[{ label: 'Contact', href: '/contact' }]} className="mb-6" />
+      <div className="flex items-center justify-between gap-4 mb-6">
+        <Breadcrumb items={[{ label: 'Contact', href: '/contact' }]} className="mb-0" />
+        <BackButton fallbackUrl="/" label="Back to Home" />
+      </div>
 
       {/* Header */}
       <div className="max-w-3xl mb-8">

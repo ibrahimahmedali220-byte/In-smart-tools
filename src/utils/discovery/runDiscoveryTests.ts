@@ -19,7 +19,11 @@ import {
   isToolFavorite,
   getRecentToolEntries,
   recordToolVisit,
-  clearRecentTools
+  clearRecentTools,
+  getRecentSearches,
+  recordSearchQuery,
+  removeRecentSearch,
+  clearRecentSearches
 } from '../storage/preferences';
 
 let passed = 0;
@@ -41,8 +45,8 @@ console.log('--- RUNNING TOOL DISCOVERY & UX TEST SUITE ---');
 console.log('\nTesting Centralized Tool Registry Validation:');
 const registryReport = validateToolRegistry(TOOLS);
 assert(registryReport.isValid, 'Registry: Complete registry is valid with 0 errors');
-assert(registryReport.totalTools === 20, 'Registry: Total tools count is exactly 20', registryReport.totalTools, 20);
-assert(registryReport.implementedCount === 20, 'Registry: All 20 tools are marked implemented', registryReport.implementedCount, 20);
+assert(registryReport.totalTools === 21, 'Registry: Total tools count is exactly 21', registryReport.totalTools, 21);
+assert(registryReport.implementedCount === 20, 'Registry: 20 tools marked implemented + 1 coming soon', registryReport.implementedCount, 20);
 assert(registryReport.errors.length === 0, 'Registry: Zero structural errors', registryReport.errors.length, 0);
 
 // Test corrupt tool detection
@@ -90,7 +94,7 @@ assert(messyQuery[0]?.id === 'emi-calculator', 'Search: Whitespace and case-tole
 
 // Empty query returns all tools
 const emptyQuery = searchTools('');
-assert(emptyQuery.length === 20, 'Search: Empty query returns full directory of 20 tools', emptyQuery.length, 20);
+assert(emptyQuery.length === 21, 'Search: Empty query returns full directory of 21 tools', emptyQuery.length, 21);
 
 // No results for gibberish
 const noMatch = searchTools('nonexistentrandomtoolquery999');
@@ -160,7 +164,36 @@ const sampleEntry = cappedRecents[0];
 const keys = Object.keys(sampleEntry);
 assert(keys.length === 2 && keys.includes('toolId') && keys.includes('lastUsed'), 'Recent Privacy: Entry contains strictly { toolId, lastUsed } with zero input or calculation values');
 
-// 6. ROUTE INTEGRITY & DETAIL MAPPING
+// 6. RECENT SEARCHES HISTORY & STORAGE
+console.log('\nTesting Recent Searches History & Local Storage:');
+clearRecentSearches();
+assert(getRecentSearches().length === 0, 'Recent Searches: Cleared history starts at 0');
+
+recordSearchQuery('qr code');
+recordSearchQuery('jpg to pdf');
+recordSearchQuery('emi calculator');
+
+let searches = getRecentSearches();
+assert(searches.length === 3, 'Recent Searches: Added 3 search queries', searches.length, 3);
+assert(searches[0] === 'emi calculator', 'Recent Searches: Most recent search is at index 0');
+
+// Deduplication on re-search
+recordSearchQuery('qr code');
+searches = getRecentSearches();
+assert(searches.length === 3, 'Recent Searches: Re-searching deduplicates and moves to front', searches.length, 3);
+assert(searches[0] === 'qr code', 'Recent Searches: Re-searched query is now at index 0');
+
+// Single removal
+removeRecentSearch('jpg to pdf');
+searches = getRecentSearches();
+assert(searches.length === 2 && !searches.includes('jpg to pdf'), 'Recent Searches: Successfully removes individual search item');
+
+// Ignore empty or 1-char strings
+recordSearchQuery('a');
+recordSearchQuery('   ');
+assert(getRecentSearches().length === 2, 'Recent Searches: Rejects queries shorter than 2 chars');
+
+// 7. ROUTE INTEGRITY & DETAIL MAPPING
 console.log('\nTesting Route & Component Integrity:');
 for (const tool of TOOLS) {
   assert(tool.route === `/tools/${tool.slug}`, `Route: Tool '${tool.id}' has consistent route '${tool.route}'`);

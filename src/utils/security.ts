@@ -56,7 +56,7 @@ export function isSafeUrl(url: unknown): boolean {
 
   // Allow standard http, https, mailto, tel
   try {
-    const parsed = new URL(clean, 'https://smartlytools.vercel.app');
+    const parsed = new URL(clean, 'https://www.smartlytools.cyou');
     return ['http:', 'https:', 'mailto:', 'tel:'].includes(parsed.protocol);
   } catch {
     return false;
