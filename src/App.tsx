@@ -12,6 +12,7 @@ import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { PWAUpdateBanner } from './components/common/PWAUpdateBanner';
 import { OfflineIndicator } from './components/common/OfflineIndicator';
+import { Analytics } from '@vercel/analytics/react';
 
 // Pages
 import { HomePage } from './pages/HomePage';
@@ -111,6 +112,7 @@ const AppContent: React.FC = () => {
       <Footer />
       <PWAUpdateBanner />
       <OfflineIndicator />
+      <Analytics />
     </div>
   );
 };
