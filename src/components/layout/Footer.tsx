@@ -12,10 +12,10 @@ export const Footer: React.FC = () => {
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1 space-y-3">
             <Link to="/" className="text-base font-bold text-slate-900 dark:text-slate-100 tracking-tight">
-              India Smart Tools
+              Smartly Tools
             </Link>
             <p className="text-xs leading-relaxed text-slate-500 dark:text-slate-400 max-w-xs">
-              Simple tools for everyday India. Fast, free, and privacy-conscious online utilities designed for students, job applicants, and professionals.
+              Simple, fast, and free online utilities designed for students, job applicants, creators, and everyday productivity.
             </p>
             <div className="pt-2">
               <ThemeToggle variant="segmented" />
@@ -127,11 +127,11 @@ export const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-slate-200/80 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
           <div className="flex flex-col sm:flex-row items-center gap-3">
-            <p>© 2026 India Smart Tools. All rights reserved.</p>
+            <p>© 2026 Smartly Tools. All rights reserved.</p>
             <PrivacyWiperButton />
           </div>
           <p className="text-[11px] text-slate-400 dark:text-slate-500">
-            Built with modern web standards for high-speed performance across all Indian networks.
+            Built with modern web standards for high-speed performance across all devices.
           </p>
         </div>
       </div>

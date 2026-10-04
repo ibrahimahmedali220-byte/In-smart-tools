@@ -9,8 +9,8 @@ import { Check, Shield, Zap, HeartHandshake } from 'lucide-react';
 export const AboutPage: React.FC = () => {
   useEffect(() => {
     updateSeoMetadata({
-      title: 'About Us – India Smart Tools',
-      description: 'Learn about India Smart Tools: a fast, free, privacy-focused online utility platform created for everyday users across India.',
+      title: 'About Us – Smartly Tools',
+      description: 'Learn about Smartly Tools: a fast, free, privacy-focused online utility platform created for everyday productivity.',
       canonicalPath: '/about',
       jsonLd: getBreadcrumbListSchema([
         { name: 'Home', item: '/' },
@@ -33,26 +33,26 @@ export const AboutPage: React.FC = () => {
             About Our Mission
           </span>
           <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100 tracking-tight mt-1">
-            About India Smart Tools
+            About Smartly Tools
           </h1>
           <p className="mt-3 text-base text-slate-600 dark:text-slate-400 leading-relaxed">
-            India Smart Tools is built on a simple conviction: essential everyday digital calculations, file formatting, and academic tools should be fast, completely free, and respectful of user privacy.
+            Smartly Tools is built on a simple conviction: essential everyday digital calculations, file formatting, QR generation, and academic tools should be fast, completely free, and respectful of user privacy.
           </p>
         </div>
 
         {/* Story & Context */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-8 sm:p-10 space-y-6 text-sm text-slate-600 dark:text-slate-400 leading-relaxed transition-colors">
           <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
-            Why India Smart Tools Was Built
+            Why Smartly Tools Was Built
           </h2>
           <p>
-            Whether an engineering student preparing marks certificates for TCS or Infosys, a job seeker resizing passport photos to strict 20 KB limits for UPSC or SSC portals, or a family planning a home loan EMI, millions of Indians search for everyday utility tools every single day.
+            Whether a student preparing marks certificates, a job seeker resizing passport photos to strict limits for application portals, or a family planning a loan EMI, millions of users search for everyday utility tools every single day.
           </p>
           <p>
-            Unfortunately, most existing utility websites are cluttered with intrusive pop-up ads, deceptive download buttons, slow server redirects, and questionable privacy policies that upload private certificates to unverified cloud servers.
+            Unfortunately, most existing utility websites are cluttered with intrusive pop-up ads, deceptive download buttons, slow server redirects, and questionable privacy policies that upload private files to unverified cloud servers.
           </p>
           <p>
-            India Smart Tools replaces this chaos with a clean, fast, and secure digital utility suite designed specifically for Indian use cases.
+            Smartly Tools replaces this chaos with a clean, fast, and secure digital utility suite that processes calculations and files directly on your device.
           </p>
         </div>
 

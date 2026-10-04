@@ -16,8 +16,8 @@ export const HomePage: React.FC = () => {
 
   useEffect(() => {
     updateSeoMetadata({
-      title: 'India Smart Tools – Simple Tools for Everyday India',
-      description: 'An Indian all-in-one utility platform providing simple, fast and free online tools for students, job seekers, creators and everyday users.',
+      title: 'Smartly Tools – Simple, Fast & Free Online Utilities',
+      description: 'Smartly Tools is a fast, free, and privacy-conscious online utility platform providing QR generator, PDF tools, student calculators, and financial tools.',
       canonicalPath: '/',
       jsonLd: getWebSiteSchema()
     });
@@ -28,8 +28,8 @@ export const HomePage: React.FC = () => {
     .map(slug => TOOLS.find(t => t.slug === slug))
     .filter(Boolean) as typeof TOOLS;
 
-  // Last 5 accessed tools for quick access
-  const lastFiveRecentTools = recentTools.slice(0, 5);
+  // Strictly last 2 accessed tools for quick access
+  const lastTwoRecentTools = recentTools.slice(0, 2);
 
   return (
     <div className="flex flex-col">
@@ -113,8 +113,8 @@ export const HomePage: React.FC = () => {
         {/* PWA Install Promo Card (suppresses automatically if installed or unsupported) */}
         <PWAInstallButton variant="card" />
 
-        {/* Dedicated "Recently Used" Section (Stores last 5 accessed tools in localStorage) */}
-        {lastFiveRecentTools.length > 0 && (
+        {/* Dedicated "Recently Used" Section (Stores last 2 accessed tools in localStorage) */}
+        {lastTwoRecentTools.length > 0 && (
           <section className="bg-gradient-to-br from-slate-50 to-indigo-50/30 dark:from-slate-900 dark:to-slate-900/90 rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-6 shadow-2xs">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800 gap-2">
               <div className="flex items-center gap-2">
@@ -124,7 +124,7 @@ export const HomePage: React.FC = () => {
                     Recently Used Tools
                   </h2>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
-                    Your last {lastFiveRecentTools.length} accessed tools stored locally for quick access.
+                    Your last {lastTwoRecentTools.length} accessed {lastTwoRecentTools.length === 1 ? 'tool' : 'tools'} stored locally for quick access.
                   </p>
                 </div>
               </div>
@@ -148,8 +148,8 @@ export const HomePage: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-              {lastFiveRecentTools.map(tool => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl">
+              {lastTwoRecentTools.map(tool => (
                 <ToolCard key={tool.id} tool={tool} isRecent={true} />
               ))}
             </div>

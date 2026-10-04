@@ -47,7 +47,7 @@ export const Header: React.FC = () => {
                 to="/"
                 className="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100 hover:text-slate-700 dark:hover:text-slate-300 transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-sky-400 rounded"
               >
-                India Smart Tools
+                Smartly Tools
               </Link>
             </div>
 

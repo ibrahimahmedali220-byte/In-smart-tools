@@ -1,6 +1,6 @@
 {
-  "name": "India Smart Tools",
-  "description": "Simple, fast and free online utility platform for students, job seekers, creators and everyday users across India.",
+  "name": "Smartly Tools",
+  "description": "Simple, fast and free online utility platform for students, job seekers, creators and everyday users.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

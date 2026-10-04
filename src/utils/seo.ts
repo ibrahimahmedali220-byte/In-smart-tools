@@ -20,9 +20,9 @@ export interface SeoConfig {
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const DEFAULT_TITLE = 'India Smart Tools – Simple Tools for Everyday India';
-const DEFAULT_DESCRIPTION = 'Simple, fast and free online utility platform for students, job seekers, creators and everyday users across India. Free finance, student, document, and daily utilities.';
-const DEFAULT_SITE_NAME = 'India Smart Tools';
+const DEFAULT_TITLE = 'Smartly Tools – Simple, Fast & Free Online Utilities';
+const DEFAULT_DESCRIPTION = 'Smartly Tools is a fast, free, and privacy-conscious online utility platform providing QR generator, PDF tools, student calculators, and financial tools.';
+const DEFAULT_SITE_NAME = 'Smartly Tools';
 const DEFAULT_OG_IMAGE = '/og-image.svg';
 
 /**
@@ -52,7 +52,11 @@ export function updateSeoMetadata(config: SeoConfig = {}) {
   const cleanPath = rawPath.split('?')[0].split('#')[0] || '/';
   const canonicalUrl = `${baseUrl}${cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`}`;
 
-  const title = config.title ? `${config.title} | India Smart Tools` : DEFAULT_TITLE;
+  const title = config.title
+    ? config.title.includes('Smartly Tools')
+      ? config.title
+      : `${config.title} | Smartly Tools`
+    : DEFAULT_TITLE;
   const description = config.description || DEFAULT_DESCRIPTION;
   const imageUrl = config.image ? (config.image.startsWith('http') ? config.image : `${baseUrl}${config.image}`) : `${baseUrl}${DEFAULT_OG_IMAGE}`;
 
