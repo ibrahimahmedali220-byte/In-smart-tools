@@ -308,7 +308,7 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
         <div className="relative w-full max-w-xl bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 z-10 animate-in fade-in-0 zoom-in-95 duration-150">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-3">
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              India Smart Tools Search
+              Smartly Tools Search
             </span>
             <span className="text-[11px] text-slate-400 dark:text-slate-500">ESC to close</span>
           </div>

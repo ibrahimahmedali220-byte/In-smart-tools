@@ -16,8 +16,8 @@ export const HomePage: React.FC = () => {
 
   useEffect(() => {
     updateSeoMetadata({
-      title: 'Smartly Tools – Simple, Fast & Free Online Utilities',
-      description: 'Smartly Tools is a fast, free, and privacy-conscious online utility platform providing QR generator, PDF tools, student calculators, and financial tools.',
+      title: 'Smartly Tools – Free Online Calculators & Digital Utilities',
+      description: 'Smartly Tools is a fast, free, and privacy-first global web utility platform providing free digital tools: calculators, PDF tools, image compressors, QR codes, and everyday utilities.',
       canonicalPath: '/',
       jsonLd: getWebSiteSchema()
     });
@@ -38,7 +38,7 @@ export const HomePage: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-slate-100 text-balance">
-            Simple tools for everyday India.
+            Simple, fast and free digital tools.
           </h1>
 
           <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
@@ -171,7 +171,7 @@ export const HomePage: React.FC = () => {
               to="/tools"
               className="inline-flex items-center text-xs font-semibold text-slate-800 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white gap-1 transition-colors"
             >
-              <span>Browse all 20 tools</span>
+              <span>Browse all tools</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -249,7 +249,7 @@ export const HomePage: React.FC = () => {
               Designed for Speed, Simplicity & Privacy
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
-              India Smart Tools is engineered to solve everyday calculations and file operations without annoying sign-up walls, sluggish bloat, or data tracking.
+              Smartly Tools is engineered to solve everyday calculations and file operations without annoying sign-up walls, sluggish bloat, or data tracking.
             </p>
           </div>
 

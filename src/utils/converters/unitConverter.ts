@@ -3,7 +3,7 @@
  * 
  * Implements pure mathematical base-unit conversions for linear categories
  * and specialized non-linear formulas for Temperature.
- * Includes traditional Indian land measurement units (Bigha, Guntha, Ground, Marla, Gaj).
+ * Includes regional land measurement units (Bigha, Guntha, Ground, Marla, Gaj).
  */
 
 export type UnitCategory =
@@ -95,7 +95,7 @@ export const UNITS: UnitDefinition[] = [
   { id: 'sq_yard', name: 'Square Yard (Gaj)', symbol: 'sq yd (Gaj)', category: 'area', toBase: v => v * 0.83612736, fromBase: b => b / 0.83612736, description: '1 Gaj = 9 sq ft' },
   { id: 'acre', name: 'Acre', symbol: 'ac', category: 'area', toBase: v => v * 4046.8564224, fromBase: b => b / 4046.8564224 },
   { id: 'hectare', name: 'Hectare', symbol: 'ha', category: 'area', toBase: v => v * 10000, fromBase: b => b / 10000 },
-  { id: 'bigha', name: 'Bigha (Standard North)', symbol: 'Bigha', category: 'area', toBase: v => v * 2500, fromBase: b => b / 2500, description: 'Standard Northern India reference (~26,910 sq ft)' },
+  { id: 'bigha', name: 'Bigha (Standard)', symbol: 'Bigha', category: 'area', toBase: v => v * 2500, fromBase: b => b / 2500, description: 'Standard regional reference (~26,910 sq ft)' },
   { id: 'guntha', name: 'Guntha (MH / KA / GJ)', symbol: 'Guntha', category: 'area', toBase: v => v * 101.17141, fromBase: b => b / 101.17141, description: '1 Guntha = 1,089 sq ft (33 ft × 33 ft)' },
   { id: 'ground', name: 'Ground (Tamil Nadu)', symbol: 'Ground', category: 'area', toBase: v => v * 222.967, fromBase: b => b / 222.967, description: '1 Ground = 2,400 sq ft' },
   { id: 'marla', name: 'Marla (Punjab / Haryana)', symbol: 'Marla', category: 'area', toBase: v => v * 25.29285, fromBase: b => b / 25.29285, description: '1 Marla = ~272.25 sq ft' },

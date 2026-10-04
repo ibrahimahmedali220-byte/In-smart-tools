@@ -62,7 +62,7 @@ export const ImageCompressorComponent: React.FC = () => {
     }
   };
 
-  // Quick preset button for Indian Govt exam requirements
+  // Quick preset button for exam & application portal requirements
   const applyPreset = async (targetKb: number) => {
     if (!file) return;
     // Iteratively adjust quality until size is below target or quality floor is reached

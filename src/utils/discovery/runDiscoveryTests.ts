@@ -45,8 +45,8 @@ console.log('--- RUNNING TOOL DISCOVERY & UX TEST SUITE ---');
 console.log('\nTesting Centralized Tool Registry Validation:');
 const registryReport = validateToolRegistry(TOOLS);
 assert(registryReport.isValid, 'Registry: Complete registry is valid with 0 errors');
-assert(registryReport.totalTools === 21, 'Registry: Total tools count is exactly 21', registryReport.totalTools, 21);
-assert(registryReport.implementedCount === 20, 'Registry: 20 tools marked implemented + 1 coming soon', registryReport.implementedCount, 20);
+assert(registryReport.totalTools === 22, 'Registry: Total tools count is exactly 22', registryReport.totalTools, 22);
+assert(registryReport.implementedCount === 21, 'Registry: 21 tools marked implemented + 1 coming soon', registryReport.implementedCount, 21);
 assert(registryReport.errors.length === 0, 'Registry: Zero structural errors', registryReport.errors.length, 0);
 
 // Test corrupt tool detection
@@ -94,7 +94,7 @@ assert(messyQuery[0]?.id === 'emi-calculator', 'Search: Whitespace and case-tole
 
 // Empty query returns all tools
 const emptyQuery = searchTools('');
-assert(emptyQuery.length === 21, 'Search: Empty query returns full directory of 21 tools', emptyQuery.length, 21);
+assert(emptyQuery.length === 22, 'Search: Empty query returns full directory of 22 tools', emptyQuery.length, 22);
 
 // No results for gibberish
 const noMatch = searchTools('nonexistentrandomtoolquery999');

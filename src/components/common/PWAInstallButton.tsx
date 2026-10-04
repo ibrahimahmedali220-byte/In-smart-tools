@@ -41,7 +41,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({ variant = 'h
           <div className="space-y-1">
             <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2">
               <Download className="w-4 h-4 text-slate-900 dark:text-sky-400" />
-              Install India Smart Tools
+              Install Smartly Tools
             </h3>
             <p className="text-xs text-slate-600 dark:text-slate-400">
               Add to your home screen or desktop for fast, offline-ready access without typing the URL.
@@ -118,7 +118,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({ variant = 'h
         type="button"
         onClick={handleInstall}
         disabled={isInstalling}
-        aria-label="Install India Smart Tools progressive web app"
+        aria-label="Install Smartly Tools progressive web app"
         className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 rounded-lg border border-slate-200/80 dark:border-slate-700/60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-300 min-h-[36px] ${className}`}
       >
         <Download className="w-3.5 h-3.5 text-slate-500 dark:text-sky-400" />

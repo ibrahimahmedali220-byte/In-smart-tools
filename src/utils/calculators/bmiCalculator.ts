@@ -4,7 +4,7 @@
  * Supports Metric (cm, kg) and Imperial (ft/in, lbs) measurement systems.
  * Provides dual classification:
  * 1. Standard International WHO Guidelines
- * 2. Asian-Indian Consensus Guidelines (Overweight at >=23, Obese at >=25)
+ * 2. Asian Regional Consensus Guidelines (Overweight at >=23, Obese at >=25)
  * 
  * Includes healthy weight range computation and non-diagnostic educational disclaimers.
  */
@@ -29,7 +29,7 @@ export interface BmiCalculationResult {
   whoHealthyWeightMinKg: number;
   whoHealthyWeightMaxKg: number;
 
-  // Asian-Indian Adjusted
+  // Asian Consensus Adjusted
   asianCategory: BmiCategoryInfo;
   asianHealthyWeightMinKg: number;
   asianHealthyWeightMaxKg: number;
@@ -71,35 +71,35 @@ function getWhoCategory(bmi: number): BmiCategoryInfo {
 }
 
 /**
- * Asian-Indian Consensus adult BMI classification
- * (Health Ministry of India & WHO SEARO guidelines)
+ * Asian Regional Consensus adult BMI classification
+ * (WHO SEARO & Regional Health guidelines)
  */
-function getAsianIndianCategory(bmi: number): BmiCategoryInfo {
+function getAsianCategory(bmi: number): BmiCategoryInfo {
   if (bmi < 18.5) {
     return {
       category: 'Underweight',
       color: 'text-amber-600',
-      description: 'Below reference threshold for South Asian adults.'
+      description: 'Below reference threshold for Asian adults.'
     };
   }
   if (bmi < 23.0) {
     return {
       category: 'Normal',
       color: 'text-emerald-600',
-      description: 'Optimal metabolic risk range for Indian adults.'
+      description: 'Optimal metabolic risk range for Asian adults.'
     };
   }
   if (bmi < 25.0) {
     return {
       category: 'Overweight',
       color: 'text-amber-600',
-      description: 'Higher cardiovascular/metabolic risk threshold for Indian adults.'
+      description: 'Higher cardiovascular/metabolic risk threshold for Asian adults.'
     };
   }
   return {
     category: 'Obese',
     color: 'text-rose-600',
-    description: 'Elevated cardiovascular and metabolic risk threshold for Indian adults.'
+    description: 'Elevated cardiovascular and metabolic risk threshold for Asian adults.'
   };
 }
 
@@ -131,7 +131,7 @@ export function calculateBmi(heightCm: number, weightKg: number): BmiCalculation
       whoCategory: getWhoCategory(0),
       whoHealthyWeightMinKg: 0,
       whoHealthyWeightMaxKg: 0,
-      asianCategory: getAsianIndianCategory(0),
+      asianCategory: getAsianCategory(0),
       asianHealthyWeightMinKg: 0,
       asianHealthyWeightMaxKg: 0,
       healthyWeightRangeFormatted: '0 - 0 kg'
@@ -149,7 +149,7 @@ export function calculateBmi(heightCm: number, weightKg: number): BmiCalculation
       whoCategory: getWhoCategory(0),
       whoHealthyWeightMinKg: 0,
       whoHealthyWeightMaxKg: 0,
-      asianCategory: getAsianIndianCategory(0),
+      asianCategory: getAsianCategory(0),
       asianHealthyWeightMinKg: 0,
       asianHealthyWeightMaxKg: 0,
       healthyWeightRangeFormatted: '0 - 0 kg'
@@ -166,7 +166,7 @@ export function calculateBmi(heightCm: number, weightKg: number): BmiCalculation
       whoCategory: getWhoCategory(0),
       whoHealthyWeightMinKg: 0,
       whoHealthyWeightMaxKg: 0,
-      asianCategory: getAsianIndianCategory(0),
+      asianCategory: getAsianCategory(0),
       asianHealthyWeightMinKg: 0,
       asianHealthyWeightMaxKg: 0,
       healthyWeightRangeFormatted: '0 - 0 kg'
@@ -183,7 +183,7 @@ export function calculateBmi(heightCm: number, weightKg: number): BmiCalculation
   const whoHealthyWeightMinKg = Math.round(18.5 * heightMSquared * 10) / 10;
   const whoHealthyWeightMaxKg = Math.round(24.9 * heightMSquared * 10) / 10;
 
-  // Asian-Indian Consensus Range (18.5 - 22.9)
+  // Asian Consensus Range (18.5 - 22.9)
   const asianHealthyWeightMinKg = Math.round(18.5 * heightMSquared * 10) / 10;
   const asianHealthyWeightMaxKg = Math.round(22.9 * heightMSquared * 10) / 10;
 
@@ -195,7 +195,7 @@ export function calculateBmi(heightCm: number, weightKg: number): BmiCalculation
     whoCategory: getWhoCategory(bmi),
     whoHealthyWeightMinKg,
     whoHealthyWeightMaxKg,
-    asianCategory: getAsianIndianCategory(bmi),
+    asianCategory: getAsianCategory(bmi),
     asianHealthyWeightMinKg,
     asianHealthyWeightMaxKg,
     healthyWeightRangeFormatted: `${whoHealthyWeightMinKg} kg – ${whoHealthyWeightMaxKg} kg`

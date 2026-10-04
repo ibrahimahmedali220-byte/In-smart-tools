@@ -20,7 +20,7 @@ export interface FdInput {
   tenure: number;
   tenureUnit: FdTenureUnit;
   compoundingFrequency: CompoundingFrequency;
-  isSeniorCitizen?: boolean; // When true, gives +0.50% standard Indian preferential rate
+  isSeniorCitizen?: boolean; // When true, gives +0.50% standard preferential rate
 }
 
 export interface FdResult {
@@ -41,7 +41,7 @@ export interface FdResult {
 
 export const COMPOUNDING_PERIODS: Record<CompoundingFrequency, { name: string; n: number }> = {
   monthly: { name: 'Monthly', n: 12 },
-  quarterly: { name: 'Quarterly (Most Indian Banks)', n: 4 },
+  quarterly: { name: 'Quarterly (Most Commercial Banks)', n: 4 },
   half_yearly: { name: 'Half-Yearly', n: 2 },
   yearly: { name: 'Yearly', n: 1 }
 };
@@ -57,7 +57,7 @@ export function calculateFd(input: FdInput): FdResult {
   const principal = Math.max(0, input.principal || 0);
   let baseRate = Math.max(0, input.annualRate || 0);
   if (input.isSeniorCitizen) {
-    baseRate += 0.50; // Standard Senior Citizen preferential rate in India
+    baseRate += 0.50; // Standard Senior Citizen preferential rate
   }
   const tenure = Math.max(0, input.tenure || 0);
   const freq = input.compoundingFrequency || 'quarterly';

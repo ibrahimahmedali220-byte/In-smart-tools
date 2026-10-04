@@ -53,7 +53,7 @@ async function runTests() {
     const page = doc.addPage(PageSizes.A4);
     assert(page.getWidth() > 0 && page.getHeight() > 0, 'PDF: Successfully initializes A4 page dimensions');
 
-    doc.setTitle('India Smart Tools Test');
+    doc.setTitle('Smartly Tools Test');
     const pdfBytes = await doc.save();
     assert(pdfBytes.length > 0, 'PDF: Compiles valid binary PDF bytes');
 

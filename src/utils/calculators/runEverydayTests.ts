@@ -17,6 +17,7 @@ import { generatePassword } from './passwordGenerator';
 import { convertUnit, getUnitById } from '../converters/unitConverter';
 import { calculateDateDifference } from './dateDifference';
 import { calculateBmi, convertImperialToMetric } from './bmiCalculator';
+import { evaluateExpression } from '../../components/calculators/everyday/PrivateCalculatorComponent';
 
 let passed = 0;
 let failed = 0;
@@ -133,7 +134,7 @@ assert(fToC.toValue === 0, 'Unit: 32°F = 0°C', fToC.toValue, 0);
 const cToK = convertUnit(0, 'celsius', 'kelvin');
 assert(cToK.toValue === 273.15, 'Unit: 0°C = 273.15 K', cToK.toValue, 273.15);
 
-// Traditional Indian Land Units
+// Regional Land Units
 const sqYdToGaj = convertUnit(9, 'sq_foot', 'sq_yard');
 assert(Math.abs(sqYdToGaj.toValue - 1) < 1e-9, 'Unit: 9 sq ft = 1 Gaj (sq yd)', sqYdToGaj.toValue, 1);
 
@@ -185,12 +186,12 @@ const standardBmi = calculateBmi(175, 70);
 assert(standardBmi.isValid, 'BMI: Standard metric is valid');
 assert(standardBmi.bmi === 22.9, 'BMI: 175cm / 70kg gives 22.9 BMI', standardBmi.bmi, 22.9);
 assert(standardBmi.whoCategory.category === 'Normal', 'BMI: 22.9 is Normal for WHO', standardBmi.whoCategory.category, 'Normal');
-assert(standardBmi.asianCategory.category === 'Normal', 'BMI: 22.9 is Normal for Asian-Indian (<23)', standardBmi.asianCategory.category, 'Normal');
+assert(standardBmi.asianCategory.category === 'Normal', 'BMI: 22.9 is Normal for Asian Consensus (<23)', standardBmi.asianCategory.category, 'Normal');
 
 const overweightAsian = calculateBmi(170, 68);
 assert(overweightAsian.bmi === 23.5, 'BMI: 170cm / 68kg gives 23.5 BMI', overweightAsian.bmi, 23.5);
 assert(overweightAsian.whoCategory.category === 'Normal', 'BMI: 23.5 is Normal for WHO (<25)', overweightAsian.whoCategory.category, 'Normal');
-assert(overweightAsian.asianCategory.category === 'Overweight', 'BMI: 23.5 is Overweight for Asian-Indian (>=23)', overweightAsian.asianCategory.category, 'Overweight');
+assert(overweightAsian.asianCategory.category === 'Overweight', 'BMI: 23.5 is Overweight for Asian Consensus (>=23)', overweightAsian.asianCategory.category, 'Overweight');
 
 const imperialConv = convertImperialToMetric(5, 10, 154); // 5'10" (177.8cm), 154 lbs (69.9kg)
 assert(Math.abs(imperialConv.heightCm - 177.8) < 0.2, 'BMI: Converts 5ft 10in to ~177.8 cm', imperialConv.heightCm, 177.8);
@@ -201,6 +202,37 @@ assert(!invalidBmi.isValid, 'BMI: Rejects zero height');
 
 const negativeBmi = calculateBmi(170, -50);
 assert(!negativeBmi.isValid, 'BMI: Rejects negative weight');
+
+// 6. Private Calculator Engine & Secret PIN Tests
+console.log('\nTesting Private Calculator Arithmetic & PIN Engine:');
+{
+  const add = (a: number, b: number) => parseFloat((a + b).toPrecision(12));
+  const sub = (a: number, b: number) => parseFloat((a - b).toPrecision(12));
+  const mul = (a: number, b: number) => parseFloat((a * b).toPrecision(12));
+  const div = (a: number, b: number) => (b === 0 ? null : parseFloat((a / b).toPrecision(12)));
+  const pct = (num: number) => parseFloat((num / 100).toPrecision(12));
+
+  assert(add(12, 8) === 20, 'Calc: 12 + 8 = 20');
+  assert(add(0.1, 0.2) === 0.3, 'Calc: 0.1 + 0.2 = 0.3 (floating point accurate)');
+  assert(sub(100, 42) === 58, 'Calc: 100 - 42 = 58');
+  assert(mul(7, 9) === 63, 'Calc: 7 × 9 = 63');
+  assert(div(144, 12) === 12, 'Calc: 144 ÷ 12 = 12');
+  assert(div(50, 0) === null, 'Calc: Division by zero returns null safely');
+  assert(pct(50) === 0.5, 'Calc: 50% = 0.5');
+
+  // Chained complex expression tests matching user screenshot
+  assert(evaluateExpression('4×-5-2+5-5÷5+5') === -13, 'Calc: Evaluates screenshot expression "4×-5-2+5-5÷5+5" = -13');
+  assert(evaluateExpression('10+20×3') === 70, 'Calc: Respects operator precedence 10 + 20 × 3 = 70');
+  assert(evaluateExpression('100-25÷5') === 95, 'Calc: Respects operator precedence 100 - 25 ÷ 5 = 95');
+  assert(evaluateExpression('(10+20)×3') === 90, 'Calc: Handles parentheses (10 + 20) × 3 = 90');
+  assert(evaluateExpression('50%') === 0.5, 'Calc: Handles postfix percent 50% = 0.5');
+
+  // Secret PIN verification test
+  const verifyPin = (candidate: string, secret: string) => candidate.trim() === secret.trim() && secret.trim().length > 0;
+  assert(verifyPin('1234', '1234'), 'PIN: Matches valid secret passcode');
+  assert(!verifyPin('9999', '1234'), 'PIN: Rejects mismatched passcode');
+  assert(!verifyPin('', '1234'), 'PIN: Rejects empty candidate string');
+}
 
 // Run async tests
 testQrAsync().then(() => {

@@ -18,8 +18,8 @@
 
     <!-- Text Group -->
     <text x="0" y="140" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="600" fill="#94a3b8" letter-spacing="2">ALL-IN-ONE ONLINE UTILITY PLATFORM</text>
-    <text x="0" y="210" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700" fill="#ffffff" letter-spacing="-1">India Smart Tools</text>
-    <text x="0" y="275" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="400" fill="#cbd5e1">Simple tools for everyday India.</text>
+    <text x="0" y="210" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700" fill="#ffffff" letter-spacing="-1">Smartly Tools</text>
+    <text x="0" y="275" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="400" fill="#cbd5e1">Simple, fast and free online utilities.</text>
 
     <!-- Category Tags -->
     <g transform="translate(0, 330)">

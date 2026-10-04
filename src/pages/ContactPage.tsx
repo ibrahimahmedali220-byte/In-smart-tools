@@ -7,10 +7,10 @@ import { Input } from '../components/common/Input';
 import { useToast } from '../components/common/Toast';
 import { updateSeoMetadata, getBreadcrumbListSchema } from '../utils/seo';
 import { sanitizeString, isValidEmail, checkRateLimit } from '../utils/security';
-import { Mail, MessageSquare, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Mail, MessageSquare, CheckCircle2, ShieldCheck, ExternalLink, Send } from 'lucide-react';
 import { Link } from '../router/Router';
 
-const CONTACT_EMAIL_PLACEHOLDER = import.meta.env.VITE_CONTACT_EMAIL || 'support@smartlytools.cyou (Configured Contact Inbox)';
+export const OFFICIAL_CONTACT_EMAIL = 'kmnurbusiness@gmail.com';
 
 export const ContactPage: React.FC = () => {
   const { showToast } = useToast();
@@ -27,8 +27,8 @@ export const ContactPage: React.FC = () => {
 
   useEffect(() => {
     updateSeoMetadata({
-      title: 'Contact Us – India Smart Tools',
-      description: 'Get in touch with the India Smart Tools team for inquiries, bug reports, and data privacy questions.',
+      title: 'Contact Us – Smartly Tools',
+      description: 'Get in touch with the Smartly Tools team for inquiries, bug reports, and data privacy questions.',
       canonicalPath: '/contact',
       jsonLd: getBreadcrumbListSchema([
         { name: 'Home', item: '/' },
@@ -67,6 +67,12 @@ export const ContactPage: React.FC = () => {
     return Object.keys(errs).length === 0;
   };
 
+  const getMailtoUrl = () => {
+    const subject = encodeURIComponent(formData.subject.trim() || 'Inquiry from Smartly Tools');
+    const bodyText = `Name: ${formData.name || 'Not specified'}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`;
+    return `mailto:${OFFICIAL_CONTACT_EMAIL}?subject=${subject}&body=${encodeURIComponent(bodyText)}`;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -84,12 +90,21 @@ export const ContactPage: React.FC = () => {
 
     setIsSubmitting(true);
 
-    // Simulate safe local submission
+    // Prepare mailto link to route directly to user's specified inbox: kmnurbusiness@gmail.com
+    const mailtoUrl = getMailtoUrl();
+
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-      showToast('Your message has been submitted successfully.', 'success');
-    }, 600);
+      showToast(`Message prepared for ${OFFICIAL_CONTACT_EMAIL}.`, 'success');
+
+      // Attempt to open email client
+      try {
+        window.location.href = mailtoUrl;
+      } catch {
+        // Fallback handled by the UI button
+      }
+    }, 400);
   };
 
   return (
@@ -105,7 +120,13 @@ export const ContactPage: React.FC = () => {
           Contact Us
         </h1>
         <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          Have a question about a tool, an issue to report, or a feature suggestion? Send us a message and we'll respond promptly.
+          Have a question about a tool, an issue to report, or a feature suggestion? Send us a message and we'll respond promptly at{' '}
+          <a
+            href={`mailto:${OFFICIAL_CONTACT_EMAIL}`}
+            className="font-medium text-emerald-600 dark:text-emerald-400 hover:underline"
+          >
+            {OFFICIAL_CONTACT_EMAIL}
+          </a>.
         </p>
       </div>
 
@@ -118,12 +139,23 @@ export const ContactPage: React.FC = () => {
               <Mail className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Direct Email</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">For official inquiries & privacy requests</p>
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Official Gmail</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">For all user inquiries, support & suggestions</p>
             </div>
-            <p className="text-xs font-mono text-slate-700 dark:text-sky-300 bg-slate-50 dark:bg-slate-800 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 break-all select-all">
-              {CONTACT_EMAIL_PLACEHOLDER}
-            </p>
+            <a
+              href={`mailto:${OFFICIAL_CONTACT_EMAIL}`}
+              className="block text-xs font-mono text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 p-2.5 rounded-lg border border-emerald-200 dark:border-emerald-800 break-all hover:underline"
+            >
+              {OFFICIAL_CONTACT_EMAIL}
+            </a>
+
+            <a
+              href={`mailto:${OFFICIAL_CONTACT_EMAIL}?subject=Smartly%20Tools%20Inquiry`}
+              className="inline-flex items-center justify-center gap-1.5 w-full py-2 px-3 text-xs font-semibold rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-sky-500 dark:hover:bg-sky-400 text-white dark:text-slate-950 transition-colors cursor-pointer"
+            >
+              <Send className="w-3.5 h-3.5" />
+              <span>Email Directly via Gmail</span>
+            </a>
           </div>
 
           <div className="p-4 bg-slate-100/70 dark:bg-slate-900/60 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 space-y-2">
@@ -148,11 +180,18 @@ export const ContactPage: React.FC = () => {
                 <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-6 h-6" aria-hidden="true" />
                 </div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Message Received</h2>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Message Ready & Routed</h2>
                 <p className="text-xs text-slate-600 dark:text-slate-400 max-w-md mx-auto leading-relaxed">
-                  Thank you for reaching out. We have logged your submission. If you provided an email, our team will reply as soon as possible.
+                  Your message has been directed to <strong className="text-slate-900 dark:text-slate-100 font-mono">{OFFICIAL_CONTACT_EMAIL}</strong>. If your email client did not launch automatically, please click below:
                 </p>
-                <div className="pt-4">
+                <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <a
+                    href={getMailtoUrl()}
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2 text-xs font-semibold rounded-xl bg-slate-900 dark:bg-sky-500 text-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-sky-400 transition-colors"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                    <span>Open Email Client / Gmail</span>
+                  </a>
                   <Button
                     variant="outline"
                     size="sm"
@@ -171,7 +210,7 @@ export const ContactPage: React.FC = () => {
                   <Input
                     id="contact-name"
                     label="Full Name (Optional)"
-                    placeholder="e.g. Ramesh Kumar"
+                    placeholder="e.g. Alex Morgan"
                     value={formData.name}
                     maxLength={100}
                     onChange={e => setFormData({ ...formData, name: e.target.value.slice(0, 100) })}
@@ -183,55 +222,58 @@ export const ContactPage: React.FC = () => {
                     id="contact-email"
                     label="Email Address"
                     type="email"
-                    required
-                    placeholder="e.g. ramesh@example.com"
+                    placeholder="name@example.com"
                     value={formData.email}
                     maxLength={254}
                     onChange={e => setFormData({ ...formData, email: e.target.value.slice(0, 254) })}
                     error={errors.email}
-                    helperText="Required so we can reply to you"
+                    required
+                    helperText="We will reply to this address"
                   />
                 </div>
 
                 <Input
                   id="contact-subject"
-                  label="Subject / Topic (Optional)"
-                  placeholder="e.g. UPSC photo resizer question"
+                  label="Subject (Optional)"
+                  placeholder="e.g. Question regarding calculation accuracy"
                   value={formData.subject}
                   maxLength={200}
                   onChange={e => setFormData({ ...formData, subject: e.target.value.slice(0, 200) })}
                   error={errors.subject}
                 />
 
-                <div>
-                  <label htmlFor="contact-message" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5 tracking-tight">
+                <div className="space-y-1.5">
+                  <label
+                    htmlFor="contact-message"
+                    className="block text-xs font-semibold text-slate-800 dark:text-slate-200"
+                  >
                     Your Message <span className="text-red-500" aria-hidden="true">*</span>
                   </label>
                   <textarea
                     id="contact-message"
                     rows={5}
-                    required
-                    aria-required="true"
-                    aria-invalid={errors.message ? 'true' : 'false'}
-                    aria-describedby={errors.message ? 'contact-message-error' : undefined}
                     value={formData.message}
                     maxLength={5000}
                     onChange={e => setFormData({ ...formData, message: e.target.value.slice(0, 5000) })}
-                    placeholder="Describe your inquiry or feedback in detail (at least 15 characters)..."
-                    className={`w-full rounded-xl border bg-white dark:bg-slate-900 px-3.5 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-slate-900 dark:focus:ring-sky-400 ${
-                      errors.message ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'
-                    }`}
+                    placeholder="Please describe your question, feedback, or suggestion in detail..."
+                    aria-required="true"
+                    aria-invalid={errors.message ? 'true' : 'false'}
+                    aria-describedby={errors.message ? 'contact-message-error' : undefined}
+                    className="w-full px-3.5 py-2.5 text-xs sm:text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-sky-400 focus:border-transparent transition-shadow resize-y"
                   />
+                  <div className="flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500">
+                    <span>Minimum 15 characters</span>
+                    <span>{formData.message.length} / 5000</span>
+                  </div>
                   {errors.message && (
-                    <p id="contact-message-error" role="alert" className="mt-1 text-xs text-red-600 dark:text-red-400 font-medium">
+                    <p id="contact-message-error" role="alert" className="text-xs text-red-600 dark:text-red-400 font-medium">
                       {errors.message}
                     </p>
                   )}
                 </div>
 
-                {/* Explicit Unbundled Consent Checkbox */}
                 <div className="pt-2">
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-2.5">
                     <input
                       id="contact-consent"
                       type="checkbox"
@@ -243,7 +285,7 @@ export const ContactPage: React.FC = () => {
                       className="mt-1 h-4 w-4 rounded border-slate-300 dark:border-slate-700 text-slate-900 dark:text-sky-500 focus:ring-slate-900 dark:focus:ring-sky-400 cursor-pointer"
                     />
                     <label htmlFor="contact-consent" className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed cursor-pointer">
-                      I consent to India Smart Tools processing my email and message solely for the purpose of replying to this inquiry. I understand this data is not shared, sold, or used for marketing. <span className="text-red-500" aria-hidden="true">*</span>
+                      I consent to Smartly Tools processing my email and message solely for the purpose of replying to this inquiry via {OFFICIAL_CONTACT_EMAIL}. I understand this data is not shared, sold, or used for marketing. <span className="text-red-500" aria-hidden="true">*</span>
                     </label>
                   </div>
                   {errors.consent && (
@@ -253,18 +295,17 @@ export const ContactPage: React.FC = () => {
                   )}
                 </div>
 
-                <div className="pt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                  <span className="text-[11px] text-slate-500 dark:text-slate-400">
-                    Protected by client rate limiting. No tracking cookies.
-                  </span>
+                <div className="pt-3">
                   <Button
                     type="submit"
                     variant="primary"
                     size="md"
                     isLoading={isSubmitting}
-                    icon={<MessageSquare className="w-4 h-4" />}
+                    disabled={isSubmitting}
+                    className="w-full sm:w-auto"
+                    icon={<Send className="w-4 h-4" />}
                   >
-                    Submit Message
+                    Send to {OFFICIAL_CONTACT_EMAIL}
                   </Button>
                 </div>
               </form>

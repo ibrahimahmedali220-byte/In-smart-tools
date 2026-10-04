@@ -1,5 +1,5 @@
 /**
- * Indian Salary & In-Hand Take-Home Calculator
+ * Salary & In-Hand Take-Home Calculator
  * 
  * Computes monthly in-hand pay from annual Cost to Company (CTC),
  * factoring in Employee PF, Professional Tax, and estimated Income Tax under New & Old Regimes.
@@ -162,7 +162,7 @@ export function calculateSalary(input: SalaryInput): SalaryResult {
 
   const monthlyCtc = Math.round(annualCtc / 12);
 
-  // 1. Basic Salary (standard Indian benchmark is ~40% of CTC unless customized)
+  // 1. Basic Salary (standard benchmark is ~40% of CTC unless customized)
   const basicAnnual = input.customBasicSalary !== undefined && input.customBasicSalary > 0
     ? input.customBasicSalary
     : Math.round(annualCtc * 0.40);

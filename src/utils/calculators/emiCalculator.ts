@@ -1,5 +1,5 @@
 /**
- * EMI Calculator Engine (Standard Indian Reducing Balance Formula)
+ * EMI Calculator Engine (Standard Reducing Balance Formula)
  * 
  * Formula:
  * EMI = P × r × (1+r)^n / ((1+r)^n - 1)

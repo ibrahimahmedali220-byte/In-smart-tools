@@ -16,13 +16,21 @@ const manifestPath = path.resolve(process.cwd(), 'public/manifest.json');
 assert(fs.existsSync(manifestPath), 'manifest.json must exist in public folder');
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 
-assert(manifest.name === 'India Smart Tools', 'Manifest name must be "India Smart Tools"');
-assert(manifest.short_name === 'Smart Tools', 'Manifest short_name must be "Smart Tools"');
-assert(manifest.description === 'Simple tools for everyday India.', 'Manifest description matches requirement');
+assert(manifest.name === 'Smartly Tools', 'Manifest name must be "Smartly Tools"');
+assert(manifest.short_name === 'Smartly Tools', 'Manifest short_name must be "Smartly Tools"');
+assert(manifest.description === 'Free Online Utilities & Smart Digital Tools', 'Manifest description matches requirement');
 assert(manifest.display === 'standalone', 'Display mode must be standalone');
 assert(manifest.start_url === '/', 'Start URL must be /');
 assert(manifest.background_color === '#0f172a' || manifest.background_color === '#ffffff' || manifest.background_color === '#f8fafc', 'Valid background color');
 assert(Array.isArray(manifest.icons) && manifest.icons.length >= 2, 'Manifest must have at least 2 icon sizes');
+
+// 1b. Validate vite.config.ts PWA manifest configuration
+const viteConfigPath = path.resolve(process.cwd(), 'vite.config.ts');
+assert(fs.existsSync(viteConfigPath), 'vite.config.ts must exist');
+const viteConfigContent = fs.readFileSync(viteConfigPath, 'utf8');
+assert(!viteConfigContent.includes('India Smart Tools'), 'vite.config.ts must not contain regional name');
+assert(!viteConfigContent.includes('everyday India'), 'vite.config.ts must not contain regional description');
+assert(viteConfigContent.includes("name: 'Smartly Tools'"), 'vite.config.ts manifest name must be Smartly Tools');
 
 // 2. Validate icon files physically exist on disk
 for (const icon of manifest.icons) {

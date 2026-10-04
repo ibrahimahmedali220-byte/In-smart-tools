@@ -1,8 +1,8 @@
 /**
- * Cookie and Storage Consent Architecture for India Smart Tools
+ * Cookie and Storage Consent Architecture for Smartly Tools
  * 
  * Manages user preferences for technical storage, preferences, and future analytics.
- * Currently, India Smart Tools only utilizes strictly necessary technical session storage
+ * Currently, Smartly Tools only utilizes strictly necessary technical session storage
  * (for form submission rate-limiting). Non-essential cookies and trackers are NOT loaded
  * unless explicit consent is recorded.
  */

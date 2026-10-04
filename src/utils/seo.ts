@@ -1,5 +1,5 @@
 /**
- * SEO & Structured Data Manager for India Smart Tools
+ * SEO & Structured Data Manager for Smartly Tools
  * Handles dynamic title, meta descriptions, canonical URLs, Open Graph tags, and JSON-LD structured data.
  */
 
@@ -20,8 +20,8 @@ export interface SeoConfig {
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const DEFAULT_TITLE = 'Smartly Tools – Simple, Fast & Free Online Utilities';
-const DEFAULT_DESCRIPTION = 'Smartly Tools is a fast, free, and privacy-conscious online utility platform providing QR generator, PDF tools, student calculators, and financial tools.';
+const DEFAULT_TITLE = 'Smartly Tools – Free Online Calculators & Digital Utilities';
+const DEFAULT_DESCRIPTION = 'Smartly Tools is a fast, free, and privacy-first global web utility platform providing free digital tools: calculators, PDF tools, image compressors, QR codes, and everyday utilities.';
 const DEFAULT_SITE_NAME = 'Smartly Tools';
 const DEFAULT_OG_IMAGE = '/og-image.svg';
 
@@ -152,9 +152,9 @@ export function getWebSiteSchema(baseUrl: string = getBaseUrl()): Record<string,
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'India Smart Tools',
+    name: 'Smartly Tools',
     url: baseUrl,
-    description: 'Simple, fast and free online utility platform for students, job seekers, creators and everyday users across India.',
+    description: 'Smartly Tools is a fast, free, and privacy-conscious online utility platform providing QR generator, PDF tools, student calculators, and financial tools.',
     potentialAction: {
       '@type': 'SearchAction',
       target: `${baseUrl}/tools?q={search_term_string}`,

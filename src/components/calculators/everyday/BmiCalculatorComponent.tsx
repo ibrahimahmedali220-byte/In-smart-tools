@@ -230,7 +230,7 @@ export const BmiCalculatorComponent: React.FC = () => {
                 WHO: {bmiResult.whoCategory.category}
               </span>
               <span className={`text-xs font-bold px-3 py-1 rounded-full border ${asianStyle.bg} ${asianStyle.text}`}>
-                Asian-Indian: {bmiResult.asianCategory.category}
+                Asian Consensus: {bmiResult.asianCategory.category}
               </span>
             </div>
           </div>
@@ -285,14 +285,14 @@ export const BmiCalculatorComponent: React.FC = () => {
               </div>
             </div>
 
-            {/* Asian-Indian Guideline */}
+            {/* Asian Regional Guideline */}
             <div className="p-4 bg-white rounded-xl border border-slate-200 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-900">Asian-Indian Consensus</span>
+                <span className="text-xs font-bold text-slate-900">Asian Consensus Criteria</span>
                 <span className={`text-[11px] font-bold ${asianStyle.text}`}>{bmiResult.asianCategory.category}</span>
               </div>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Indian guidelines set lower cutoffs (Overweight at 23, Obese at 25) due to higher abdominal adiposity risks.
+                Regional guidelines set lower cutoffs (Overweight at 23, Obese at 25) due to distinct abdominal adiposity patterns.
               </p>
               <div className="pt-1 text-[11px] text-slate-600 border-t border-slate-100">
                 Optimal weight target: <strong>{bmiResult.asianHealthyWeightMinKg} kg – {bmiResult.asianHealthyWeightMaxKg} kg</strong>

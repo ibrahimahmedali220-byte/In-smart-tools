@@ -1,5 +1,5 @@
 /**
- * Theme Management System for India Smart Tools
+ * Theme Management System for Smartly Tools
  * 
  * Supports:
  * 1. 'light' - Explicit Light theme

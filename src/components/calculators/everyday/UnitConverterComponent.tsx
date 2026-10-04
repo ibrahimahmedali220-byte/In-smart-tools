@@ -235,19 +235,19 @@ export const UnitConverterComponent: React.FC = () => {
           </div>
         </div>
 
-        {/* Indian Land Units Reference Card (Shown if Area category selected) */}
+        {/* Regional Land Units Reference Card (Shown if Area category selected) */}
         {category === 'area' && (
           <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs">
             <span className="font-bold text-slate-900 block">
-              Traditional Indian Land Area Reference:
+              Regional & Traditional Land Area Reference:
             </span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-600">
               <div>• <strong>1 Gaj (Square Yard):</strong> 9 sq ft ≈ 0.836 m²</div>
               <div>• <strong>1 Guntha:</strong> 1,089 sq ft (33 ft × 33 ft) ≈ 101.17 m²</div>
-              <div>• <strong>1 Ground:</strong> 2,400 sq ft ≈ 222.96 m² (Tamil Nadu)</div>
-              <div>• <strong>1 Marla:</strong> 272.25 sq ft ≈ 25.29 m² (North India)</div>
-              <div>• <strong>1 Kanal:</strong> 20 Marlas = 5,445 sq ft (North India)</div>
-              <div>• <strong>1 Bigha:</strong> Standard ~26,910 sq ft (Varies by state)</div>
+              <div>• <strong>1 Ground:</strong> 2,400 sq ft ≈ 222.96 m²</div>
+              <div>• <strong>1 Marla:</strong> 272.25 sq ft ≈ 25.29 m²</div>
+              <div>• <strong>1 Kanal:</strong> 20 Marlas = 5,445 sq ft</div>
+              <div>• <strong>1 Bigha:</strong> Standard ~26,910 sq ft (Regional standard)</div>
             </div>
           </div>
         )}

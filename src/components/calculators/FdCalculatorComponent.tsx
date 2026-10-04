@@ -213,7 +213,7 @@ export const FdCalculatorComponent: React.FC = () => {
                 );
               })}
             </div>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400">Quarterly compounding is standard across most Indian banks (SBI, HDFC, ICICI).</p>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">Quarterly compounding is standard across commercial and retail banks.</p>
           </div>
         </div>
 

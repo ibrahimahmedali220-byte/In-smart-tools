@@ -23,8 +23,8 @@ export const CATEGORIES: CategoryItem[] = [
     id: 'finance',
     name: 'Finance Tools',
     slug: 'finance',
-    tagline: 'Smart money calculators for Indian households and professionals',
-    description: 'Accurate interest, loan, investment, and tax utilities tuned to Indian financial standards and schemes.',
+    tagline: 'Smart money calculators for households and professionals',
+    description: 'Accurate interest, loan, investment, and tax utilities tuned to financial standards and schemes.',
     icon: 'Landmark',
     route: '/tools/finance'
   },
@@ -33,7 +33,7 @@ export const CATEGORIES: CategoryItem[] = [
     name: 'Student Tools',
     slug: 'student',
     tagline: 'Academic aids for schools, colleges, and competitive exams',
-    description: 'Fast grade converters, study focus timers, age checkers, and text analysis tools for Indian learners.',
+    description: 'Fast grade converters, study focus timers, age checkers, and text analysis tools for learners worldwide.',
     icon: 'GraduationCap',
     route: '/tools/student'
   }
@@ -59,7 +59,7 @@ export const TOOLS: ToolItem[] = [
       'Direct WhatsApp and Instagram sharing options with high error resilience',
       'Download in crisp PNG and scalable SVG formats'
     ],
-    seoTitle: 'Free QR Code Generator with Logo – UPI, URL & Wi-Fi QR Codes | India Smart Tools',
+    seoTitle: 'Free QR Code Generator with Logo – UPI, URL & Wi-Fi QR Codes | Smartly Tools',
     seoDescription: 'Generate custom QR codes online for free with logo embedding. Create UPI payment QRs, Wi-Fi access codes, and links with WhatsApp sharing.'
   },
   {
@@ -80,7 +80,7 @@ export const TOOLS: ToolItem[] = [
       'Direct WhatsApp and social sharing options',
       'Orientation controls: Portrait and Landscape per page'
     ],
-    seoTitle: 'JPG to PDF Converter Online | India Smart Tools',
+    seoTitle: 'JPG to PDF Converter Online | Smartly Tools',
     seoDescription: 'Convert JPG images to PDF documents online for free. 100% private, runs in browser, perfect for marksheets and certificates.'
   },
 
@@ -98,13 +98,13 @@ export const TOOLS: ToolItem[] = [
     summary: 'Standard reducing balance EMI & amortization breakdown',
     targetAudience: ['Home buyers', 'Car loan seekers', 'Personal budgeters'],
     plannedFeatures: [
-      'Standard Indian reducing balance formula (P x R x (1+R)^N / ((1+R)^N - 1))',
+      'Standard reducing balance formula (P x R x (1+R)^N / ((1+R)^N - 1))',
       'Pre-payment impact and tenure reduction modeling',
       'Year-by-year and month-by-month principal vs interest schedule',
       'Instant shareable loan summary PDF export'
     ],
-    seoTitle: 'EMI Calculator – Home, Car & Personal Loan EMI | India Smart Tools',
-    seoDescription: 'Free online EMI Calculator for Indian bank loans. Calculate loan EMIs, interest payable, and monthly payment schedules.'
+    seoTitle: 'EMI Calculator – Home, Car & Personal Loan EMI | Smartly Tools',
+    seoDescription: 'Free online EMI Calculator for bank loans. Calculate loan EMIs, interest payable, and monthly payment schedules.'
   },
   {
     id: 'sip-calculator',
@@ -124,15 +124,15 @@ export const TOOLS: ToolItem[] = [
       'Visual breakdown of invested principal vs expected returns',
       'Inflation-adjusted purchasing power estimate'
     ],
-    seoTitle: 'SIP Calculator – Mutual Fund Returns & Growth Projection | India Smart Tools',
-    seoDescription: 'Calculate expected returns on mutual fund SIP investments in India with step-up increments and inflation adjustments.'
+    seoTitle: 'SIP Calculator – Mutual Fund Returns & Growth Projection | Smartly Tools',
+    seoDescription: 'Calculate expected returns on mutual fund SIP investments with step-up increments and inflation adjustments.'
   },
   {
     id: 'gst-calculator',
     name: 'GST Calculator',
     slug: 'gst-calculator',
     category: 'finance',
-    description: 'Compute inclusive and exclusive Goods and Services Tax for all Indian standard GST slabs (5%, 12%, 18%, 28%).',
+    description: 'Compute inclusive and exclusive Goods and Services Tax for all standard GST slabs (5%, 12%, 18%, 28%).',
     icon: 'Receipt',
     keywords: ['gst', 'tax', 'cgst', 'sgst', 'igst', 'invoice', 'hsn', 'slab', 'business', 'billing'],
     status: 'implemented',
@@ -145,16 +145,16 @@ export const TOOLS: ToolItem[] = [
       'Intra-state (CGST + SGST) vs Inter-state (IGST) division breakdown',
       'Copyable tax breakup for invoicing and quotation preparation'
     ],
-    seoTitle: 'GST Calculator – Inclusive & Exclusive GST Rates | India Smart Tools',
-    seoDescription: 'Fast, free GST calculator for Indian businesses and freelancers. Calculate 5%, 12%, 18%, and 28% GST with CGST/SGST split.'
+    seoTitle: 'GST Calculator – Inclusive & Exclusive GST Rates | Smartly Tools',
+    seoDescription: 'Fast, free GST calculator for businesses and freelancers. Calculate 5%, 12%, 18%, and 28% GST with CGST/SGST split.'
   },
   {
     id: 'salary-calculator',
     name: 'Salary Calculator',
     slug: 'salary-calculator',
     category: 'finance',
-    description: 'Convert annual Cost to Company (CTC) into realistic in-hand monthly take-home pay under old and new Indian tax regimes.',
-    icon: 'BadgeIndianRupee',
+    description: 'Convert annual Cost to Company (CTC) into realistic in-hand monthly take-home pay under old and new tax regimes.',
+    icon: 'Landmark',
     keywords: ['salary', 'ctc', 'take home', 'in hand', 'income tax', 'epf', 'pf', 'professional tax', 'tds', 'form 16'],
     status: 'implemented',
     route: '/tools/salary-calculator',
@@ -166,15 +166,15 @@ export const TOOLS: ToolItem[] = [
       'Customizable Basic Pay percentage and PF options',
       'Detailed itemized deduction breakdown table'
     ],
-    seoTitle: 'In-Hand Salary Calculator (New vs Old Regime) | India Smart Tools',
-    seoDescription: 'Calculate take-home salary from CTC in India. Compare New vs Old tax regimes with EPF, PT, and income tax breakdown.'
+    seoTitle: 'In-Hand Salary Calculator (New vs Old Regime) | Smartly Tools',
+    seoDescription: 'Calculate take-home salary from CTC. Compare New vs Old tax regimes with statutory withholdings and tax breakdown.'
   },
   {
     id: 'fd-calculator',
     name: 'FD Calculator',
     slug: 'fd-calculator',
     category: 'finance',
-    description: 'Calculate Fixed Deposit maturity amount and earned interest across Indian banks and post offices with quarterly compounding.',
+    description: 'Calculate Fixed Deposit maturity amount and earned interest across banks and institutions with quarterly compounding.',
     icon: 'Landmark',
     keywords: ['fd', 'fixed deposit', 'interest', 'maturity', 'bank fd', 'sbi fd', 'post office', 'term deposit', 'senior citizen'],
     status: 'implemented',
@@ -182,13 +182,13 @@ export const TOOLS: ToolItem[] = [
     summary: 'Bank & Post Office FD maturity solver with compounding options',
     targetAudience: ['Conservative savers', 'Senior citizens', 'Fixed income planners'],
     plannedFeatures: [
-      'Compounding frequency options: Monthly, Quarterly (standard in Indian banks), Half-Yearly, Yearly',
+      'Compounding frequency options: Monthly, Quarterly (standard in commercial banks), Half-Yearly, Yearly',
       'Special Senior Citizen preferential interest rate toggle (+0.50%)',
       'Cumulative (re-investment) vs Non-Cumulative payout options',
       'Maturity date projection from deposit date'
     ],
-    seoTitle: 'Fixed Deposit (FD) Calculator – Maturity & Interest | India Smart Tools',
-    seoDescription: 'Calculate bank and post office fixed deposit (FD) maturity values, interest earned, and quarterly compounding in India.'
+    seoTitle: 'Fixed Deposit (FD) Calculator – Maturity & Interest | Smartly Tools',
+    seoDescription: 'Calculate bank and fixed deposit (FD) maturity values, interest earned, and quarterly compounding.'
   },
 
   // Student Tools
@@ -210,7 +210,7 @@ export const TOOLS: ToolItem[] = [
       'Percentage change calculator: Increase, decrease, and difference',
       'Reverse percentage solver: Find original value from percentage'
     ],
-    seoTitle: 'Percentage Calculator – Exam Marks & Aggregate Scores | India Smart Tools',
+    seoTitle: 'Percentage Calculator – Exam Marks & Aggregate Scores | Smartly Tools',
     seoDescription: 'Calculate exam marks percentage, multi-subject aggregate scores, and percentage increase or decrease instantly.'
   },
   {
@@ -231,7 +231,7 @@ export const TOOLS: ToolItem[] = [
       'Semester SGPA to cumulative CGPA aggregate calculator',
       'Equivalent classification output: Distinction, First Class, Second Class'
     ],
-    seoTitle: 'CGPA to Percentage Calculator (CBSE & University Scales) | India Smart Tools',
+    seoTitle: 'CGPA to Percentage Calculator (CBSE & University Scales) | Smartly Tools',
     seoDescription: 'Convert CGPA to percentage using official CBSE multiplier (9.5) or custom university grading formulas easily.'
   },
   {
@@ -252,7 +252,7 @@ export const TOOLS: ToolItem[] = [
       'Total lived duration breakdown: Months, Weeks, Days, Hours, and Minutes',
       'Next birthday countdown timer and day of the week'
     ],
-    seoTitle: 'Age Calculator — Exact Age on Specific Cutoff Date | India Smart Tools',
+    seoTitle: 'Age Calculator — Exact Age on Specific Cutoff Date | Smartly Tools',
     seoDescription: 'Calculate your exact age in years, months, and days. Check exam eligibility on specific cutoff dates for UPSC, SSC, and state exams.'
   },
   {
@@ -273,7 +273,7 @@ export const TOOLS: ToolItem[] = [
       'Session counter tracking completed study rounds per day',
       'Full-screen distraction-free focus mode with dark background'
     ],
-    seoTitle: 'Study Timer & Pomodoro for Exam Preparation | India Smart Tools',
+    seoTitle: 'Study Timer & Pomodoro for Exam Preparation | Smartly Tools',
     seoDescription: 'Stay focused during exam prep with this free online Pomodoro study timer. Custom intervals, break alerts, and full-screen mode.'
   },
   {
@@ -294,7 +294,7 @@ export const TOOLS: ToolItem[] = [
       'Estimated reading time (200 wpm) and speaking time (130 wpm)',
       'Character limit warnings for Common App, SOPs, and Twitter/LinkedIn'
     ],
-    seoTitle: 'Word Counter — Count Words & Characters | India Smart Tools',
+    seoTitle: 'Word Counter — Count Words & Characters | Smartly Tools',
     seoDescription: 'Count words, characters, sentences, and reading time instantly. Ideal for academic essays, SOPs, and competitive exams.'
   },
 
@@ -317,7 +317,7 @@ export const TOOLS: ToolItem[] = [
       'Single page download or batch ZIP export',
       'Client-side Canvas rendering for maximum privacy'
     ],
-    seoTitle: 'PDF to JPG Converter Online | India Smart Tools',
+    seoTitle: 'PDF to JPG Converter Online | Smartly Tools',
     seoDescription: 'Convert PDF pages to JPG images in high resolution. Free, private, and works on desktop and mobile browsers.'
   },
   {
@@ -325,7 +325,7 @@ export const TOOLS: ToolItem[] = [
     name: 'PDF Compressor',
     slug: 'pdf-compressor',
     category: 'documents',
-    description: 'Shrink PDF file sizes to under 100 KB, 200 KB, or 500 KB to meet strict limits on Indian government and recruitment portals.',
+    description: 'Shrink PDF file sizes to under 100 KB, 200 KB, or 500 KB to meet strict limits on upload and recruitment portals.',
     icon: 'Minimize2',
     keywords: ['pdf compressor', 'reduce pdf size', 'compress pdf', '100kb', '200kb', 'upsc upload', 'ssc upload', 'portal limit'],
     status: 'implemented',
@@ -338,7 +338,7 @@ export const TOOLS: ToolItem[] = [
       'Before-and-after size comparison preview with percentage reduction',
       'Zero server upload: Processing handled securely on device'
     ],
-    seoTitle: 'Compress PDF Online | India Smart Tools',
+    seoTitle: 'Compress PDF Online | Smartly Tools',
     seoDescription: 'Compress PDF files to under 100KB or 200KB for government job portals, university admissions, and online forms.'
   },
   {
@@ -359,7 +359,7 @@ export const TOOLS: ToolItem[] = [
       'Supports JPG, PNG, and WebP compression formats',
       'Batch compression for multiple certificates simultaneously'
     ],
-    seoTitle: 'Image Compressor Online | India Smart Tools',
+    seoTitle: 'Image Compressor Online | Smartly Tools',
     seoDescription: 'Compress passport photos and signatures to under 20KB or 50KB for UPSC, SSC, IBPS, and state portal submissions.'
   },
   {
@@ -375,13 +375,13 @@ export const TOOLS: ToolItem[] = [
     summary: 'Pixel and centimeter precision photo dimension adjuster',
     targetAudience: ['Passport/visa applicants', 'Admit card submission seekers', 'Form uploaders'],
     plannedFeatures: [
-      'Standard Indian portal dimension presets (UPSC 350x350, SSC 200x230, Passport 35x45mm)',
+      'Standard portal dimension presets (350x350, 200x230, Passport 35x45mm)',
       'Custom Width x Height with optional aspect ratio lock',
       'Centimeter to Pixel conversion at 200/300 DPI standards',
       'Built-in center crop and smart framing tool'
     ],
-    seoTitle: 'Resize Image Online | India Smart Tools',
-    seoDescription: 'Resize photos to exact pixel dimensions (350x350, 200x230) and passport dimensions for Indian online government applications.'
+    seoTitle: 'Resize Image Online | Smartly Tools',
+    seoDescription: 'Resize photos to exact pixel dimensions (350x350, 200x230) and passport dimensions for online applications.'
   },
 
   // Everyday Tools (remaining)
@@ -403,7 +403,7 @@ export const TOOLS: ToolItem[] = [
       'Memorable passphrase mode using readable word combinations',
       'Live entropy bit score and cracking resistance estimation'
     ],
-    seoTitle: 'Strong Password Generator – Secure & Random | India Smart Tools',
+    seoTitle: 'Strong Password Generator – Secure & Random | Smartly Tools',
     seoDescription: 'Generate strong, secure passwords and memorable passphrases with custom length and symbols. 100% private in browser.'
   },
   {
@@ -411,21 +411,21 @@ export const TOOLS: ToolItem[] = [
     name: 'Unit Converter',
     slug: 'unit-converter',
     category: 'everyday',
-    description: 'Convert length, weight, area, volume, temperature, and traditional Indian land units (Bigha, Guntha, Ground, Marla, Gaj).',
+    description: 'Convert length, weight, area, volume, temperature, and regional land units (Bigha, Guntha, Ground, Marla, Gaj).',
     icon: 'ArrowRightLeft',
     keywords: ['unit converter', 'convert', 'bigha', 'guntha', 'gaj', 'sq ft', 'kg to lbs', 'meters', 'acre', 'celsius'],
     status: 'implemented',
     route: '/tools/unit-converter',
-    summary: 'Comprehensive converter with traditional Indian land measurements',
+    summary: 'Comprehensive converter with regional land measurements',
     targetAudience: ['Real estate buyers', 'Engineers', 'Farmers', 'Students'],
     plannedFeatures: [
-      'Traditional Indian land unit conversions: Bigha, Guntha, Ground, Marla, Kanal, Gaj to Sq Ft / Acres',
+      'Regional land unit conversions: Bigha, Guntha, Ground, Marla, Kanal, Gaj to Sq Ft / Acres',
       'Standard scientific units: Length, Mass, Volume, Temperature, Speed, and Digital Storage',
       'Bidirectional instantaneous calculation with swap trigger',
       'Copyable result with formula notation'
     ],
-    seoTitle: 'Unit Converter – Metric & Indian Land Units (Bigha, Guntha, Gaj) | India Smart Tools',
-    seoDescription: 'Convert units of length, area, weight, and traditional Indian land measurements including Bigha, Guntha, Gaj, and Sq Ft.'
+    seoTitle: 'Unit Converter – Metric & Regional Land Units (Bigha, Guntha, Gaj) | Smartly Tools',
+    seoDescription: 'Convert units of length, area, weight, and regional land measurements including Bigha, Guntha, Gaj, and Sq Ft.'
   },
   {
     id: 'date-difference',
@@ -445,7 +445,7 @@ export const TOOLS: ToolItem[] = [
       'Add or subtract days/weeks/months to compute future or past deadlines',
       'Leap year and daylight precision calculation'
     ],
-    seoTitle: 'Date Difference Calculator – Days Between Dates | India Smart Tools',
+    seoTitle: 'Date Difference Calculator – Days Between Dates | Smartly Tools',
     seoDescription: 'Calculate the exact number of days, weeks, months, and working days between two dates with leap year accuracy.'
   },
   {
@@ -453,21 +453,52 @@ export const TOOLS: ToolItem[] = [
     name: 'BMI Calculator',
     slug: 'bmi-calculator',
     category: 'everyday',
-    description: 'Calculate Body Mass Index based on standard WHO guidelines and Asian-Indian adjusted BMI thresholds for health risk evaluation.',
+    description: 'Calculate Body Mass Index based on standard WHO guidelines and Asian-adjusted BMI thresholds for health risk evaluation.',
     icon: 'Activity',
     keywords: ['bmi calculator', 'body mass index', 'weight', 'height', 'asian bmi', 'health', 'fitness', 'ideal weight'],
     status: 'implemented',
     route: '/tools/bmi-calculator',
-    summary: 'Standard WHO & Asian-Indian cutoff health metric evaluator',
+    summary: 'Standard WHO & Asian cutoff health metric evaluator',
     targetAudience: ['Fitness enthusiasts', 'Health conscious individuals', 'Medical students'],
     plannedFeatures: [
       'Dual metric system: cm / kg and ft-inches / lbs',
-      'Asian-Indian consensus thresholds (Overweight at >= 23, Obese at >= 25)',
+      'Asian consensus thresholds (Overweight at >= 23, Obese at >= 25)',
       'Healthy weight range indicator for target height',
       'Interactive visual BMI category scale gauge'
     ],
-    seoTitle: 'BMI Calculator (WHO & Asian-Indian Cutoffs) | India Smart Tools',
-    seoDescription: 'Calculate your Body Mass Index (BMI) with Asian-Indian adjusted cutoffs. Check healthy weight range and health categories.'
+    seoTitle: 'BMI Calculator (WHO & Asian Cutoffs) | Smartly Tools',
+    seoDescription: 'Calculate your Body Mass Index (BMI) with Asian-adjusted cutoffs. Check healthy weight range and health categories.'
+  },
+  {
+    id: 'private-calculator',
+    name: 'Private Calculator',
+    slug: 'private-calculator',
+    category: 'everyday',
+    description: 'A fully functional standard calculator with an interactive concept preview of the upcoming Android secret PIN Private Vault.',
+    icon: 'Calculator',
+    keywords: [
+      'private calculator',
+      'private vault',
+      'secure calculator',
+      'privacy calculator',
+      'private file vault',
+      'calculator vault',
+      'secret pin calculator',
+      'math calculator',
+      'standard calculator'
+    ],
+    status: 'implemented',
+    route: '/tools/private-calculator',
+    summary: 'Standard math calculator with a conceptual preview of future Android secret PIN Private Vault',
+    targetAudience: ['Everyday math users', 'Students', 'Professionals', 'Privacy-conscious mobile users'],
+    plannedFeatures: [
+      'Standard arithmetic with addition, subtraction, multiplication, division, and percentage',
+      'Keyboard and touch-friendly responsive keypad with calculation history',
+      'Interactive secret PIN concept demonstrating future Private Vault unlock trigger',
+      'Visual architectural preview of future Android app-specific local file isolation'
+    ],
+    seoTitle: 'Private Calculator — Free Online Utility & Private Vault Preview | Smartly Tools',
+    seoDescription: 'Use our fast, free online calculator for standard everyday arithmetic, and preview the upcoming Android-based Private Vault feature for local on-device file security.'
   },
   {
     id: 'private-calling',

@@ -1,11 +1,11 @@
 /**
- * Centralized Indian Currency and Number Formatter
- * Formats numbers in standard Indian numbering system (Lakhs, Crores).
+ * Centralized Currency and Number Formatter
+ * Formats numbers in standard numbering system.
  * Example: 1000000 -> ₹10,00,000
  */
 
 /**
- * Formats a number as Indian Currency (INR).
+ * Formats a number as Currency.
  * Defaults to 0 decimal places for clean display.
  */
 export function formatINR(value: number, options?: { decimals?: number; showSymbol?: boolean }): string {
@@ -16,7 +16,7 @@ export function formatINR(value: number, options?: { decimals?: number; showSymb
   const decimals = options?.decimals ?? 0;
   const showSymbol = options?.showSymbol ?? true;
 
-  // Use Intl.NumberFormat with Indian locale (en-IN)
+  // Use Intl.NumberFormat with formatted locale (en-IN)
   try {
     const formatter = new Intl.NumberFormat('en-IN', {
       style: showSymbol ? 'currency' : 'decimal',
@@ -33,7 +33,7 @@ export function formatINR(value: number, options?: { decimals?: number; showSymb
 }
 
 /**
- * Formats large amounts into friendly Indian denominations (Lakhs / Crores)
+ * Formats large amounts into friendly compact denominations
  * Example: 1500000 -> "₹15 Lakh", 12500000 -> "₹1.25 Cr"
  */
 export function formatINRCompact(value: number): string {

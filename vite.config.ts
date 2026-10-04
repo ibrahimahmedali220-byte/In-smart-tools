@@ -14,9 +14,9 @@ export default defineConfig(() => {
         includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png', 'pwa-maskable-512x512.png', 'robots.txt', 'sitemap.xml'],
         manifest: {
           id: '/',
-          name: 'India Smart Tools',
-          short_name: 'Smart Tools',
-          description: 'Simple tools for everyday India.',
+          name: 'Smartly Tools',
+          short_name: 'Smartly Tools',
+          description: 'Free Online Utilities & Smart Digital Tools',
           start_url: '/',
           scope: '/',
           display: 'standalone',

@@ -119,7 +119,7 @@ console.log('\nTesting Age Calculator:');
 console.log('\nTesting Word Counter:');
 {
   // Test case 1: Standard English with multiple spaces and newlines
-  const text1 = '  India   Smart Tools  is   fast. \n\nIt works   offline!  ';
+  const text1 = '  Global   Smart Tools  is   fast. \n\nIt works   offline!  ';
   const w1 = analyzeText(text1);
   assert(w1.wordCount === 8, `Word Counter: Counts 8 words despite messy whitespace (got ${w1.wordCount})`);
   assert(w1.sentenceCount === 2, `Word Counter: Counts 2 sentences (got ${w1.sentenceCount})`);

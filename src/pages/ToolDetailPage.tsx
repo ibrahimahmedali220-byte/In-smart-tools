@@ -41,6 +41,7 @@ import { UnitConverterComponent } from '../components/calculators/everyday/UnitC
 import { DateDifferenceComponent } from '../components/calculators/everyday/DateDifferenceComponent';
 import { BmiCalculatorComponent } from '../components/calculators/everyday/BmiCalculatorComponent';
 import { PrivateCallingComponent } from '../components/calling/PrivateCallingComponent';
+import { PrivateCalculatorComponent } from '../components/calculators/everyday/PrivateCalculatorComponent';
 
 import {
   Layers,
@@ -89,7 +90,8 @@ const SPECIFIED_RELATED_TOOLS: Record<string, string[]> = {
   'password-generator': ['qr-generator', 'word-counter'],
   'unit-converter': ['percentage-calculator', 'date-difference', 'bmi-calculator'],
   'date-difference': ['age-calculator', 'unit-converter'],
-  'bmi-calculator': ['unit-converter', 'age-calculator']
+  'bmi-calculator': ['unit-converter', 'age-calculator'],
+  'private-calculator': ['password-generator', 'unit-converter', 'qr-generator']
 };
 
 export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
@@ -106,7 +108,7 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
 
     const category = getCategoryById(tool.category);
     updateSeoMetadata({
-      title: `${tool.name} – Free Online Tool for India`,
+      title: `${tool.name} – Free Online Tool`,
       description: tool.description,
       canonicalPath: tool.route,
       jsonLd: [
@@ -149,8 +151,8 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
   const categoryFaqs: Record<string, { q: string; a: string }[]> = {
     finance: [
       {
-        q: 'Is this calculation based on standard Indian banking practices?',
-        a: 'Yes. All financial formulas utilize the reducing-balance method, quarterly compounding intervals, and latest Income Tax regimes established in India.'
+        q: 'Is this calculation based on standard banking practices?',
+        a: 'Yes. All financial formulas utilize the reducing-balance method, quarterly compounding intervals, and established financial computation standards.'
       },
       {
         q: 'Is any of my financial or salary data stored or sent to a server?',
@@ -158,7 +160,7 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
       },
       {
         q: 'Can I use this tool offline on my phone or laptop?',
-        a: 'Yes. India Smart Tools is an installable PWA. Once loaded, you can calculate EMIs, SIP returns, and GST offline without internet.'
+        a: 'Yes. Smartly Tools is an installable PWA. Once loaded, you can calculate EMIs, SIP returns, and GST offline without internet.'
       }
     ],
     student: [
@@ -187,8 +189,8 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
     ],
     everyday: [
       {
-        q: 'Are generated QR codes compatible with all Indian UPI apps?',
-        a: 'Yes. Generated UPI payment QR codes follow the standard NPCI specification and can be scanned with Google Pay, PhonePe, Paytm, BHIM, and bank apps.'
+        q: 'Are generated QR codes compatible with all UPI & payment apps?',
+        a: 'Yes. Generated UPI payment QR codes follow the standard payment specification and can be scanned with Google Pay, PhonePe, Paytm, BHIM, and global banking apps.'
       }
     ]
   };
@@ -219,17 +221,17 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
     },
     'gst-calculator': {
       formula: 'Add GST: Base + (Base × Rate / 100) | Remove GST: (Total × 100) / (100 + Rate)',
-      explanation: 'The Goods and Services Tax in India is levied at standard tariff slabs (0%, 5%, 12%, 18%, 28%). For intra-state transactions within the same state, the tax amount is divided equally into CGST (50%) and SGST (50%). For inter-state supplies, IGST (100%) applies.',
+      explanation: 'The Goods and Services Tax (GST) is levied at standard tariff slabs (0%, 5%, 12%, 18%, 28%). For local transactions within the same territory, the tax amount is divided into CGST (50%) and SGST (50%). For interstate or international supplies, IGST (100%) applies.',
       steps: [
         'Choose whether you want to "Add GST" to a net price or "Remove GST" from an inclusive invoice total.',
-        'Enter the transaction amount in Indian Rupees.',
+        'Enter the transaction amount in your preferred currency.',
         'Select the applicable GST slab (0%, 5%, 12%, 18%, 28%) or type a custom percentage.',
         'Instantly copy the complete invoice tax breakup with CGST and SGST splits for your records.'
       ]
     },
     'salary-calculator': {
       formula: 'In-Hand Pay = Gross CTC - (Employee PF + Professional Tax + Income Tax TDS)',
-      explanation: 'Cost to Company (CTC) includes direct earnings, allowances, employer contributions, and statutory withholdings. In India, employees are typically subject to Employee Provident Fund (12% of basic), state Professional Tax (standard ₹200/mo), and Income Tax under either the New Regime (Section 115BAC) or Old Regime.',
+      explanation: 'Cost to Company (CTC) includes direct earnings, allowances, employer contributions, and statutory withholdings. Employees are typically subject to Provident Fund (12% of basic), Professional Tax, and Income Tax under either the New Regime or Old Regime.',
       steps: [
         'Select your applicable Financial Year and preferred Tax Regime (New Regime is the default).',
         'Enter your annual CTC as specified in your job offer or appointment letter.',
@@ -239,12 +241,12 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
     },
     'fd-calculator': {
       formula: 'A = P × (1 + r/n)ⁿᵗ',
-      explanation: 'Where A is the final maturity amount, P is the deposit principal, r is the annual interest rate, n is the compounding frequency per year (Quarterly = 4 for most Indian banks), and t is the tenure in years. Compound interest accelerates interest earnings over extended tenures.',
+      explanation: 'Where A is the final maturity amount, P is the deposit principal, r is the annual interest rate, n is the compounding frequency per year (Quarterly = 4 for most commercial banks), and t is the tenure in years. Compound interest accelerates interest earnings over extended tenures.',
       steps: [
-        'Enter the lump-sum principal amount you wish to deposit in a bank or post office fixed deposit.',
+        'Enter the lump-sum principal amount you wish to deposit in a bank or financial institution fixed deposit.',
         'Specify the annual interest rate provided by the bank.',
         'Toggle the Senior Citizen bonus (+0.50%) if the deposit is in the name of an individual aged 60+.',
-        'Select the compounding interval (Quarterly is standard across SBI, HDFC, ICICI, etc.) and view your maturity value.'
+        'Select the compounding interval (Quarterly is standard across commercial and retail banks) and view your maturity value.'
       ]
     },
     'percentage-calculator': {
@@ -289,7 +291,7 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
     },
     'word-counter': {
       formula: 'Words = Count(Non-Whitespace Tokens) | Reading Time = Words / 200 WPM',
-      explanation: 'Analyzes text length, character counts with and without spaces, sentences, paragraphs, and estimated speech and reading durations calibrated for Indian university essays, competitive exams, and assignments.',
+      explanation: 'Analyzes text length, character counts with and without spaces, sentences, paragraphs, and estimated speech and reading durations calibrated for essays, academic papers, and reading assignments.',
       steps: [
         'Type or paste your text into the input area.',
         'View real-time metric cards updating dynamically as you write.',
@@ -342,7 +344,7 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
       explanation: 'Resamples image pixel matrices to exact pixel (width × height) or millimeter dimensions matching recruitment application guidelines (UPSC 350×350, SSC 200×230).',
       steps: [
         'Upload the photo or identity document you wish to resize.',
-        'Select a standard Indian recruitment portal preset or enter custom pixel dimensions.',
+        'Select a standard recruitment portal preset or enter custom pixel dimensions.',
         'Keep the aspect ratio locked to prevent distorted proportions.',
         'Download your resized image file.'
       ]
@@ -369,7 +371,7 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
     },
     'unit-converter': {
       formula: 'Target Value = (Input Value × Source Base Multiplier) / Target Base Multiplier',
-      explanation: 'Standardizes conversions across 7 measurement categories (Length, Weight, Temperature, Area, Volume, Time, Speed) and includes traditional Indian land units (Gaj, Bigha, Guntha, Ground).',
+      explanation: 'Standardizes conversions across 7 measurement categories (Length, Weight, Temperature, Area, Volume, Time, Speed) and includes regional land units (Gaj, Bigha, Guntha, Ground).',
       steps: [
         'Select the measurement category from the category selector.',
         'Enter the source quantity and pick your source unit.',
@@ -389,12 +391,22 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
     },
     'bmi-calculator': {
       formula: 'BMI = Weight (kg) / [Height (m)]² | Imperial: 703 × Weight (lbs) / [Height (in)]²',
-      explanation: 'Measures body mass index using standard World Health Organization criteria alongside Asian-Indian consensus thresholds (Overweight ≥23, Obese ≥25) reflecting lower body fat cut-offs.',
+      explanation: 'Measures body mass index using standard World Health Organization criteria alongside Asian consensus thresholds (Overweight ≥23, Obese ≥25) reflecting lower body fat cut-offs.',
       steps: [
         'Select your preferred measurement unit (Metric cm/kg or Imperial ft-in/lbs).',
         'Enter your height and weight into the input fields.',
         'View your calculated BMI score, health category, and healthy weight range.',
-        'Compare against WHO standard and Asian-Indian guidance.'
+        'Compare against WHO standard and Asian consensus guidance.'
+      ]
+    },
+    'private-calculator': {
+      formula: 'Standard Arithmetic (0-9, +, -, ×, ÷, %) & Secret PIN Vault Verification',
+      explanation: 'Performs instant mathematical calculations directly on your device, and serves as an interactive concept preview for the upcoming native Android Private Vault application.',
+      steps: [
+        'Use the on-screen keypad or your physical keyboard to enter numbers and arithmetic operations.',
+        'Press "=" or Enter to calculate the exact result and append to calculation history.',
+        'Review the secret PIN and Private Vault concept preview in the sections below.',
+        'Click "Private Vault — Coming Soon" to inspect planned on-device Android capabilities.'
       ]
     }
   };
@@ -508,6 +520,7 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
           {tool.slug === 'date-difference' && <DateDifferenceComponent />}
           {tool.slug === 'bmi-calculator' && <BmiCalculatorComponent />}
           {tool.slug === 'private-calling' && <PrivateCallingComponent />}
+          {tool.slug === 'private-calculator' && <PrivateCalculatorComponent />}
         </ErrorBoundary>
 
         {/* How It Works & Mathematical Formula (For Implemented Tools) */}
@@ -623,7 +636,7 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
           <div className="p-4 bg-slate-100 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 flex items-start gap-2.5">
             <AlertCircle className="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0 mt-0.5" aria-hidden="true" />
             <p className="leading-relaxed">
-              <strong>Privacy & Processing Notice:</strong> All documents, marksheets, photographs, and signatures processed using India Smart Tools are executed entirely in your device's browser memory using HTML5 Canvas and client-side PDF libraries. No uploaded files are transmitted to external servers, cloud databases, or third-party APIs. Compression percentages and resolution adaptations are mathematical estimates based on source file contents.
+              <strong>Privacy & Processing Notice:</strong> All documents, marksheets, photographs, and signatures processed using Smartly Tools are executed entirely in your device's browser memory using HTML5 Canvas and client-side PDF libraries. No uploaded files are transmitted to external servers, cloud databases, or third-party APIs. Compression percentages and resolution adaptations are mathematical estimates based on source file contents.
             </p>
           </div>
         )}

@@ -11,7 +11,7 @@ export const CategoriesIndexPage: React.FC = () => {
   useEffect(() => {
     updateSeoMetadata({
       title: 'Tool Categories – Browse by Domain',
-      description: 'Explore India Smart Tools categorized into Finance, Student, Document, and Everyday productivity suites.',
+      description: 'Explore Smartly Tools categorized into Finance, Student, Document, and Everyday productivity suites.',
       canonicalPath: '/categories',
       jsonLd: getBreadcrumbListSchema([
         { name: 'Home', item: '/' },
@@ -31,7 +31,7 @@ export const CategoriesIndexPage: React.FC = () => {
           Browse by Category
         </h1>
         <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          Four dedicated tool suites built specifically for Indian financial planning, academic success, document compliance, and daily tasks.
+          Four dedicated tool suites built for financial planning, academic success, document compliance, and daily productivity.
         </p>
       </div>
 

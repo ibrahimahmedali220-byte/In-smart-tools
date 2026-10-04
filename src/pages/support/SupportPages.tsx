@@ -33,10 +33,10 @@ export const SupportPage: React.FC<{ type: SupportPageType }> = ({ type }) => {
 
   useEffect(() => {
     updateSeoMetadata({
-      title: isReport ? 'Report a Problem – India Smart Tools' : 'Suggest a Tool – India Smart Tools',
+      title: isReport ? 'Report a Problem – Smartly Tools' : 'Suggest a Tool – Smartly Tools',
       description: isReport
-        ? 'Report calculation discrepancies, visual glitches, or device errors on India Smart Tools.'
-        : 'Request a new online calculator, document utility, or academic tool for India Smart Tools.',
+        ? 'Report calculation discrepancies, visual glitches, or device errors on Smartly Tools.'
+        : 'Request a new online calculator, document utility, or academic tool for Smartly Tools.',
       canonicalPath: `/support/${type}`,
       jsonLd: getBreadcrumbListSchema([
         { name: 'Home', item: '/' },
@@ -138,7 +138,7 @@ export const SupportPage: React.FC<{ type: SupportPageType }> = ({ type }) => {
           <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
             {isReport
               ? 'Found a calculation mismatch, broken export, or layout glitch? Let us know so our team can resolve it.'
-              : 'Have an idea for an Indian financial formula, university converter, or exam utility? Submit your idea for implementation.'}
+              : 'Have an idea for a financial formula, university converter, or utility? Submit your idea for implementation.'}
           </p>
         </div>
 
@@ -153,7 +153,7 @@ export const SupportPage: React.FC<{ type: SupportPageType }> = ({ type }) => {
                 {isReport ? 'Bug Report Submitted' : 'Suggestion Submitted'}
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto leading-relaxed">
-                Thank you for contributing to the quality and expansion of India Smart Tools. We review all feedback regularly.
+                Thank you for contributing to the quality and expansion of Smartly Tools. We review all feedback regularly at kmnurbusiness@gmail.com.
               </p>
               <div className="pt-4">
                 <Button
@@ -330,7 +330,7 @@ export const SupportPage: React.FC<{ type: SupportPageType }> = ({ type }) => {
                       value={formData.description}
                       maxLength={5000}
                       onChange={e => setFormData({ ...formData, description: e.target.value.slice(0, 5000) })}
-                      placeholder="Explain the formula, user scenario, or Indian portal rules for this utility (at least 15 characters)..."
+                      placeholder="Explain the formula, user scenario, or portal rules for this utility (at least 15 characters)..."
                       className={`w-full rounded-xl border bg-white dark:bg-slate-900 px-3.5 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-slate-900 dark:focus:ring-sky-400 ${
                         errors.description ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'
                       }`}

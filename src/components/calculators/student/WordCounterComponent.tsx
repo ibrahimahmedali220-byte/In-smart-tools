@@ -5,9 +5,9 @@ import { Button } from '../../common/Button';
 import { useToast } from '../../common/Toast';
 import { Copy, Trash2, Clock, BookOpen, Mic, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
-const SAMPLE_TEXT = `India is a diverse country known for its rich cultural heritage, deep academic traditions, and rapidly expanding digital technology ecosystem. From ancient universities like Nalanda and Takshashila to modern Indian Institutes of Technology, education has remained a pillar of Indian society.
+const SAMPLE_TEXT = `Knowledge is the foundation of human progress, cultural exchange, and technological innovation. From ancient academies and great historical libraries to modern international universities and digital laboratories, education remains an enduring pillar of human civilization.
 
-Students across the nation prepare for rigorous examinations like UPSC, JEE, NEET, and GATE with extraordinary determination and focus.`;
+Students and scholars across the world explore sciences, arts, languages, and engineering with extraordinary curiosity, determination, and creative focus.`;
 
 export const WordCounterComponent: React.FC = () => {
   const { showToast } = useToast();

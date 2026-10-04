@@ -40,8 +40,8 @@ export async function compressPdf(
   pdfDoc.setAuthor('');
   pdfDoc.setSubject('');
   pdfDoc.setKeywords([]);
-  pdfDoc.setProducer('India Smart Tools');
-  pdfDoc.setCreator('India Smart Tools PDF Optimizer');
+  pdfDoc.setProducer('Smartly Tools');
+  pdfDoc.setCreator('Smartly Tools PDF Optimizer');
 
   if (onProgress) onProgress(70);
 

@@ -219,7 +219,7 @@ export const SalaryCalculatorComponent: React.FC = () => {
       <div className="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-400 flex items-start gap-2.5">
         <AlertCircle className="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0 mt-0.5" aria-hidden="true" />
         <p className="leading-relaxed">
-          <strong>Statutory Note:</strong> This calculator provides mathematical estimates of monthly net take-home pay based on standard Indian corporate pay structures and Central Board of Direct Taxes (CBDT) tax slabs. Actual payroll numbers may vary depending on voluntary NPS contributions (80CCD), medical insurance deductions (80D), and specific corporate gratuity provisions.
+          <strong>Statutory Note:</strong> This calculator provides mathematical estimates of monthly net take-home pay based on standard corporate pay structures and applicable tax slabs. Actual payroll numbers may vary depending on voluntary retirement contributions, medical insurance deductions, and specific corporate gratuity provisions.
         </p>
       </div>
     </div>

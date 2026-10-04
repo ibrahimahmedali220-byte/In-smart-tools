@@ -89,7 +89,7 @@ export const AboutPage: React.FC = () => {
               </div>
               <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">Offline & Accessible</h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                Installable Progressive Web App (PWA) with light and dark mode, optimized for high performance across all 4G/5G Indian mobile networks.
+                Installable Progressive Web App (PWA) with light and dark mode, optimized for high performance across all mobile and broadband networks worldwide.
               </p>
             </div>
           </div>

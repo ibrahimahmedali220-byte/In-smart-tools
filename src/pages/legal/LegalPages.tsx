@@ -31,13 +31,13 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
     title: 'Privacy Policy',
     slug: 'privacy-policy',
     lastUpdated: 'October 2026',
-    description: 'A transparent, factual breakdown of how India Smart Tools processes user calculations, browser storage, and communication data.',
-    notice: 'LEGAL REVIEW RECOMMENDED — This document describes the actual technical architecture of India Smart Tools. We do not claim 100% legal compliance with any specific regional law without formal legal verification.',
+    description: 'A transparent, factual breakdown of how Smartly Tools processes user calculations, browser storage, and communication data.',
+    notice: 'LEGAL REVIEW RECOMMENDED — This document describes the actual technical architecture of Smartly Tools. We do not claim 100% legal compliance with any specific regional law without formal legal verification.',
     sections: [
       {
         title: '1. Architecture & Privacy by Design',
         content: [
-          'India Smart Tools is engineered around a client-first, privacy-by-design model. Every utility, calculator, and converter on this platform operates 100% locally within your browser runtime using standard Web APIs (HTML5, Canvas, Web Crypto, and local JavaScript).',
+          'Smartly Tools is engineered around a client-first, privacy-by-design model. Every utility, calculator, and converter on this platform operates 100% locally within your browser runtime using standard Web APIs (HTML5, Canvas, Web Crypto, and local JavaScript).',
           'Your calculations, document uploads, marks percentages, loan figures, and images are NEVER transmitted to or stored on any remote server. When you close or refresh your browser tab, all calculation inputs held in runtime memory are discarded.'
         ]
       },
@@ -48,7 +48,7 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
           '• Personal financial data: Salary figures, loan balances, bank details, SIP contribution amounts, or GST numbers.',
           '• Personal academic records: Roll numbers, marks, exam scores, CGPA, or student identifiers.',
           '• Personal identity documents: Aadhaar numbers, PAN numbers, passport photos, or signature scans uploaded to image or PDF tools.',
-          '• Account credentials: India Smart Tools requires no registration, password creation, or user login.'
+          '• Account credentials: Smartly Tools requires no registration, password creation, or user login.'
         ]
       },
       {
@@ -64,7 +64,7 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
       {
         title: '4. Browser Storage & Local Preferences',
         content: [
-          'India Smart Tools does NOT use third-party tracking cookies, advertising pixels, or cross-site fingerprinting technologies.',
+          'Smartly Tools does NOT use third-party tracking cookies, advertising pixels, or cross-site fingerprinting technologies.',
           'To provide a seamless, app-like Progressive Web App (PWA) experience, we use local browser storage (localStorage) strictly for three user-controlled preferences:',
           '1. Theme Preference (ist_theme): Stores your selected display theme (light, dark, or system).',
           '2. Favorite Tools (ist_favorites): Stores the string IDs of tools you have explicitly starred for quick access.',
@@ -91,19 +91,19 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
     title: 'Terms of Service',
     slug: 'terms',
     lastUpdated: 'October 2026',
-    description: 'General terms and conditions governing the use of India Smart Tools free online utilities.',
+    description: 'General terms and conditions governing the use of Smartly Tools free online utilities.',
     notice: 'LEGAL REVIEW RECOMMENDED — These Terms of Service set forth reasonable usage standards for a free, public utility website.',
     sections: [
       {
         title: '1. Acceptance of Terms',
         content: [
-          'By accessing and using India Smart Tools (smartlytools.cyou), you agree to be bound by these Terms of Service. If you do not agree with these terms, you should discontinue using the website.'
+          'By accessing and using Smartly Tools (smartlytools.cyou), you agree to be bound by these Terms of Service. If you do not agree with these terms, you should discontinue using the website.'
         ]
       },
       {
         title: '2. Free Educational & Utility Platform',
         content: [
-          'India Smart Tools provides computational calculators, document utilities, and academic converters free of charge for personal, academic, and professional convenience.',
+          'Smartly Tools provides computational calculators, document utilities, and academic converters free of charge for personal, academic, and professional convenience.',
           'All tools are provided on an "as is" and "as available" basis without warranties of any kind.'
         ]
       },
@@ -117,7 +117,7 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
       {
         title: '4. Acceptable Use',
         content: [
-          'You agree not to misuse our services, attempt to disrupt infrastructure, reverse-engineer proprietary assets, or execute automated scraping that impairs performance for other Indian users.'
+          'You agree not to misuse our services, attempt to disrupt infrastructure, reverse-engineer proprietary assets, or execute automated scraping that impairs performance for other users.'
         ]
       }
     ]
@@ -126,7 +126,7 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
     title: 'Cookie Policy',
     slug: 'cookie-policy',
     lastUpdated: 'October 2026',
-    description: 'Detailed information regarding browser storage, preferences, and cookie usage on India Smart Tools.',
+    description: 'Detailed information regarding browser storage, preferences, and cookie usage on Smartly Tools.',
     notice: 'LEGAL REVIEW RECOMMENDED — We do not use third-party tracking or advertising cookies.',
     sections: [
       {
@@ -136,7 +136,7 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
         ]
       },
       {
-        title: '2. How India Smart Tools Uses Storage',
+        title: '2. How Smartly Tools Uses Storage',
         content: [
           '• Theme Preference (localStorage): Remembers whether you selected Light, Dark, or System mode.',
           '• Tool Preferences (localStorage): Remembers your starred favorite tools and up to 8 recently opened tools.',
@@ -147,7 +147,7 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
       {
         title: '3. Zero Third-Party Advertising Trackers',
         content: [
-          'India Smart Tools does not deploy commercial marketing cookies, Facebook pixels, Google Ads trackers, or cross-site tracking beacons.'
+          'Smartly Tools does not deploy commercial marketing cookies, Facebook pixels, Google Ads trackers, or cross-site tracking beacons.'
         ]
       }
     ]
@@ -162,7 +162,7 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
       {
         title: '1. General Informational Notice',
         content: [
-          'The content, tools, calculators, and documentation provided on India Smart Tools are for general informational, educational, and computational assistance only.'
+          'The content, tools, calculators, and documentation provided on Smartly Tools are for general informational, educational, and computational assistance only.'
         ]
       },
       {
@@ -174,7 +174,7 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
       {
         title: '3. Academic & Document Compliance',
         content: [
-          'CGPA conversion factors and exam age eligibility criteria are based on standard Indian benchmarks (CBSE/AICTE/UPSC). Always verify final application criteria against official notification gazettes released by your target examining body.'
+          'CGPA conversion factors and exam age eligibility criteria are based on standard educational benchmarks. Always verify final application criteria against official notification gazettes released by your target examining body or university.'
         ]
       }
     ]
@@ -183,12 +183,12 @@ const LEGAL_DOCS: Record<LegalDocType, LegalDocConfig> = {
     title: 'Refund Policy',
     slug: 'refund-policy',
     lastUpdated: 'October 2026',
-    description: 'Statement regarding payments and transactions on India Smart Tools.',
+    description: 'Statement regarding payments and transactions on Smartly Tools.',
     sections: [
       {
         title: '1. 100% Free Platform Notice',
         content: [
-          'All utilities, tools, and converters on India Smart Tools are completely free to use. We do not charge fees, require paid subscriptions, or process credit card payments.',
+          'All utilities, tools, and converters on Smartly Tools are completely free to use. We do not charge fees, require paid subscriptions, or process credit card payments.',
           'Because no monetary transactions occur on this platform, refunds are not applicable.'
         ]
       }
@@ -204,7 +204,7 @@ export const LegalPage: React.FC<{ type: LegalDocType }> = ({ type }) => {
 
   useEffect(() => {
     updateSeoMetadata({
-      title: `${doc.title} – India Smart Tools`,
+      title: `${doc.title} – Smartly Tools`,
       description: doc.description,
       canonicalPath: `/${doc.slug}`,
       jsonLd: getBreadcrumbListSchema([
@@ -256,7 +256,7 @@ export const LegalPage: React.FC<{ type: LegalDocType }> = ({ type }) => {
             <span aria-hidden="true">·</span>
             <span>Version 1.0</span>
             <span aria-hidden="true">·</span>
-            <span className="text-slate-600 dark:text-slate-300 font-medium">India Smart Tools</span>
+            <span className="text-slate-600 dark:text-slate-300 font-medium">Smartly Tools</span>
           </div>
           <p className="mt-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
             {doc.description}

@@ -1,4 +1,4 @@
-# India Smart Tools - Robots Exclusion Standard
+# Smartly Tools - Robots Exclusion Standard
 User-agent: *
 Allow: /
 

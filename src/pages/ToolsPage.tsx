@@ -17,8 +17,8 @@ export const ToolsPage: React.FC = () => {
 
   useEffect(() => {
     updateSeoMetadata({
-      title: 'All Tools – 20 Fast, Free Online Utilities',
-      description: 'Browse all 20 free online calculators, academic tools, document converters, and everyday utilities on India Smart Tools.',
+      title: 'All Tools – Free Online Utilities & Smart Digital Tools',
+      description: 'Browse all free online calculators, academic tools, document converters, and everyday utilities on Smartly Tools.',
       canonicalPath: '/tools',
       jsonLd: getBreadcrumbListSchema([
         { name: 'Home', item: '/' },

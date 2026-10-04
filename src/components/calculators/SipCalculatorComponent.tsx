@@ -84,7 +84,7 @@ export const SipCalculatorComponent: React.FC = () => {
               { label: '14% (Flexi-cap)', value: 14.0 },
               { label: '16% (Small-cap)', value: 16.0 }
             ]}
-            helperText="Past market averages range from 11% to 15% across broad Indian equity indices over 7+ years."
+            helperText="Past market averages range from 10% to 15% across broad equity indices over 7+ years."
           />
 
           {/* Duration */}

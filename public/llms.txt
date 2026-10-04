@@ -1,45 +1,48 @@
-# India Smart Tools
-> Simple tools for everyday India.
+# Smartly Tools
+> Simple, fast and free online utility platform.
 
 ## About
-India Smart Tools is an Indian all-in-one online utility platform providing fast, free, and privacy-first digital tools. Built specifically for students, job applicants, creators, small business owners, and everyday households across India.
+Smartly Tools is an all-in-one online utility platform providing fast, free, and privacy-first digital tools. Built for students, job applicants, creators, small business owners, and everyday productivity.
 
 - **Primary URL**: https://www.smartlytools.cyou
+- **Official Contact Email**: kmnurbusiness@gmail.com
 - **Platform Type**: Client-side Web Application (Privacy-first, zero cloud retention of user documents)
-- **Target Audience**: Indian students, job seekers, creators, small business owners, professionals
+- **Target Audience**: Students, job seekers, creators, small business owners, professionals worldwide
 
 ## Main Categories & Available Tools
 
 ### 1. Everyday Tools (/tools/everyday)
 - **QR Code Generator** (/tools/qr-generator): Creates customizable QR codes with logo support for UPI payments, Wi-Fi credentials, and URLs.
 - **Password Generator** (/tools/password-generator): Cryptographically secure password and passphrase generator using Web Crypto API.
-- **Unit Converter** (/tools/unit-converter): Standard metric conversions plus traditional Indian land units (Bigha, Guntha, Gaj, Ground, Marla).
+- **Unit Converter** (/tools/unit-converter): Standard metric conversions plus regional land units (Bigha, Guntha, Gaj, Ground, Marla).
 - **Date Difference** (/tools/date-difference): Calculates calendar day and working business day duration between dates.
-- **BMI Calculator** (/tools/bmi-calculator): Body Mass Index calculated with WHO and Asian-Indian adjusted health cutoffs.
+- **BMI Calculator** (/tools/bmi-calculator): Body Mass Index calculated with WHO and Asian adjusted health cutoffs.
+- **Private Calculator** (/tools/private-calculator): Chained arithmetic calculator with secret PIN Private Vault concept preview.
 - **Private Calling** (/tools/private-calling): Masked, privacy-first calling system under development using authorized telecom infrastructure.
 
 ### 2. Document Tools (/tools/documents)
 - **JPG to PDF** (/tools/jpg-to-pdf): In-browser photo to PDF document compiler with direct WhatsApp and social sharing.
 - **PDF to JPG** (/tools/pdf-to-jpg): Extracts PDF pages as individual high-resolution JPG images.
 - **PDF Compressor** (/tools/pdf-compressor): Shrinks PDF file sizes to under 100 KB, 200 KB, or 500 KB for portal limits.
-- **Image Compressor** (/tools/image-compressor): Reduces photo and signature file sizes to under 20 KB or 50 KB for UPSC/SSC portals.
+- **Image Compressor** (/tools/image-compressor): Reduces photo and signature file sizes to under 20 KB or 50 KB for application portals.
 - **Image Resizer** (/tools/image-resizer): Resizes images to exact pixel dimensions (350x450, 200x230) and passport standards.
 
 ### 3. Finance Tools (/tools/finance)
 - **EMI Calculator** (/tools/emi-calculator): Standard reducing balance monthly installment solver with principal vs interest schedule.
 - **SIP Calculator** (/tools/sip-calculator): Mutual fund wealth growth projector with compounding and annual step-up increments.
-- **GST Calculator** (/tools/gst-calculator): Inclusive/exclusive tax calculator across Indian slabs (5%, 12%, 18%, 28%) with CGST/SGST/IGST breakdown.
+- **GST Calculator** (/tools/gst-calculator): Inclusive/exclusive tax calculator across standard slabs (5%, 12%, 18%, 28%) with CGST/SGST/IGST breakdown.
 - **Salary Calculator** (/tools/salary-calculator): Cost to Company (CTC) to monthly take-home salary converter comparing old vs new tax regimes.
-- **FD Calculator** (/tools/fd-calculator): Bank and post office fixed deposit maturity interest calculator with quarterly compounding.
+- **FD Calculator** (/tools/fd-calculator): Bank and fixed deposit maturity interest calculator with quarterly compounding.
 
 ### 4. Student Tools (/tools/student)
-- **Percentage Calculator** (/tools/percentage-calculator): Board exam marks percentages, aggregate subject calculator, and target score solver.
-- **CGPA Calculator** (/tools/cgpa-calculator): Converts university CGPA/SGPA to percentage using CBSE (9.5x), VTU, AKTU, and university formulas.
-- **Age Calculator** (/tools/age-calculator): Chronological age counter in years, months, and days for government recruitment cutoff dates.
+- **Percentage Calculator** (/tools/percentage-calculator): Exam marks percentages, aggregate subject calculator, and target score solver.
+- **CGPA Calculator** (/tools/cgpa-calculator): Converts university CGPA/SGPA to percentage using standard educational multipliers.
+- **Age Calculator** (/tools/age-calculator): Chronological age counter in years, months, and days for application cutoff dates.
 - **Study Timer** (/tools/study-timer): Distraction-free Pomodoro (25/5) and custom interval study timer.
 - **Word Counter** (/tools/word-counter): Character, word, sentence, and paragraph counter with reading time and SOP length checks.
 
 ## Contact & Support
+- **Official Email**: kmnurbusiness@gmail.com
 - **General Inquiries**: https://www.smartlytools.cyou/contact
 - **Bug Reporting**: https://www.smartlytools.cyou/support/report-problem
 - **Suggest a Tool**: https://www.smartlytools.cyou/support/suggest-tool

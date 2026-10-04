@@ -9,8 +9,8 @@ import { Home, Compass, ArrowRight } from 'lucide-react';
 export const NotFoundPage: React.FC = () => {
   useEffect(() => {
     updateSeoMetadata({
-      title: 'Page Not Found (404) – India Smart Tools',
-      description: 'The requested tool or page could not be located on India Smart Tools.',
+      title: 'Page Not Found (404) – Smartly Tools',
+      description: 'The requested tool or page could not be located on Smartly Tools.',
       noIndex: true
     });
   }, []);
