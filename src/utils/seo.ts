@@ -20,8 +20,8 @@ export interface SeoConfig {
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const DEFAULT_TITLE = 'Smartly Tools – Free Online Calculators & Digital Utilities';
-const DEFAULT_DESCRIPTION = 'Smartly Tools is a fast, free, and privacy-first global web utility platform providing free digital tools: calculators, PDF tools, image compressors, QR codes, and everyday utilities.';
+const DEFAULT_TITLE = 'Smartly Tools – Free Online Tools for Everyday Tasks';
+const DEFAULT_DESCRIPTION = 'Smartly Tools provides free online tools for everyday tasks, including calculators, converters, generators and other useful web tools.';
 const DEFAULT_SITE_NAME = 'Smartly Tools';
 const DEFAULT_OG_IMAGE = '/og-image.svg';
 
@@ -163,12 +163,30 @@ export function getWebSiteSchema(baseUrl: string = getBaseUrl()): Record<string,
     '@type': 'WebSite',
     name: 'Smartly Tools',
     url: baseUrl,
-    description: 'Smartly Tools is a fast, free, and privacy-conscious online utility platform providing QR generator, PDF tools, student calculators, and financial tools.',
+    description: 'Smartly Tools provides free online tools for everyday tasks, including calculators, converters, generators and other useful web tools.',
     potentialAction: {
       '@type': 'SearchAction',
       target: `${baseUrl}/tools?q={search_term_string}`,
       'query-input': 'required name=search_term_string'
     }
+  };
+}
+
+/**
+ * Generates Schema.org FAQPage structured data
+ */
+export function getFaqPageSchema(faqs: { q: string; a: string }[]): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a
+      }
+    }))
   };
 }
 
@@ -237,7 +255,7 @@ export function getWebApplicationSchema(
     offers: {
       '@type': 'Offer',
       price: '0',
-      priceCurrency: 'INR'
+      priceCurrency: 'USD'
     }
   };
 }

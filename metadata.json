@@ -1,6 +1,6 @@
 {
   "name": "Smartly Tools",
-  "description": "Simple, fast and free online utility platform for students, job seekers, creators and everyday users.",
+  "description": "Smartly Tools provides free online tools for everyday tasks, including calculators, converters, generators and other useful web tools.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

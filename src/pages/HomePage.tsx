@@ -6,9 +6,36 @@ import { ToolCard } from '../components/common/ToolCard';
 import { PWAInstallButton } from '../components/common/PWAInstallButton';
 import { CATEGORIES, TOOLS } from '../data/tools';
 import { Link, useRouter } from '../router/Router';
-import { updateSeoMetadata, getWebSiteSchema } from '../utils/seo';
-import { ShieldCheck, Zap, Laptop, ArrowRight, Star, History, Trash2, Clock } from 'lucide-react';
+import { updateSeoMetadata, getWebSiteSchema, getFaqPageSchema } from '../utils/seo';
+import { ShieldCheck, Zap, Laptop, ArrowRight, Star, History, Trash2, Clock, HelpCircle } from 'lucide-react';
 import { useUserPreferences } from '../hooks/useUserPreferences';
+
+const HOMEPAGE_FAQS = [
+  {
+    q: 'What is Smartly Tools?',
+    a: 'Smartly Tools is a free online platform providing fast, privacy-first web utilities and digital tools for everyday tasks, including loan calculators, image compressors, PDF converters, and unit calculators.'
+  },
+  {
+    q: 'Are Smartly Tools free?',
+    a: 'Yes, every tool on Smartly Tools is 100% free to use. There are no subscriptions, hidden fees, or paywalls.'
+  },
+  {
+    q: 'How do I use an online calculator?',
+    a: 'Simply select your calculator from the directory, type your values into the input fields, and view immediate results. You can also view step-by-step calculation formulas and practical examples.'
+  },
+  {
+    q: 'Do I need to create an account?',
+    a: 'No. You do not need to register, create an account, or share personal contact information to access any tool.'
+  },
+  {
+    q: 'Are my files uploaded to a server?',
+    a: 'No. All document conversions, PDF operations, and calculations run client-side directly in your browser. Your sensitive files and private inputs never leave your device.'
+  },
+  {
+    q: 'Can I use Smartly Tools on mobile and offline?',
+    a: 'Yes. Smartly Tools is responsive and works as an installable Progressive Web App (PWA) on both Android and iOS devices, retaining functionality even without internet.'
+  }
+];
 
 export const HomePage: React.FC = () => {
   const { favoriteTools, recentTools, recentSearches, removeSearch, clearRecentSearches, clearRecentTools } = useUserPreferences();
@@ -16,10 +43,13 @@ export const HomePage: React.FC = () => {
 
   useEffect(() => {
     updateSeoMetadata({
-      title: 'Smartly Tools – Free Online Calculators & Digital Utilities',
-      description: 'Smartly Tools is a fast, free, and privacy-first global web utility platform providing free digital tools: calculators, PDF tools, image compressors, QR codes, and everyday utilities.',
+      title: 'Smartly Tools – Free Online Tools for Everyday Tasks',
+      description: 'Smartly Tools provides free online tools for everyday tasks, including calculators, converters, generators and other useful web tools.',
       canonicalPath: '/',
-      jsonLd: getWebSiteSchema()
+      jsonLd: [
+        getWebSiteSchema(),
+        getFaqPageSchema(HOMEPAGE_FAQS)
+      ]
     });
   }, []);
 
@@ -38,7 +68,7 @@ export const HomePage: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-slate-100 text-balance">
-            Simple, fast and free digital tools.
+            Free Online Tools for Everyday Tasks
           </h1>
 
           <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
@@ -156,15 +186,18 @@ export const HomePage: React.FC = () => {
           </section>
         )}
 
-        {/* Section 1: Featured Essential Tools (QR Code Generator & JPG to PDF at Top #1 and #2, above Categories) */}
+        {/* Section 1: Useful Free Online Tools */}
         <section>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-2">
             <div>
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                Useful Free Online Tools
+              </span>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 tracking-tight mt-0.5">
                 Featured Tools
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-                Top utilities including QR Code Generator, JPG to PDF, and financial calculators.
+                Handy online tools including QR Code Generator, JPG to PDF converter, and financial calculators.
               </p>
             </div>
             <Link
@@ -209,7 +242,7 @@ export const HomePage: React.FC = () => {
           </section>
         )}
 
-        {/* Section 2: Browse by Category (Placed below Featured Tools) */}
+        {/* Section 2: Browse by Category */}
         <section>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-2">
             <div>
@@ -242,11 +275,63 @@ export const HomePage: React.FC = () => {
           </div>
         </section>
 
-        {/* Section 3: Architecture & Guarantees */}
+        {/* Section: What is Smartly Tools & How It Works */}
+        <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-8 sm:p-10 md:p-12 transition-colors">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            <div className="space-y-4">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                Overview
+              </span>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
+                What is Smartly Tools?
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Smartly Tools is a free, fast, and privacy-first online platform offering useful digital utilities for everyday tasks. Designed for students, job applicants, creators, and everyday productivity, the platform provides calculators, converters, image compressors, and PDF tools without subscription walls or complicated interfaces.
+              </p>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Every utility is engineered to execute directly inside your web browser. This means calculations happen in milliseconds, document compression runs on your own device, and your private data never touches remote servers.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                Process
+              </span>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
+                How Smartly Tools Works
+              </h2>
+              <div className="space-y-3 pt-1">
+                <div className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 flex items-center justify-center text-xs font-bold shrink-0">1</span>
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <strong className="text-slate-900 dark:text-slate-100">Pick a Tool:</strong> Search by keyword or explore categories like Finance, Documents, Student, or Everyday tools.
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 flex items-center justify-center text-xs font-bold shrink-0">2</span>
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <strong className="text-slate-900 dark:text-slate-100">Input Your Data:</strong> Type in your figures, paste text, or select local files for instant processing.
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 flex items-center justify-center text-xs font-bold shrink-0">3</span>
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <strong className="text-slate-900 dark:text-slate-100">Get Instant Results:</strong> View formatted outputs, copy answers to your clipboard, or download converted documents immediately.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 3: Why Use Smartly Tools? */}
         <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-8 sm:p-10 md:p-12 transition-colors">
           <div className="max-w-2xl mb-8">
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
-              Designed for Speed, Simplicity & Privacy
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              Advantages
+            </span>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 tracking-tight mt-0.5">
+              Why Use Smartly Tools?
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
               Smartly Tools is engineered to solve everyday calculations and file operations without annoying sign-up walls, sluggish bloat, or data tracking.
@@ -286,7 +371,39 @@ export const HomePage: React.FC = () => {
           </div>
         </section>
 
+        {/* Section: Frequently Asked Questions */}
+        <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-8 sm:p-10 md:p-12 transition-colors">
+          <div className="max-w-2xl mb-8">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              Got Questions?
+            </span>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 tracking-tight mt-0.5">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Find quick answers to common questions about using Smartly Tools.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {HOMEPAGE_FAQS.map((faq, idx) => (
+              <div
+                key={idx}
+                className="p-5 rounded-xl bg-slate-50/70 dark:bg-slate-800/50 border border-slate-200/70 dark:border-slate-800 space-y-2"
+              >
+                <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                  {faq.q}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                  {faq.a}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
       </PageContainer>
     </div>
   );
 };
+

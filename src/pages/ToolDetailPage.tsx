@@ -7,11 +7,12 @@ import { Button } from '../components/common/Button';
 import { ErrorBoundary } from '../components/common/ErrorBoundary';
 import { getToolBySlug, getCategoryById, getToolsByCategory, TOOLS } from '../data/tools';
 import { Link } from '../router/Router';
-import { updateSeoMetadata, getBreadcrumbListSchema, getWebApplicationSchema } from '../utils/seo';
+import { updateSeoMetadata, getBreadcrumbListSchema, getWebApplicationSchema, getFaqPageSchema } from '../utils/seo';
 import { safeClipboardCopy } from '../utils/security';
 import { NotFoundPage } from './NotFoundPage';
 import { useToast } from '../components/common/Toast';
 import { BackButton } from '../components/common/BackButton';
+import { TOOL_SEO_DATA } from '../data/toolSeoData';
 
 // Lazy-loaded Financial Calculator Components (Part 6)
 const EmiCalculatorComponent = React.lazy(() => import('../components/calculators/EmiCalculatorComponent').then(m => ({ default: m.EmiCalculatorComponent })));
@@ -62,36 +63,37 @@ export interface ToolDetailPageProps {
   slug: string;
 }
 
-// Relevant internal links specified in Requirements 18, 19 & Parts 8-9
+// Relevant natural internal links between tools (e.g. Calculator -> Unit Converter, Image Tools -> Image Compressor)
 const SPECIFIED_RELATED_TOOLS: Record<string, string[]> = {
-  // Finance (Part 6)
-  'emi-calculator': ['sip-calculator', 'salary-calculator', 'fd-calculator'],
+  // Finance
+  'emi-calculator': ['sip-calculator', 'salary-calculator', 'unit-converter', 'fd-calculator'],
   'sip-calculator': ['emi-calculator', 'fd-calculator', 'salary-calculator'],
-  'gst-calculator': ['salary-calculator'],
+  'gst-calculator': ['salary-calculator', 'percentage-calculator'],
   'salary-calculator': ['emi-calculator', 'sip-calculator', 'fd-calculator'],
   'fd-calculator': ['sip-calculator', 'emi-calculator', 'salary-calculator'],
 
-  // Student (Part 7)
-  'percentage-calculator': ['cgpa-calculator', 'age-calculator'],
+  // Student
+  'percentage-calculator': ['cgpa-calculator', 'age-calculator', 'unit-converter'],
   'cgpa-calculator': ['percentage-calculator', 'study-timer'],
-  'age-calculator': ['percentage-calculator', 'date-difference'],
+  'age-calculator': ['date-difference', 'percentage-calculator'],
   'study-timer': ['word-counter', 'percentage-calculator'],
   'word-counter': ['study-timer', 'password-generator'],
 
-  // Documents & Images (Part 8)
+  // Documents & Images
   'jpg-to-pdf': ['pdf-to-jpg', 'pdf-compressor', 'image-compressor'],
-  'pdf-to-jpg': ['jpg-to-pdf', 'pdf-compressor'],
-  'pdf-compressor': ['pdf-to-jpg', 'jpg-to-pdf'],
-  'image-compressor': ['image-resizer', 'jpg-to-pdf'],
+  'pdf-to-jpg': ['jpg-to-pdf', 'pdf-compressor', 'image-compressor'],
+  'pdf-compressor': ['pdf-to-jpg', 'jpg-to-pdf', 'image-compressor'],
+  'image-compressor': ['image-resizer', 'jpg-to-pdf', 'pdf-compressor'],
   'image-resizer': ['image-compressor', 'jpg-to-pdf'],
 
-  // Everyday (Part 9)
+  // Everyday
   'qr-generator': ['password-generator', 'unit-converter'],
-  'password-generator': ['qr-generator', 'word-counter'],
+  'password-generator': ['word-counter', 'qr-generator'],
   'unit-converter': ['percentage-calculator', 'date-difference', 'bmi-calculator'],
   'date-difference': ['age-calculator', 'unit-converter'],
   'bmi-calculator': ['unit-converter', 'age-calculator'],
-  'private-calculator': ['password-generator', 'unit-converter', 'qr-generator']
+  'private-calculator': ['unit-converter', 'percentage-calculator', 'password-generator'],
+  'private-calling': ['password-generator', 'qr-generator']
 };
 
 const ToolSkeleton: React.FC = () => (
@@ -117,6 +119,7 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
   const { isFavorite, toggleFavorite, recordToolVisit } = useUserPreferences();
 
   const isFav = tool ? isFavorite(tool.id) : false;
+  const seoDetail = tool ? TOOL_SEO_DATA[tool.slug] : undefined;
 
   useEffect(() => {
     if (!tool) return;
@@ -124,9 +127,15 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
     recordToolVisit(tool.id);
 
     const category = getCategoryById(tool.category);
+    const detail = TOOL_SEO_DATA[tool.slug];
+
+    const title = detail?.seoTitle || `${tool.name} – Free Online Tool | Smartly Tools`;
+    const description = detail?.seoDescription || tool.description;
+    const toolFaqs = detail?.faqs || categoryFaqs[tool.category] || [];
+
     updateSeoMetadata({
-      title: `${tool.name} – Free Online Tool`,
-      description: tool.description,
+      title,
+      description,
       canonicalPath: tool.route,
       jsonLd: [
         getBreadcrumbListSchema([
@@ -135,7 +144,8 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
           { name: category ? category.name : tool.category, item: category ? category.route : '/tools' },
           { name: tool.name, item: tool.route }
         ]),
-        getWebApplicationSchema(tool)
+        getWebApplicationSchema(tool),
+        ...(toolFaqs.length > 0 ? [getFaqPageSchema(toolFaqs)] : [])
       ]
     });
   }, [tool, recordToolVisit]);
@@ -212,7 +222,9 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
     ]
   };
 
-  const faqs = categoryFaqs[tool.category] || categoryFaqs.documents;
+  const faqs = (seoDetail && seoDetail.faqs && seoDetail.faqs.length > 0)
+    ? seoDetail.faqs
+    : (categoryFaqs[tool.category] || categoryFaqs.documents);
 
   // Formula & How it works documentation for implemented tools
   const toolFormulas: Record<string, { formula: string; explanation: string; steps: string[] }> = {
@@ -466,7 +478,7 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
                 </h1>
 
                 <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
-                  {tool.description}
+                  {seoDetail?.explanation || tool.description}
                 </p>
               </div>
             </div>
@@ -557,7 +569,7 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
                 How to Use This Tool
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                {formulaInfo.steps.map((step, idx) => (
+                {(seoDetail?.howToUseSteps || formulaInfo.steps).map((step, idx) => (
                   <div key={idx} className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 space-y-1">
                     <span className="text-xs font-bold text-slate-900 dark:text-slate-100">Step {idx + 1}</span>
                     <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{step}</p>
@@ -565,6 +577,37 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
                 ))}
               </div>
             </div>
+          </div>
+        )}
+
+        {/* Practical Example Box */}
+        {seoDetail?.example && (
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-4 transition-colors">
+            <div className="border-b border-slate-100 dark:border-slate-800 pb-3 flex items-center justify-between">
+              <h2 className="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-amber-500" aria-hidden="true" />
+                <span>Practical Example: {seoDetail.example.title}</span>
+              </h2>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+              {seoDetail.example.scenario}
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+              {Object.entries(seoDetail.example.inputs).map(([key, val]) => (
+                <div key={key} className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200/70 dark:border-slate-700/60">
+                  <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">{key}</span>
+                  <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 mt-0.5 block">{val}</span>
+                </div>
+              ))}
+            </div>
+            <div className="p-3.5 bg-sky-50/70 dark:bg-sky-950/30 rounded-xl border border-sky-200/70 dark:border-sky-800/50 text-xs sm:text-sm text-sky-900 dark:text-sky-200 font-medium">
+              <strong>Result:</strong> {seoDetail.example.result}
+            </div>
+            {seoDetail.example.note && (
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 italic">
+                Note: {seoDetail.example.note}
+              </p>
+            )}
           </div>
         )}
 
