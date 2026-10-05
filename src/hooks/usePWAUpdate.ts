@@ -9,18 +9,26 @@ export function usePWAUpdate() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    try {
-      const updateSW = registerSW({
-        onNeedRefresh() {
-          setNeedRefresh(true);
-        },
-        onOfflineReady() {
-          setOfflineReady(true);
-        }
-      });
-      setUpdateSWHandler(() => updateSW);
-    } catch {
-      // SW not supported or failed to register
+    const register = () => {
+      try {
+        const updateSW = registerSW({
+          onNeedRefresh() {
+            setNeedRefresh(true);
+          },
+          onOfflineReady() {
+            setOfflineReady(true);
+          }
+        });
+        setUpdateSWHandler(() => updateSW);
+      } catch {
+        // SW not supported or failed to register
+      }
+    };
+
+    if (document.readyState === 'complete') {
+      register();
+    } else {
+      window.addEventListener('load', register, { once: true });
     }
   }, []);
 

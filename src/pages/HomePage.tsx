@@ -20,6 +20,10 @@ const HOMEPAGE_FAQS = [
     a: 'Yes, every tool on Smartly Tools is 100% free to use. There are no subscriptions, hidden fees, or paywalls.'
   },
   {
+    q: 'What types of free online tools are available on Smartly Tools?',
+    a: 'Smartly Tools offers a wide variety of free online tools across four main categories: everyday utilities (QR generator, password generator, unit converter), document tools (PDF compressor, image resizer, JPG to PDF), financial calculators (EMI, SIP, GST, FD, salary), and academic aids (percentage calculator, CGPA converter, study timer).'
+  },
+  {
     q: 'How do I use an online calculator?',
     a: 'Simply select your calculator from the directory, type your values into the input fields, and view immediate results. You can also view step-by-step calculation formulas and practical examples.'
   },
@@ -186,18 +190,18 @@ export const HomePage: React.FC = () => {
           </section>
         )}
 
-        {/* Section 1: Useful Free Online Tools */}
+        {/* Section 1: Free Online Tools */}
         <section>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-2">
             <div>
               <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                Useful Free Online Tools
+                Handy Web Utilities
               </span>
               <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 tracking-tight mt-0.5">
-                Featured Tools
+                Free Online Tools
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-                Handy online tools including QR Code Generator, JPG to PDF converter, and financial calculators.
+                Explore popular free online tools including QR Code Generator, JPG to PDF converter, and financial calculators.
               </p>
             </div>
             <Link
@@ -275,7 +279,7 @@ export const HomePage: React.FC = () => {
           </div>
         </section>
 
-        {/* Section: What is Smartly Tools & How It Works */}
+        {/* Section: What is Smartly Tools & How to Use Smartly Tools */}
         <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-8 sm:p-10 md:p-12 transition-colors">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             <div className="space-y-4">
@@ -286,10 +290,10 @@ export const HomePage: React.FC = () => {
                 What is Smartly Tools?
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Smartly Tools is a free, fast, and privacy-first online platform offering useful digital utilities for everyday tasks. Designed for students, job applicants, creators, and everyday productivity, the platform provides calculators, converters, image compressors, and PDF tools without subscription walls or complicated interfaces.
+                Smartly Tools is a dedicated collection of free online tools built to solve everyday tasks with maximum speed and absolute privacy. Designed for students, job applicants, creators, and everyday productivity, our free online tools provide calculators, converters, image compressors, and PDF tools without subscription walls or complicated interfaces.
               </p>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Every utility is engineered to execute directly inside your web browser. This means calculations happen in milliseconds, document compression runs on your own device, and your private data never touches remote servers.
+                Every utility is engineered to execute directly inside your web browser using client-side algorithms. This means calculations happen in milliseconds, document compression runs on your own device, and your private data never touches remote servers.
               </p>
             </div>
 
@@ -298,13 +302,13 @@ export const HomePage: React.FC = () => {
                 Process
               </span>
               <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
-                How Smartly Tools Works
+                How to Use Smartly Tools
               </h2>
               <div className="space-y-3 pt-1">
                 <div className="flex items-start gap-3">
                   <span className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 flex items-center justify-center text-xs font-bold shrink-0">1</span>
                   <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                    <strong className="text-slate-900 dark:text-slate-100">Pick a Tool:</strong> Search by keyword or explore categories like Finance, Documents, Student, or Everyday tools.
+                    <strong className="text-slate-900 dark:text-slate-100">Pick a Tool:</strong> Search by keyword or explore categories like Finance, Documents, Student, or Everyday free online tools.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
@@ -334,7 +338,7 @@ export const HomePage: React.FC = () => {
               Why Use Smartly Tools?
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
-              Smartly Tools is engineered to solve everyday calculations and file operations without annoying sign-up walls, sluggish bloat, or data tracking.
+              Smartly Tools delivers fast, private, and reliable free online tools engineered to solve everyday calculations and file operations without annoying sign-up walls, sluggish bloat, or data tracking.
             </p>
           </div>
 
