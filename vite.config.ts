@@ -112,9 +112,6 @@ export default defineConfig(() => {
               if (id.includes('pdf-lib') || id.includes('@pdf-lib')) {
                 return 'vendor-pdflib';
               }
-              if (id.includes('pdfjs-dist')) {
-                return 'vendor-pdfjs';
-              }
               if (id.includes('qrcode')) {
                 return 'vendor-qrcode';
               }

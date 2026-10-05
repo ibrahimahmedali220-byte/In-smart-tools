@@ -130,7 +130,7 @@ export const Footer: React.FC = () => {
             <p>© 2026 Smartly Tools. All rights reserved.</p>
             <PrivacyWiperButton />
           </div>
-          <p className="text-[11px] text-slate-400 dark:text-slate-500">
+          <p className="text-[11px] text-slate-500 dark:text-slate-400">
             Built with modern web standards for high-speed performance across all devices.
           </p>
         </div>

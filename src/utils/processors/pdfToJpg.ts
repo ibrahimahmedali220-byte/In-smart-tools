@@ -4,12 +4,20 @@
  * Script execution is disabled (isEvalSupported: false) to protect against untrusted PDF payloads.
  */
 
-import * as pdfjsLib from 'pdfjs-dist';
 import { sanitizeFilename } from '../security/fileSecurity';
 
-// Configure PDF.js worker safely
-if (typeof window !== 'undefined') {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
+let pdfjsLibPromise: Promise<typeof import('pdfjs-dist')> | null = null;
+
+async function getPdfJs(): Promise<typeof import('pdfjs-dist')> {
+  if (!pdfjsLibPromise) {
+    pdfjsLibPromise = import('pdfjs-dist').then(lib => {
+      if (typeof window !== 'undefined' && !lib.GlobalWorkerOptions.workerSrc) {
+        lib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${lib.version}/pdf.worker.min.mjs`;
+      }
+      return lib;
+    });
+  }
+  return pdfjsLibPromise;
 }
 
 export interface RenderedPageItem {
@@ -28,6 +36,7 @@ export interface PdfInfo {
 }
 
 export async function loadPdfInfo(file: File): Promise<PdfInfo> {
+  const pdfjsLib = await getPdfJs();
   const arrayBuffer = await file.arrayBuffer();
   const loadingTask = pdfjsLib.getDocument({
     data: arrayBuffer,
@@ -52,6 +61,7 @@ export async function convertPdfToJpg(
   },
   onProgress?: (percent: number, currentPage: number) => void
 ): Promise<RenderedPageItem[]> {
+  const pdfjsLib = await getPdfJs();
   const arrayBuffer = await file.arrayBuffer();
 
   const loadingTask = pdfjsLib.getDocument({
