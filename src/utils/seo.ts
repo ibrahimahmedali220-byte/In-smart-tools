@@ -74,7 +74,7 @@ export function updateSeoMetadata(config: SeoConfig = {}) {
   setMetaTag('property', 'og:url', canonicalUrl);
   setMetaTag('property', 'og:type', config.type || 'website');
   setMetaTag('property', 'og:image', imageUrl);
-  setMetaTag('property', 'og:locale', 'en_IN');
+  setMetaTag('property', 'og:locale', 'en_US');
 
   // 4. Twitter / X Cards
   setMetaTag('name', 'twitter:card', 'summary_large_image');
@@ -87,6 +87,15 @@ export function updateSeoMetadata(config: SeoConfig = {}) {
 
   // 6. Structured Data (JSON-LD)
   updateJsonLd(config.jsonLd);
+
+  // 7. Google Analytics (gtag.js) virtual page view tracking
+  if (typeof window !== 'undefined' && typeof (window as unknown as { gtag?: Function }).gtag === 'function') {
+    (window as unknown as { gtag: Function }).gtag('config', 'G-2XXDRJKM8D', {
+      page_path: cleanPath,
+      page_title: title,
+      page_location: canonicalUrl,
+    });
+  }
 }
 
 function setMetaTag(attrName: 'name' | 'property', attrValue: string, content: string) {
