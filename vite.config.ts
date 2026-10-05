@@ -95,11 +95,39 @@ export default defineConfig(() => {
     ],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, '.'),
+        '@': path.resolve(import.meta.dirname, '.'),
       },
     },
     build: {
       sourcemap: false, // Prevent public source map exposure in production
+      chunkSizeWarningLimit: 900,
+      rollupOptions: {
+        output: {
+          sourcemap: false,
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('react/') || id.includes('react-dom/')) {
+                return 'vendor-react';
+              }
+              if (id.includes('lucide-react')) {
+                return 'vendor-icons';
+              }
+              if (id.includes('pdf-lib') || id.includes('@pdf-lib')) {
+                return 'vendor-pdflib';
+              }
+              if (id.includes('pdfjs-dist')) {
+                return 'vendor-pdfjs';
+              }
+              if (id.includes('qrcode')) {
+                return 'vendor-qrcode';
+              }
+              if (id.includes('@vercel/analytics')) {
+                return 'vendor-analytics';
+              }
+            }
+          }
+        }
+      }
     },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.

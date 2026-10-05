@@ -1,50 +1,54 @@
 # Smartly Tools
-> Simple, fast and free online utility platform.
 
-## About
-Smartly Tools is an all-in-one online utility platform providing fast, free, and privacy-first digital tools. Built for students, job applicants, creators, small business owners, and everyday productivity.
+> Fast, free, and privacy-first online utilities and digital calculators for students, job applicants, creators, and everyday productivity.
 
-- **Primary URL**: https://www.smartlytools.cyou
-- **Official Contact Email**: kmnurbusiness@gmail.com
-- **Platform Type**: Client-side Web Application (Privacy-first, zero cloud retention of user documents)
-- **Target Audience**: Students, job seekers, creators, small business owners, professionals worldwide
+Smartly Tools provides a comprehensive suite of 20+ client-side web tools executed directly inside the user's browser, ensuring zero server-side retention of sensitive files, financial figures, or private calculations.
 
-## Main Categories & Available Tools
+## Everyday Tools
 
-### 1. Everyday Tools (/tools/everyday)
-- **QR Code Generator** (/tools/qr-generator): Creates customizable QR codes with logo support for UPI payments, Wi-Fi credentials, and URLs.
-- **Password Generator** (/tools/password-generator): Cryptographically secure password and passphrase generator using Web Crypto API.
-- **Unit Converter** (/tools/unit-converter): Standard metric conversions plus regional land units (Bigha, Guntha, Gaj, Ground, Marla).
-- **Date Difference** (/tools/date-difference): Calculates calendar day and working business day duration between dates.
-- **BMI Calculator** (/tools/bmi-calculator): Body Mass Index calculated with WHO and Asian adjusted health cutoffs.
-- **Private Calculator** (/tools/private-calculator): Chained arithmetic calculator with secret PIN Private Vault concept preview.
-- **Private Calling** (/tools/private-calling): Masked, privacy-first calling system under development using authorized telecom infrastructure.
+- [QR Code Generator](https://www.smartlytools.cyou/tools/qr-generator): Create customized QR codes with logo support for UPI payments, Wi-Fi credentials, and URLs with PNG/SVG export.
+- [Password Generator](https://www.smartlytools.cyou/tools/password-generator): Generate cryptographically secure passwords and passphrases using Web Crypto API.
+- [Unit Converter](https://www.smartlytools.cyou/tools/unit-converter): Convert metric and imperial units across 7 measurement categories, including regional land units (Bigha, Guntha, Gaj, Ground, Marla).
+- [Date Difference](https://www.smartlytools.cyou/tools/date-difference): Calculate calendar day spans, working business days, and exact years/months/days between dates.
+- [BMI Calculator](https://www.smartlytools.cyou/tools/bmi-calculator): Compute Body Mass Index with WHO standard and Asian consensus adjusted health thresholds.
+- [Private Calculator](https://www.smartlytools.cyou/tools/private-calculator): High-speed chained arithmetic calculator with secret PIN vault verification concept preview.
+- [Private Calling](https://www.smartlytools.cyou/tools/private-calling): Interactive concept preview for privacy-first, number-masked outbound communications.
 
-### 2. Document Tools (/tools/documents)
-- **JPG to PDF** (/tools/jpg-to-pdf): In-browser photo to PDF document compiler with direct WhatsApp and social sharing.
-- **PDF to JPG** (/tools/pdf-to-jpg): Extracts PDF pages as individual high-resolution JPG images.
-- **PDF Compressor** (/tools/pdf-compressor): Shrinks PDF file sizes to under 100 KB, 200 KB, or 500 KB for portal limits.
-- **Image Compressor** (/tools/image-compressor): Reduces photo and signature file sizes to under 20 KB or 50 KB for application portals.
-- **Image Resizer** (/tools/image-resizer): Resizes images to exact pixel dimensions (350x450, 200x230) and passport standards.
+## Document Tools
 
-### 3. Finance Tools (/tools/finance)
-- **EMI Calculator** (/tools/emi-calculator): Standard reducing balance monthly installment solver with principal vs interest schedule.
-- **SIP Calculator** (/tools/sip-calculator): Mutual fund wealth growth projector with compounding and annual step-up increments.
-- **GST Calculator** (/tools/gst-calculator): Inclusive/exclusive tax calculator across standard slabs (5%, 12%, 18%, 28%) with CGST/SGST/IGST breakdown.
-- **Salary Calculator** (/tools/salary-calculator): Cost to Company (CTC) to monthly take-home salary converter comparing old vs new tax regimes.
-- **FD Calculator** (/tools/fd-calculator): Bank and fixed deposit maturity interest calculator with quarterly compounding.
+- [JPG to PDF](https://www.smartlytools.cyou/tools/jpg-to-pdf): In-browser photo to PDF document compiler with direct WhatsApp and social sharing.
+- [PDF to JPG](https://www.smartlytools.cyou/tools/pdf-to-jpg): Extract PDF pages as individual high-resolution JPG images client-side.
+- [PDF Compressor](https://www.smartlytools.cyou/tools/pdf-compressor): Compress PDF document file sizes to meet 100 KB, 200 KB, or 500 KB portal limits.
+- [Image Compressor](https://www.smartlytools.cyou/tools/image-compressor): Compress photo and signature images to under 20 KB or 50 KB for application forms.
+- [Image Resizer](https://www.smartlytools.cyou/tools/image-resizer): Resize and crop images to exact pixel dimensions (passport 350x450, signature 200x230).
 
-### 4. Student Tools (/tools/student)
-- **Percentage Calculator** (/tools/percentage-calculator): Exam marks percentages, aggregate subject calculator, and target score solver.
-- **CGPA Calculator** (/tools/cgpa-calculator): Converts university CGPA/SGPA to percentage using standard educational multipliers.
-- **Age Calculator** (/tools/age-calculator): Chronological age counter in years, months, and days for application cutoff dates.
-- **Study Timer** (/tools/study-timer): Distraction-free Pomodoro (25/5) and custom interval study timer.
-- **Word Counter** (/tools/word-counter): Character, word, sentence, and paragraph counter with reading time and SOP length checks.
+## Finance Tools
 
-## Contact & Support
-- **Official Email**: kmnurbusiness@gmail.com
-- **General Inquiries**: https://www.smartlytools.cyou/contact
-- **Bug Reporting**: https://www.smartlytools.cyou/support/report-problem
-- **Suggest a Tool**: https://www.smartlytools.cyou/support/suggest-tool
-- **Privacy Policy**: https://www.smartlytools.cyou/privacy-policy
-- **Terms of Service**: https://www.smartlytools.cyou/terms
+- [EMI Calculator](https://www.smartlytools.cyou/tools/emi-calculator): Calculate loan monthly installments, total interest, and principal amortization schedule.
+- [SIP Calculator](https://www.smartlytools.cyou/tools/sip-calculator): Project mutual fund wealth accumulation with compounding and annual step-up increments.
+- [GST Calculator](https://www.smartlytools.cyou/tools/gst-calculator): Calculate inclusive and exclusive tax across standard slabs (5%, 12%, 18%, 28%) with CGST/SGST/IGST breakdown.
+- [Salary Calculator](https://www.smartlytools.cyou/tools/salary-calculator): Convert annual CTC to monthly take-home salary comparing old vs new tax regimes.
+- [FD Calculator](https://www.smartlytools.cyou/tools/fd-calculator): Fixed deposit maturity interest calculator with quarterly compounding.
+
+## Student Tools
+
+- [Percentage Calculator](https://www.smartlytools.cyou/tools/percentage-calculator): Compute exam marks percentages, aggregate subject scores, and target grade gaps.
+- [CGPA Calculator](https://www.smartlytools.cyou/tools/cgpa-calculator): Convert university CGPA/SGPA to percentage using standard educational multipliers.
+- [Age Calculator](https://www.smartlytools.cyou/tools/age-calculator): Determine exact chronological age in years, months, and days for job and admission cutoffs.
+- [Study Timer](https://www.smartlytools.cyou/tools/study-timer): Distraction-free Pomodoro (25/5) and custom interval study timer.
+- [Word Counter](https://www.smartlytools.cyou/tools/word-counter): Character, word, sentence, and paragraph counter with estimated reading time.
+
+## Categories
+
+- [Finance Tools](https://www.smartlytools.cyou/tools/finance): Calculators for loans, investments, taxes, and salary planning.
+- [Student Tools](https://www.smartlytools.cyou/tools/student): Educational tools for grades, timers, age, and essay analysis.
+- [Document Tools](https://www.smartlytools.cyou/tools/documents): File conversion, image processing, and PDF compression.
+- [Everyday Tools](https://www.smartlytools.cyou/tools/everyday): Day-to-day productivity tools, converters, and QR generators.
+
+## Optional
+
+- [About Smartly Tools](https://www.smartlytools.cyou/about): Platform mission, privacy architecture, and technology overview.
+- [Contact Support](https://www.smartlytools.cyou/contact): Direct email support at kmnurbusiness@gmail.com and web inquiry form.
+- [Privacy Policy](https://www.smartlytools.cyou/privacy-policy): Client-side processing and zero data retention disclosure.
+- [Terms of Service](https://www.smartlytools.cyou/terms): Platform usage terms and conditions.
+- [Machine-Readable AI Catalog](https://www.smartlytools.cyou/ai-catalog.json): JSON Schema tool catalog for AI agents and LLM tool calling.

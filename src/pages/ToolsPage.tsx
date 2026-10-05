@@ -48,9 +48,6 @@ export const ToolsPage: React.FC = () => {
 
   return (
     <PageContainer>
-      {/* Breadcrumb */}
-      <Breadcrumb items={[{ label: 'Tools', href: '/tools' }]} className="mb-6" />
-
       {/* Page Header */}
       <div className="max-w-3xl mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">

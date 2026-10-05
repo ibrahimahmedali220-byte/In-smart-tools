@@ -21,8 +21,7 @@ export const AboutPage: React.FC = () => {
 
   return (
     <PageContainer maxWidth="4xl">
-      <div className="flex items-center justify-between gap-4 mb-6">
-        <Breadcrumb items={[{ label: 'About', href: '/about' }]} className="mb-0" />
+      <div className="flex items-center justify-end mb-6">
         <BackButton fallbackUrl="/" label="Back to Home" />
       </div>
 

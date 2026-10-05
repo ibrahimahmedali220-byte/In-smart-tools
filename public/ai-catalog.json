@@ -1,0 +1,366 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "smartly-tools-catalog",
+  "version": "1.0.0",
+  "title": "Smartly Tools AI Agent Catalog",
+  "description": "Standardized machine-readable catalog of free client-side calculators and web utilities for autonomous AI agents and language models.",
+  "homepage": "https://www.smartlytools.cyou",
+  "provider": {
+    "name": "Smartly Tools",
+    "url": "https://www.smartlytools.cyou",
+    "contact": "kmnurbusiness@gmail.com"
+  },
+  "execution_environment": "browser-client-side",
+  "data_privacy": "zero-server-storage",
+  "tools": [
+    {
+      "id": "emi-calculator",
+      "name": "EMI Calculator",
+      "description": "Calculates monthly loan installment (EMI), total interest payable, and total payment based on principal, annual interest rate, and tenure.",
+      "url": "https://www.smartlytools.cyou/tools/emi-calculator",
+      "category": "finance",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "principal": { "type": "number", "description": "Loan principal amount" },
+          "annualInterestRate": { "type": "number", "description": "Annual interest rate percentage (e.g. 8.5)" },
+          "tenureMonths": { "type": "integer", "description": "Loan tenure in months" }
+        },
+        "required": ["principal", "annualInterestRate", "tenureMonths"]
+      }
+    },
+    {
+      "id": "sip-calculator",
+      "name": "SIP Calculator",
+      "description": "Projects mutual fund investment maturity wealth with compounding and annual step-up contribution.",
+      "url": "https://www.smartlytools.cyou/tools/sip-calculator",
+      "category": "finance",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "monthlyInvestment": { "type": "number", "description": "Monthly investment amount" },
+          "expectedReturnRate": { "type": "number", "description": "Expected annual return rate percentage" },
+          "investmentPeriodYears": { "type": "integer", "description": "Investment duration in years" },
+          "annualStepUpPercent": { "type": "number", "description": "Optional annual percentage increase in SIP" }
+        },
+        "required": ["monthlyInvestment", "expectedReturnRate", "investmentPeriodYears"]
+      }
+    },
+    {
+      "id": "gst-calculator",
+      "name": "GST Calculator",
+      "description": "Computes goods and services tax amount (inclusive or exclusive) across standard rate slabs with CGST, SGST, and IGST breakdowns.",
+      "url": "https://www.smartlytools.cyou/tools/gst-calculator",
+      "category": "finance",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "amount": { "type": "number", "description": "Base or gross monetary amount" },
+          "ratePercent": { "type": "number", "enum": [5, 12, 18, 28], "description": "Applicable GST tax rate percentage" },
+          "isInclusive": { "type": "boolean", "description": "True if amount includes GST; false to add GST" }
+        },
+        "required": ["amount", "ratePercent", "isInclusive"]
+      }
+    },
+    {
+      "id": "salary-calculator",
+      "name": "Salary Calculator",
+      "description": "Estimates take-home in-hand monthly salary from annual CTC, comparing deductions across tax regimes.",
+      "url": "https://www.smartlytools.cyou/tools/salary-calculator",
+      "category": "finance",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "annualCtc": { "type": "number", "description": "Gross Cost to Company (CTC) per year" },
+          "regime": { "type": "string", "enum": ["new", "old"], "description": "Income tax regime" }
+        },
+        "required": ["annualCtc"]
+      }
+    },
+    {
+      "id": "fd-calculator",
+      "name": "FD Calculator",
+      "description": "Calculates fixed deposit maturity value, interest earned, and compound interest schedule.",
+      "url": "https://www.smartlytools.cyou/tools/fd-calculator",
+      "category": "finance",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "depositAmount": { "type": "number", "description": "Principal deposit amount" },
+          "annualRate": { "type": "number", "description": "Annual interest rate percentage" },
+          "tenureYears": { "type": "number", "description": "Investment tenure in years" },
+          "compoundingFrequency": { "type": "string", "enum": ["monthly", "quarterly", "semi-annually", "annually"], "description": "Interest compounding frequency" }
+        },
+        "required": ["depositAmount", "annualRate", "tenureYears"]
+      }
+    },
+    {
+      "id": "percentage-calculator",
+      "name": "Percentage Calculator",
+      "description": "Solves marks percentage, target grade calculations, percentage increases, and aggregate subject scores.",
+      "url": "https://www.smartlytools.cyou/tools/percentage-calculator",
+      "category": "student",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "obtainedMarks": { "type": "number", "description": "Total marks scored" },
+          "maximumMarks": { "type": "number", "description": "Total maximum possible marks" }
+        },
+        "required": ["obtainedMarks", "maximumMarks"]
+      }
+    },
+    {
+      "id": "cgpa-calculator",
+      "name": "CGPA Calculator",
+      "description": "Converts university Cumulative Grade Point Average (CGPA) or SGPA to percentage using standard educational multipliers.",
+      "url": "https://www.smartlytools.cyou/tools/cgpa-calculator",
+      "category": "student",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "cgpa": { "type": "number", "description": "Cumulative GPA value (e.g. 8.4)" },
+          "scale": { "type": "number", "enum": [4.0, 7.0, 10.0], "description": "Maximum grading scale point" }
+        },
+        "required": ["cgpa"]
+      }
+    },
+    {
+      "id": "age-calculator",
+      "name": "Age Calculator",
+      "description": "Determines exact chronological age in years, months, and days from date of birth to a specific target cutoff date.",
+      "url": "https://www.smartlytools.cyou/tools/age-calculator",
+      "category": "student",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "birthDate": { "type": "string", "format": "date", "description": "Date of birth (YYYY-MM-DD)" },
+          "targetDate": { "type": "string", "format": "date", "description": "Evaluation date (defaults to today)" }
+        },
+        "required": ["birthDate"]
+      }
+    },
+    {
+      "id": "study-timer",
+      "name": "Study Timer",
+      "description": "Pomodoro interval study timer with customizable focus sessions, short breaks, and long breaks.",
+      "url": "https://www.smartlytools.cyou/tools/study-timer",
+      "category": "student",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "focusMinutes": { "type": "integer", "description": "Focus block duration in minutes" },
+          "breakMinutes": { "type": "integer", "description": "Rest break duration in minutes" }
+        }
+      }
+    },
+    {
+      "id": "word-counter",
+      "name": "Word Counter",
+      "description": "Analyzes text length for words, characters (with and without spaces), sentences, paragraphs, and reading time.",
+      "url": "https://www.smartlytools.cyou/tools/word-counter",
+      "category": "student",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "text": { "type": "string", "description": "Input text to evaluate" }
+        },
+        "required": ["text"]
+      }
+    },
+    {
+      "id": "jpg-to-pdf",
+      "name": "JPG to PDF",
+      "description": "Converts and merges multiple JPG/PNG images into a single clean PDF document directly inside the browser.",
+      "url": "https://www.smartlytools.cyou/tools/jpg-to-pdf",
+      "category": "documents",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "pageSize": { "type": "string", "enum": ["A4", "Letter", "FitToImage"] },
+          "orientation": { "type": "string", "enum": ["portrait", "landscape", "auto"] }
+        }
+      }
+    },
+    {
+      "id": "pdf-to-jpg",
+      "name": "PDF to JPG",
+      "description": "Extracts and converts all PDF document pages into high-resolution JPG images with local download.",
+      "url": "https://www.smartlytools.cyou/tools/pdf-to-jpg",
+      "category": "documents",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "quality": { "type": "number", "minimum": 0.5, "maximum": 1.0, "description": "Export image quality" }
+        }
+      }
+    },
+    {
+      "id": "pdf-compressor",
+      "name": "PDF Compressor",
+      "description": "Reduces PDF file sizes client-side to satisfy target thresholds (100 KB, 200 KB, 500 KB) for application uploads.",
+      "url": "https://www.smartlytools.cyou/tools/pdf-compressor",
+      "category": "documents",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "targetSizeKb": { "type": "integer", "enum": [100, 200, 500], "description": "Target file size limit in kilobytes" }
+        }
+      }
+    },
+    {
+      "id": "image-compressor",
+      "name": "Image Compressor",
+      "description": "Compresses JPG and PNG images down to specified limits (20 KB, 50 KB, 100 KB) without server uploads.",
+      "url": "https://www.smartlytools.cyou/tools/image-compressor",
+      "category": "documents",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "targetMaxKb": { "type": "integer", "description": "Maximum allowed image size in kilobytes" }
+        }
+      }
+    },
+    {
+      "id": "image-resizer",
+      "name": "Image Resizer",
+      "description": "Resizes images to exact pixel or millimeter dimensions (passport photo, signature, exam portals).",
+      "url": "https://www.smartlytools.cyou/tools/image-resizer",
+      "category": "documents",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "widthPx": { "type": "integer", "description": "Target pixel width" },
+          "heightPx": { "type": "integer", "description": "Target pixel height" },
+          "maintainAspectRatio": { "type": "boolean", "description": "Keep original proportions" }
+        },
+        "required": ["widthPx", "heightPx"]
+      }
+    },
+    {
+      "id": "qr-generator",
+      "name": "QR Code Generator",
+      "description": "Generates scannable QR codes for web URLs, Wi-Fi connections, text, and UPI payment requests with custom color and logo options.",
+      "url": "https://www.smartlytools.cyou/tools/qr-generator",
+      "category": "everyday",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "payload": { "type": "string", "description": "Content string or URL to encode" },
+          "errorCorrection": { "type": "string", "enum": ["L", "M", "Q", "H"], "description": "Error correction level" }
+        },
+        "required": ["payload"]
+      }
+    },
+    {
+      "id": "password-generator",
+      "name": "Password Generator",
+      "description": "Generates cryptographically random passwords and passphrases using browser Web Crypto API.",
+      "url": "https://www.smartlytools.cyou/tools/password-generator",
+      "category": "everyday",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "length": { "type": "integer", "minimum": 8, "maximum": 64, "description": "Password character length" },
+          "includeUppercase": { "type": "boolean" },
+          "includeNumbers": { "type": "boolean" },
+          "includeSymbols": { "type": "boolean" }
+        }
+      }
+    },
+    {
+      "id": "unit-converter",
+      "name": "Unit Converter",
+      "description": "Converts across 7 metric and imperial categories (Length, Weight, Temperature, Area, Volume, Time, Speed) and regional land units.",
+      "url": "https://www.smartlytools.cyou/tools/unit-converter",
+      "category": "everyday",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "category": { "type": "string", "enum": ["length", "weight", "temperature", "area", "volume", "time", "speed"] },
+          "value": { "type": "number", "description": "Source numeric value" },
+          "fromUnit": { "type": "string" },
+          "toUnit": { "type": "string" }
+        },
+        "required": ["category", "value", "fromUnit", "toUnit"]
+      }
+    },
+    {
+      "id": "date-difference",
+      "name": "Date Difference",
+      "description": "Calculates total calendar days, elapsed breakdown in years/months/days, and working business days between two dates.",
+      "url": "https://www.smartlytools.cyou/tools/date-difference",
+      "category": "everyday",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "startDate": { "type": "string", "format": "date", "description": "Beginning date (YYYY-MM-DD)" },
+          "endDate": { "type": "string", "format": "date", "description": "Ending date (YYYY-MM-DD)" },
+          "includeEndDay": { "type": "boolean", "description": "Include end date in count" }
+        },
+        "required": ["startDate", "endDate"]
+      }
+    },
+    {
+      "id": "bmi-calculator",
+      "name": "BMI Calculator",
+      "description": "Computes Body Mass Index (BMI) and health risk classification using WHO criteria and Asian-adjusted health thresholds.",
+      "url": "https://www.smartlytools.cyou/tools/bmi-calculator",
+      "category": "everyday",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "weightKg": { "type": "number", "description": "Weight in kilograms" },
+          "heightCm": { "type": "number", "description": "Height in centimeters" }
+        },
+        "required": ["weightKg", "heightCm"]
+      }
+    },
+    {
+      "id": "private-calculator",
+      "name": "Private Calculator",
+      "description": "Ultra-fast chained mathematical calculator with secret PIN vault access concept preview.",
+      "url": "https://www.smartlytools.cyou/tools/private-calculator",
+      "category": "everyday",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "expression": { "type": "string", "description": "Mathematical formula to evaluate (e.g. 4*5-2)" }
+        },
+        "required": ["expression"]
+      }
+    },
+    {
+      "id": "private-calling",
+      "name": "Private Calling",
+      "description": "Concept preview and product specification for privacy-first, number-masked calling architecture.",
+      "url": "https://www.smartlytools.cyou/tools/private-calling",
+      "category": "everyday",
+      "auth_required": false,
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  ]
+}

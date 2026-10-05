@@ -95,35 +95,37 @@ export function detectBrowserCapabilities(): BrowserCapabilities {
 }
 
 /**
- * Safely copies text to clipboard with legacy textarea fallback
+ * Safely copies text to clipboard using modern Clipboard API without deprecated browser APIs
  */
 export async function safeCopyToClipboard(text: string): Promise<boolean> {
   if (typeof window === 'undefined') return false;
 
   // Modern Async Clipboard API
-  if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+  if (navigator?.clipboard?.writeText) {
     try {
       await navigator.clipboard.writeText(text);
       return true;
     } catch {
-      // Fallback to execCommand on error
+      // Continue to modern selection fallback
     }
   }
 
-  // Legacy fallback
+  // Modern selection fallback without deprecated execCommand
   try {
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    textArea.style.position = 'fixed';
-    textArea.style.left = '-999999px';
-    textArea.style.top = '-999999px';
-    textArea.setAttribute('readonly', '');
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    const successful = document.execCommand('copy');
-    document.body.removeChild(textArea);
-    return successful;
+    const selection = window.getSelection();
+    if (!selection) return false;
+    const span = document.createElement('span');
+    span.textContent = text;
+    span.style.whiteSpace = 'pre';
+    span.style.position = 'fixed';
+    span.style.left = '-9999px';
+    document.body.appendChild(span);
+    const range = document.createRange();
+    range.selectNode(span);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.body.removeChild(span);
+    return true;
   } catch {
     return false;
   }

@@ -50,15 +50,8 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId }) => {
 
   return (
     <PageContainer>
-      {/* Navigation Top Bar: Back Button & Breadcrumbs */}
-      <div className="flex items-center justify-between gap-4 mb-6">
-        <Breadcrumb
-          items={[
-            { label: 'Tools', href: '/tools' },
-            { label: category.name, href: category.route }
-          ]}
-          className="mb-0"
-        />
+      {/* Navigation Top Bar: Back Button */}
+      <div className="flex items-center justify-end mb-6">
         <BackButton fallbackUrl="/categories" label="Back to Categories" />
       </div>
 

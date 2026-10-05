@@ -10,22 +10,40 @@ import { ToastProvider } from './components/common/Toast';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
+import { DynamicBreadcrumb } from './components/common/DynamicBreadcrumb';
 import { PWAUpdateBanner } from './components/common/PWAUpdateBanner';
 import { OfflineIndicator } from './components/common/OfflineIndicator';
 import { Analytics } from '@vercel/analytics/react';
 
-// Pages
+// Static import for critical home landing path to ensure sub-1.5s LCP & FCP
 import { HomePage } from './pages/HomePage';
-import { ToolsPage } from './pages/ToolsPage';
-import { CategoryPage } from './pages/CategoryPage';
-import { CategoriesIndexPage } from './pages/CategoriesIndexPage';
-import { ToolDetailPage } from './pages/ToolDetailPage';
-import { AboutPage } from './pages/AboutPage';
-import { ContactPage } from './pages/ContactPage';
-import { LegalPage, LegalDocType } from './pages/legal/LegalPages';
-import { SupportPage, SupportPageType } from './pages/support/SupportPages';
-import { NotFoundPage } from './pages/NotFoundPage';
+
+// Code splitting & lazy loading for non-home routes
+const ToolsPage = React.lazy(() => import('./pages/ToolsPage').then(m => ({ default: m.ToolsPage })));
+const CategoryPage = React.lazy(() => import('./pages/CategoryPage').then(m => ({ default: m.CategoryPage })));
+const CategoriesIndexPage = React.lazy(() => import('./pages/CategoriesIndexPage').then(m => ({ default: m.CategoriesIndexPage })));
+const ToolDetailPage = React.lazy(() => import('./pages/ToolDetailPage').then(m => ({ default: m.ToolDetailPage })));
+const AboutPage = React.lazy(() => import('./pages/AboutPage').then(m => ({ default: m.AboutPage })));
+const ContactPage = React.lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
+const LegalPage = React.lazy(() => import('./pages/legal/LegalPages').then(m => ({ default: m.LegalPage })));
+const SupportPage = React.lazy(() => import('./pages/support/SupportPages').then(m => ({ default: m.SupportPage })));
+const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage').then(m => ({ default: m.NotFoundPage })));
+
+import type { LegalDocType } from './pages/legal/LegalPages';
+import type { SupportPageType } from './pages/support/SupportPages';
 import { ToolCategory } from './types/tool';
+
+const PageSkeleton: React.FC = () => (
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-pulse space-y-6" aria-busy="true">
+    <div className="h-8 bg-slate-200 dark:bg-slate-800 rounded-lg w-1/4" />
+    <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-1/2" />
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-6">
+      <div className="h-40 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800" />
+      <div className="h-40 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800" />
+      <div className="h-40 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800" />
+    </div>
+  </div>
+);
 
 const AppContent: React.FC = () => {
   const { currentPath, params } = useRouter();
@@ -107,7 +125,10 @@ const AppContent: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-150">
       <Header />
       <main className="flex-1">
-        {renderRoute()}
+        <DynamicBreadcrumb />
+        <React.Suspense fallback={<PageSkeleton />}>
+          {renderRoute()}
+        </React.Suspense>
       </main>
       <Footer />
       <PWAUpdateBanner />

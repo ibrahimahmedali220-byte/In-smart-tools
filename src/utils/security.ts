@@ -125,26 +125,30 @@ export function checkRateLimit(
 }
 
 /**
- * Safely copies text to the clipboard without throwing uncaught rejections
+ * Safely copies text to the clipboard without throwing uncaught rejections or using deprecated browser APIs
  */
 export async function safeClipboardCopy(text: string): Promise<boolean> {
+  if (typeof window === 'undefined') return false;
   try {
-    if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+    if (navigator?.clipboard?.writeText) {
       await navigator.clipboard.writeText(text);
       return true;
     }
-    // Fallback for restricted contexts
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    textArea.style.position = 'fixed';
-    textArea.style.left = '-9999px';
-    textArea.style.top = '-9999px';
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    const successful = document.execCommand('copy');
-    document.body.removeChild(textArea);
-    return successful;
+    // Modern non-deprecated selection fallback
+    const selection = window.getSelection();
+    if (!selection) return false;
+    const span = document.createElement('span');
+    span.textContent = text;
+    span.style.whiteSpace = 'pre';
+    span.style.position = 'fixed';
+    span.style.left = '-9999px';
+    document.body.appendChild(span);
+    const range = document.createRange();
+    range.selectNode(span);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.body.removeChild(span);
+    return true;
   } catch {
     return false;
   }

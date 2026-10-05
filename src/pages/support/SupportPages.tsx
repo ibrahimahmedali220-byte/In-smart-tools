@@ -108,14 +108,6 @@ export const SupportPage: React.FC<{ type: SupportPageType }> = ({ type }) => {
 
   return (
     <PageContainer maxWidth="4xl">
-      <Breadcrumb
-        items={[
-          { label: 'Support', href: '/support/report-problem' },
-          { label: isReport ? 'Report a Problem' : 'Suggest a Tool', href: `/support/${type}` }
-        ]}
-        className="mb-6"
-      />
-
       <div className="space-y-8">
         {/* Header */}
         <div>

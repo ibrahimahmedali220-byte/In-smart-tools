@@ -13,35 +13,35 @@ import { NotFoundPage } from './NotFoundPage';
 import { useToast } from '../components/common/Toast';
 import { BackButton } from '../components/common/BackButton';
 
-// Financial Calculator Components (Part 6)
-import { EmiCalculatorComponent } from '../components/calculators/EmiCalculatorComponent';
-import { SipCalculatorComponent } from '../components/calculators/SipCalculatorComponent';
-import { GstCalculatorComponent } from '../components/calculators/GstCalculatorComponent';
-import { SalaryCalculatorComponent } from '../components/calculators/SalaryCalculatorComponent';
-import { FdCalculatorComponent } from '../components/calculators/FdCalculatorComponent';
+// Lazy-loaded Financial Calculator Components (Part 6)
+const EmiCalculatorComponent = React.lazy(() => import('../components/calculators/EmiCalculatorComponent').then(m => ({ default: m.EmiCalculatorComponent })));
+const SipCalculatorComponent = React.lazy(() => import('../components/calculators/SipCalculatorComponent').then(m => ({ default: m.SipCalculatorComponent })));
+const GstCalculatorComponent = React.lazy(() => import('../components/calculators/GstCalculatorComponent').then(m => ({ default: m.GstCalculatorComponent })));
+const SalaryCalculatorComponent = React.lazy(() => import('../components/calculators/SalaryCalculatorComponent').then(m => ({ default: m.SalaryCalculatorComponent })));
+const FdCalculatorComponent = React.lazy(() => import('../components/calculators/FdCalculatorComponent').then(m => ({ default: m.FdCalculatorComponent })));
 
-// Student Tools Components (Part 7)
-import { PercentageCalculatorComponent } from '../components/calculators/student/PercentageCalculatorComponent';
-import { CgpaCalculatorComponent } from '../components/calculators/student/CgpaCalculatorComponent';
-import { AgeCalculatorComponent } from '../components/calculators/student/AgeCalculatorComponent';
-import { StudyTimerComponent } from '../components/calculators/student/StudyTimerComponent';
-import { WordCounterComponent } from '../components/calculators/student/WordCounterComponent';
+// Lazy-loaded Student Tools Components (Part 7)
+const PercentageCalculatorComponent = React.lazy(() => import('../components/calculators/student/PercentageCalculatorComponent').then(m => ({ default: m.PercentageCalculatorComponent })));
+const CgpaCalculatorComponent = React.lazy(() => import('../components/calculators/student/CgpaCalculatorComponent').then(m => ({ default: m.CgpaCalculatorComponent })));
+const AgeCalculatorComponent = React.lazy(() => import('../components/calculators/student/AgeCalculatorComponent').then(m => ({ default: m.AgeCalculatorComponent })));
+const StudyTimerComponent = React.lazy(() => import('../components/calculators/student/StudyTimerComponent').then(m => ({ default: m.StudyTimerComponent })));
+const WordCounterComponent = React.lazy(() => import('../components/calculators/student/WordCounterComponent').then(m => ({ default: m.WordCounterComponent })));
 
-// Document & Image Tools Components (Part 8)
-import { JpgToPdfComponent } from '../components/calculators/documents/JpgToPdfComponent';
-import { PdfToJpgComponent } from '../components/calculators/documents/PdfToJpgComponent';
-import { PdfCompressorComponent } from '../components/calculators/documents/PdfCompressorComponent';
-import { ImageCompressorComponent } from '../components/calculators/documents/ImageCompressorComponent';
-import { ImageResizerComponent } from '../components/calculators/documents/ImageResizerComponent';
+// Lazy-loaded Document & Image Tools Components (Part 8)
+const JpgToPdfComponent = React.lazy(() => import('../components/calculators/documents/JpgToPdfComponent').then(m => ({ default: m.JpgToPdfComponent })));
+const PdfToJpgComponent = React.lazy(() => import('../components/calculators/documents/PdfToJpgComponent').then(m => ({ default: m.PdfToJpgComponent })));
+const PdfCompressorComponent = React.lazy(() => import('../components/calculators/documents/PdfCompressorComponent').then(m => ({ default: m.PdfCompressorComponent })));
+const ImageCompressorComponent = React.lazy(() => import('../components/calculators/documents/ImageCompressorComponent').then(m => ({ default: m.ImageCompressorComponent })));
+const ImageResizerComponent = React.lazy(() => import('../components/calculators/documents/ImageResizerComponent').then(m => ({ default: m.ImageResizerComponent })));
 
-// Everyday Tools Components (Part 9)
-import { QrGeneratorComponent } from '../components/calculators/everyday/QrGeneratorComponent';
-import { PasswordGeneratorComponent } from '../components/calculators/everyday/PasswordGeneratorComponent';
-import { UnitConverterComponent } from '../components/calculators/everyday/UnitConverterComponent';
-import { DateDifferenceComponent } from '../components/calculators/everyday/DateDifferenceComponent';
-import { BmiCalculatorComponent } from '../components/calculators/everyday/BmiCalculatorComponent';
-import { PrivateCallingComponent } from '../components/calling/PrivateCallingComponent';
-import { PrivateCalculatorComponent } from '../components/calculators/everyday/PrivateCalculatorComponent';
+// Lazy-loaded Everyday Tools Components (Part 9)
+const QrGeneratorComponent = React.lazy(() => import('../components/calculators/everyday/QrGeneratorComponent').then(m => ({ default: m.QrGeneratorComponent })));
+const PasswordGeneratorComponent = React.lazy(() => import('../components/calculators/everyday/PasswordGeneratorComponent').then(m => ({ default: m.PasswordGeneratorComponent })));
+const UnitConverterComponent = React.lazy(() => import('../components/calculators/everyday/UnitConverterComponent').then(m => ({ default: m.UnitConverterComponent })));
+const DateDifferenceComponent = React.lazy(() => import('../components/calculators/everyday/DateDifferenceComponent').then(m => ({ default: m.DateDifferenceComponent })));
+const BmiCalculatorComponent = React.lazy(() => import('../components/calculators/everyday/BmiCalculatorComponent').then(m => ({ default: m.BmiCalculatorComponent })));
+const PrivateCallingComponent = React.lazy(() => import('../components/calling/PrivateCallingComponent').then(m => ({ default: m.PrivateCallingComponent })));
+const PrivateCalculatorComponent = React.lazy(() => import('../components/calculators/everyday/PrivateCalculatorComponent').then(m => ({ default: m.PrivateCalculatorComponent })));
 
 import {
   Layers,
@@ -93,6 +93,23 @@ const SPECIFIED_RELATED_TOOLS: Record<string, string[]> = {
   'bmi-calculator': ['unit-converter', 'age-calculator'],
   'private-calculator': ['password-generator', 'unit-converter', 'qr-generator']
 };
+
+const ToolSkeleton: React.FC = () => (
+  <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-6 animate-pulse" aria-busy="true" aria-label="Loading tool...">
+    <div className="flex items-center gap-4">
+      <div className="w-10 h-10 bg-slate-200 dark:bg-slate-800 rounded-xl" />
+      <div className="space-y-2 flex-1">
+        <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-1/4" />
+        <div className="h-3 bg-slate-200 dark:bg-slate-800 rounded w-1/3" />
+      </div>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+      <div className="h-32 bg-slate-100 dark:bg-slate-800/60 rounded-xl" />
+      <div className="h-32 bg-slate-100 dark:bg-slate-800/60 rounded-xl" />
+    </div>
+    <div className="h-12 bg-slate-200 dark:bg-slate-800 rounded-xl w-full" />
+  </div>
+);
 
 export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
   const tool = getToolBySlug(slug);
@@ -415,16 +432,8 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
 
   return (
     <PageContainer>
-      {/* Navigation Top Bar: Back Button & Breadcrumbs */}
-      <div className="flex items-center justify-between gap-4 mb-6">
-        <Breadcrumb
-          items={[
-            { label: 'Tools', href: '/tools' },
-            { label: category ? category.name : tool.category, href: category ? category.route : '/tools' },
-            { label: tool.name, href: tool.route }
-          ]}
-          className="mb-0"
-        />
+      {/* Navigation Top Bar: Back Button */}
+      <div className="flex items-center justify-end mb-6">
         <BackButton fallbackUrl="/tools" label="Back to Tools" />
       </div>
 
@@ -492,35 +501,37 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
 
         {/* Interactive Calculator & Document Workspaces with Inline Error Boundary */}
         <ErrorBoundary inline>
-          {/* Finance Tools (Part 6) */}
-          {tool.slug === 'emi-calculator' && <EmiCalculatorComponent />}
-          {tool.slug === 'sip-calculator' && <SipCalculatorComponent />}
-          {tool.slug === 'gst-calculator' && <GstCalculatorComponent />}
-          {tool.slug === 'salary-calculator' && <SalaryCalculatorComponent />}
-          {tool.slug === 'fd-calculator' && <FdCalculatorComponent />}
+          <React.Suspense fallback={<ToolSkeleton />}>
+            {/* Finance Tools (Part 6) */}
+            {tool.slug === 'emi-calculator' && <EmiCalculatorComponent />}
+            {tool.slug === 'sip-calculator' && <SipCalculatorComponent />}
+            {tool.slug === 'gst-calculator' && <GstCalculatorComponent />}
+            {tool.slug === 'salary-calculator' && <SalaryCalculatorComponent />}
+            {tool.slug === 'fd-calculator' && <FdCalculatorComponent />}
 
-          {/* Student Tools (Part 7) */}
-          {tool.slug === 'percentage-calculator' && <PercentageCalculatorComponent />}
-          {tool.slug === 'cgpa-calculator' && <CgpaCalculatorComponent />}
-          {tool.slug === 'age-calculator' && <AgeCalculatorComponent />}
-          {tool.slug === 'study-timer' && <StudyTimerComponent />}
-          {tool.slug === 'word-counter' && <WordCounterComponent />}
+            {/* Student Tools (Part 7) */}
+            {tool.slug === 'percentage-calculator' && <PercentageCalculatorComponent />}
+            {tool.slug === 'cgpa-calculator' && <CgpaCalculatorComponent />}
+            {tool.slug === 'age-calculator' && <AgeCalculatorComponent />}
+            {tool.slug === 'study-timer' && <StudyTimerComponent />}
+            {tool.slug === 'word-counter' && <WordCounterComponent />}
 
-          {/* Document Tools (Part 8) */}
-          {tool.slug === 'jpg-to-pdf' && <JpgToPdfComponent />}
-          {tool.slug === 'pdf-to-jpg' && <PdfToJpgComponent />}
-          {tool.slug === 'pdf-compressor' && <PdfCompressorComponent />}
-          {tool.slug === 'image-compressor' && <ImageCompressorComponent />}
-          {tool.slug === 'image-resizer' && <ImageResizerComponent />}
+            {/* Document Tools (Part 8) */}
+            {tool.slug === 'jpg-to-pdf' && <JpgToPdfComponent />}
+            {tool.slug === 'pdf-to-jpg' && <PdfToJpgComponent />}
+            {tool.slug === 'pdf-compressor' && <PdfCompressorComponent />}
+            {tool.slug === 'image-compressor' && <ImageCompressorComponent />}
+            {tool.slug === 'image-resizer' && <ImageResizerComponent />}
 
-          {/* Everyday Tools (Part 9) */}
-          {tool.slug === 'qr-generator' && <QrGeneratorComponent />}
-          {tool.slug === 'password-generator' && <PasswordGeneratorComponent />}
-          {tool.slug === 'unit-converter' && <UnitConverterComponent />}
-          {tool.slug === 'date-difference' && <DateDifferenceComponent />}
-          {tool.slug === 'bmi-calculator' && <BmiCalculatorComponent />}
-          {tool.slug === 'private-calling' && <PrivateCallingComponent />}
-          {tool.slug === 'private-calculator' && <PrivateCalculatorComponent />}
+            {/* Everyday Tools (Part 9) */}
+            {tool.slug === 'qr-generator' && <QrGeneratorComponent />}
+            {tool.slug === 'password-generator' && <PasswordGeneratorComponent />}
+            {tool.slug === 'unit-converter' && <UnitConverterComponent />}
+            {tool.slug === 'date-difference' && <DateDifferenceComponent />}
+            {tool.slug === 'bmi-calculator' && <BmiCalculatorComponent />}
+            {tool.slug === 'private-calling' && <PrivateCallingComponent />}
+            {tool.slug === 'private-calculator' && <PrivateCalculatorComponent />}
+          </React.Suspense>
         </ErrorBoundary>
 
         {/* How It Works & Mathematical Formula (For Implemented Tools) */}
