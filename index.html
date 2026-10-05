@@ -3,13 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2XXDRJKM8D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-2XXDRJKM8D');
+    </script>
+    <meta name="google-site-verification" content="1tojwAqqQ10gPXZNFNrz6ddztRQmTFk-rSHF8Ud8uhI" />
+    <meta name="google-site-verification" content="_NMH70g_di0Uldw1Alg8T11w7-Dsg-Y-gdJ3kzHlpbw" />
     <title>Smartly Tools – Free Online Tools for Everyday Tasks</title>
     <meta name="description" content="Smartly Tools provides free online tools for everyday tasks, including calculators, converters, generators and other useful web tools." />
     <meta name="keywords" content="free online tools, online tools, useful online tools, free web tools, Smartly Tools, calculators, converters, generators" />
     <meta name="application-name" content="Smartly Tools" />
     <link rel="canonical" href="https://www.smartlytools.cyou/" />
-    <meta name="google-site-verification" content="1tojwAqqQ10gPXZNFNrz6ddztRQmTFk-rSHF8Ud8uhI" />
-    <meta name="google-site-verification" content="_NMH70g_di0Uldw1Alg8T11w7-Dsg-Y-gdJ3kzHlpbw" />
     
     <!-- Open Graph / Social Media -->
     <meta property="og:site_name" content="Smartly Tools" />
@@ -52,12 +61,13 @@
     <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
 
     <!-- Non-Render-Blocking Google Fonts with display=swap -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
     </noscript>
 
-    <!-- Critical CSS for rapid FCP (<1.5s on mobile) and layout stability -->
+    <!-- Critical CSS for rapid FCP and layout stability -->
     <style>
       :root {
         font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -88,7 +98,6 @@
       }
     </script>
 
-    <!-- Early Theme Detection to prevent theme flash -->
     <script>
       (function() {
         try {
@@ -105,79 +114,11 @@
         } catch (e) {}
       })();
     </script>
-
-    <!-- Google Analytics & Google AdSense Deferred Initialization -->
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-2XXDRJKM8D');
-
-      function loadDeferredThirdParties() {
-        if (window._thirdPartiesLoaded) return;
-        window._thirdPartiesLoaded = true;
-
-        // 1. Google Analytics
-        var gtagScript = document.createElement('script');
-        gtagScript.async = true;
-        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-2XXDRJKM8D';
-        document.head.appendChild(gtagScript);
-
-        // 2. Google AdSense (ca-pub-2455309165032618)
-        var adsScript = document.createElement('script');
-        adsScript.async = true;
-        adsScript.crossOrigin = 'anonymous';
-        adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2455309165032618';
-        document.body.appendChild(adsScript);
-      }
-
-      if (typeof window !== 'undefined') {
-        ['scroll', 'touchstart', 'mousemove', 'keydown', 'click'].forEach(function(e) {
-          window.addEventListener(e, loadDeferredThirdParties, { once: true, passive: true });
-        });
-        if ('requestIdleCallback' in window) {
-          window.addEventListener('load', function() {
-            requestIdleCallback(loadDeferredThirdParties, { timeout: 3000 });
-          });
-        } else {
-          window.addEventListener('load', function() {
-            setTimeout(loadDeferredThirdParties, 2000);
-          });
-        }
-      }
-    </script>
   </head>
   <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 antialiased font-sans selection:bg-slate-900 selection:text-white dark:selection:bg-slate-100 dark:selection:text-slate-900 transition-colors duration-150">
-    <div id="root">
-      <!-- Semantic critical initial render shell for sub-second FCP and LCP -->
-      <header class="sticky top-0 z-40 w-full border-b border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex items-center justify-between h-16">
-            <a href="/" class="flex items-center gap-2.5">
-              <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Smartly Tools</span>
-            </a>
-            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-400">
-              <a href="/tools" class="hover:text-slate-900 dark:hover:text-white transition-colors">All Tools</a>
-              <a href="/categories" class="hover:text-slate-900 dark:hover:text-white transition-colors">Categories</a>
-              <a href="/about" class="hover:text-slate-900 dark:hover:text-white transition-colors">About</a>
-              <a href="/contact" class="hover:text-slate-900 dark:hover:text-white transition-colors">Contact</a>
-            </nav>
-          </div>
-        </div>
-      </header>
-      <main class="flex-1">
-        <section class="relative bg-gradient-to-b from-white via-slate-50/50 to-slate-50 dark:from-slate-950 dark:via-slate-900/60 dark:to-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 pt-12 pb-16 md:pt-20 md:pb-24">
-          <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-slate-100 text-balance">
-              Free Online Tools for Everyday Tasks
-            </h1>
-            <p class="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-              Fast, free, and privacy-conscious online utilities designed for students, job applicants, creators, and everyday productivity.
-            </p>
-          </div>
-        </section>
-      </main>
-    </div>
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <!-- Google AdSense loaded asynchronously without blocking initial rendering -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2455309165032618" crossorigin="anonymous"></script>
   </body>
 </html>

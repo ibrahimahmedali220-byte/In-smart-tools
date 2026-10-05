@@ -106,11 +106,8 @@ export default defineConfig(() => {
           sourcemap: false,
           manualChunks(id) {
             if (id.includes('node_modules')) {
-              if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/scheduler/')) {
+              if (id.includes('react/') || id.includes('react-dom/')) {
                 return 'vendor-react';
-              }
-              if (id.includes('lucide-react')) {
-                return 'vendor-icons';
               }
               if (id.includes('pdf-lib') || id.includes('@pdf-lib')) {
                 return 'vendor-pdflib';

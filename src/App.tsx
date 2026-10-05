@@ -13,9 +13,7 @@ import { Footer } from './components/layout/Footer';
 import { DynamicBreadcrumb } from './components/common/DynamicBreadcrumb';
 import { PWAUpdateBanner } from './components/common/PWAUpdateBanner';
 import { OfflineIndicator } from './components/common/OfflineIndicator';
-
-// Lazy load Vercel Analytics so it does not block critical initial paint
-const Analytics = React.lazy(() => import('@vercel/analytics/react').then(m => ({ default: m.Analytics })));
+import { Analytics } from '@vercel/analytics/react';
 
 // Static import for critical home landing path to ensure sub-1.5s LCP & FCP
 import { HomePage } from './pages/HomePage';
@@ -135,9 +133,7 @@ const AppContent: React.FC = () => {
       <Footer />
       <PWAUpdateBanner />
       <OfflineIndicator />
-      <React.Suspense fallback={null}>
-        <Analytics />
-      </React.Suspense>
+      <Analytics />
     </div>
   );
 };
