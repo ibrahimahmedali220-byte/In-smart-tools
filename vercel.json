@@ -1,7 +1,7 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/((?!sitemap\\.xml|robots\\.txt|llms\\.txt|ai-catalog\\.json|manifest\\.json|favicon\\.svg|og-image\\.svg|icon-192\\.png|icon-512\\.png|assets/).*)", "destination": "/index.html" }
+    { "source": "/((?!ads\\.txt|sitemap\\.xml|robots\\.txt|llms\\.txt|ai-catalog\\.json|manifest\\.json|favicon\\.svg|og-image\\.svg|icon-192\\.png|icon-512\\.png|assets/).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
@@ -23,7 +23,7 @@
       ]
     },
     {
-      "source": "/(manifest\\.json|robots\\.txt|sitemap\\.xml|llms\\.txt|ai-catalog\\.json)",
+      "source": "/(ads\\.txt|manifest\\.json|robots\\.txt|sitemap\\.xml|llms\\.txt|ai-catalog\\.json)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=86400" }
       ]

@@ -18,6 +18,9 @@
 /robots.txt
   Cache-Control: public, max-age=86400, stale-while-revalidate=86400
 
+/ads.txt
+  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
+
 /sitemap.xml
   Cache-Control: public, max-age=86400, stale-while-revalidate=86400
 
