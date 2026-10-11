@@ -122,7 +122,7 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-150">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-[#050B1D] text-slate-900 dark:text-[#F4F7FF]">
       <Header />
       <main className="flex-1">
         <DynamicBreadcrumb />

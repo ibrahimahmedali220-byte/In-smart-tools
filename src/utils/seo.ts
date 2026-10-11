@@ -13,6 +13,7 @@ export interface BreadcrumbEntry {
 export interface SeoConfig {
   title?: string;
   description?: string;
+  keywords?: string[] | string;
   canonicalPath?: string;
   type?: 'website' | 'article';
   image?: string;
@@ -66,6 +67,10 @@ export function updateSeoMetadata(config: SeoConfig = {}) {
   // 2. Standard Meta Tags
   setMetaTag('name', 'description', description);
   setMetaTag('name', 'robots', config.noIndex ? 'noindex, nofollow' : 'index, follow');
+  if (config.keywords) {
+    const kwStr = Array.isArray(config.keywords) ? config.keywords.join(', ') : config.keywords;
+    setMetaTag('name', 'keywords', kwStr);
+  }
 
   // 3. Open Graph Tags
   setMetaTag('property', 'og:site_name', DEFAULT_SITE_NAME);

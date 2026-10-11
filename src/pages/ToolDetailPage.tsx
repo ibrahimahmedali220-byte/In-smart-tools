@@ -13,6 +13,7 @@ import { NotFoundPage } from './NotFoundPage';
 import { useToast } from '../components/common/Toast';
 import { BackButton } from '../components/common/BackButton';
 import { TOOL_SEO_DATA } from '../data/toolSeoData';
+import { MetaTags } from '../components/common/MetaTags';
 
 // Lazy-loaded Financial Calculator Components (Part 6)
 const EmiCalculatorComponent = React.lazy(() => import('../components/calculators/EmiCalculatorComponent').then(m => ({ default: m.EmiCalculatorComponent })));
@@ -442,8 +443,32 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
 
   const formulaInfo = toolFormulas[tool.slug];
 
+  const detail = TOOL_SEO_DATA[tool.slug];
+  const pageTitle = detail?.seoTitle || `${tool.name} – Free Online Tool | Smartly Tools`;
+  const pageDescription = detail?.seoDescription || tool.description;
+  const pageFaqs = detail?.faqs || categoryFaqs[tool.category] || [];
+  const pageJsonLd = [
+    getBreadcrumbListSchema([
+      { name: 'Home', item: '/' },
+      { name: 'Tools', item: '/tools' },
+      { name: category ? category.name : tool.category, item: category ? category.route : '/tools' },
+      { name: tool.name, item: tool.route }
+    ]),
+    getWebApplicationSchema(tool),
+    ...(pageFaqs.length > 0 ? [getFaqPageSchema(pageFaqs)] : [])
+  ];
+
   return (
     <PageContainer>
+      {/* Dynamic SEO & Open Graph Meta Tags (Declarative React Helmet pattern) */}
+      <MetaTags
+        title={pageTitle}
+        description={pageDescription}
+        keywords={tool.keywords}
+        canonicalPath={tool.route}
+        jsonLd={pageJsonLd}
+      />
+
       {/* Navigation Top Bar: Back Button */}
       <div className="flex items-center justify-end mb-6">
         <BackButton fallbackUrl="/tools" label="Back to Tools" />

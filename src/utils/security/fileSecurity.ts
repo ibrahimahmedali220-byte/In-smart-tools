@@ -58,8 +58,8 @@ export async function validateFileMagicBytes(file: File): Promise<string | null>
     const buffer = await slice.arrayBuffer();
     const bytes = new Uint8Array(buffer);
 
-    // 1. JPEG check (starts with FF D8 FF)
-    if (bytes[0] === 0xFF && bytes[1] === 0xD8 && bytes[2] === 0xFF) {
+    // 1. JPEG check (standard SOI marker starts with FF D8)
+    if (bytes[0] === 0xFF && bytes[1] === 0xD8) {
       return 'image/jpeg';
     }
 

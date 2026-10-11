@@ -27,6 +27,7 @@ export const JpgToPdfComponent: React.FC = () => {
   const [items, setItems] = useState<ImageInputItem[]>([]);
   const [orientation, setOrientation] = useState<PageOrientation>('portrait');
   const [pageSize, setPageSize] = useState<PageSizeOption>('a4');
+  const [customPdfName, setCustomPdfName] = useState<string>('');
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
   const [generatedPdf, setGeneratedPdf] = useState<{ url: string; filename: string; size: number; blob: Blob } | null>(null);
@@ -99,7 +100,8 @@ export const JpgToPdfComponent: React.FC = () => {
         {
           orientation,
           pageSize,
-          margin: pageSize === 'fit' ? 0 : 20
+          margin: pageSize === 'fit' ? 0 : 20,
+          customFilename: customPdfName.trim() || undefined
         },
         p => setProgress(p)
       );
@@ -112,11 +114,28 @@ export const JpgToPdfComponent: React.FC = () => {
         blob: result.blob
       });
       showToast('PDF compiled successfully!', 'success');
-    } catch {
-      showToast('Failed to compile PDF document. Please try again.', 'error');
+    } catch (err: unknown) {
+      console.error('PDF conversion error:', err);
+      const msg = err instanceof Error ? err.message : 'Failed to compile PDF document. Please try again.';
+      showToast(msg, 'error');
     } finally {
       setIsProcessing(false);
       setProgress(0);
+    }
+  };
+
+  const handleDownloadPdf = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!generatedPdf) return;
+    try {
+      const a = document.createElement('a');
+      a.href = generatedPdf.url;
+      a.download = generatedPdf.filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast(`Downloading ${generatedPdf.filename}...`, 'success');
+    } catch (err) {
+      console.error('Download error:', err);
     }
   };
 
@@ -333,6 +352,29 @@ export const JpgToPdfComponent: React.FC = () => {
                 </div>
               </div>
 
+              {/* Custom PDF File Name Option */}
+              <div>
+                <label htmlFor="custom-pdf-name" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                  PDF File Name (Custom Name)
+                </label>
+                <div className="relative">
+                  <input
+                    id="custom-pdf-name"
+                    type="text"
+                    value={customPdfName}
+                    onChange={e => setCustomPdfName(e.target.value)}
+                    placeholder={items[0] ? `${items[0].name.replace(/\.[^/.]+$/, '')}_converted` : 'my-document'}
+                    className="w-full px-3 py-2 pr-12 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-sky-500 transition-all font-mono"
+                  />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-slate-400 pointer-events-none">
+                    .pdf
+                  </span>
+                </div>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                  Apne hisab se file name rakhein (e.g. <em>marksheet</em>, <em>aadhaar_card</em>) ya default chhod dein.
+                </p>
+              </div>
+
               {/* Processing Progress Indicator */}
               {isProcessing && (
                 <div className="space-y-1.5 pt-2">
@@ -379,10 +421,26 @@ export const JpgToPdfComponent: React.FC = () => {
             <CheckCircle2 className="w-7 h-7" aria-hidden="true" />
           </div>
 
-          <div className="space-y-1">
+          <div className="space-y-2">
             <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Your PDF is Ready!</h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">
-              {generatedPdf.filename} ({formatFileSize(generatedPdf.size)})
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+              <span className="text-xs text-slate-500 dark:text-slate-400">File:</span>
+              <input
+                type="text"
+                value={generatedPdf.filename.replace(/\.pdf$/i, '')}
+                onChange={e => {
+                  const newBase = e.target.value.trim() || 'document';
+                  const newName = `${newBase}.pdf`;
+                  setGeneratedPdf(prev => prev ? { ...prev, filename: newName } : null);
+                }}
+                className="text-xs font-mono font-semibold text-slate-900 dark:text-slate-100 bg-transparent border-b border-dashed border-slate-400 dark:border-slate-500 focus:outline-none focus:border-slate-900 dark:focus:border-sky-400 text-center max-w-[200px]"
+                title="Click to rename before download"
+              />
+              <span className="text-xs font-mono text-slate-400">.pdf</span>
+              <span className="text-slate-400 text-[10px]">({formatFileSize(generatedPdf.size)})</span>
+            </div>
+            <p className="text-[11px] text-slate-400 dark:text-slate-500">
+              Tip: Click filename above to rename anytime before downloading
             </p>
           </div>
 
@@ -416,6 +474,7 @@ export const JpgToPdfComponent: React.FC = () => {
             <a
               href={generatedPdf.url}
               download={generatedPdf.filename}
+              onClick={handleDownloadPdf}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-sky-500 hover:bg-slate-800 dark:hover:bg-sky-600 text-white dark:text-slate-950 font-bold text-xs sm:text-sm px-6 py-2.5 rounded-xl shadow-sm transition-colors cursor-pointer"
             >
               <Download className="w-4 h-4" /> Download PDF

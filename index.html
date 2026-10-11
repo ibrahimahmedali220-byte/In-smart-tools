@@ -3,24 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2XXDRJKM8D"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-2XXDRJKM8D');
-    </script>
-    <meta name="google-adsense-account" content="ca-pub-2455309165032618">
-    <meta name="google-site-verification" content="1tojwAqqQ10gPXZNFNrz6ddztRQmTFk-rSHF8Ud8uhI" />
-    <meta name="google-site-verification" content="_NMH70g_di0Uldw1Alg8T11w7-Dsg-Y-gdJ3kzHlpbw" />
+    
     <title>Smartly Tools – Free Online Tools for Everyday Tasks</title>
     <meta name="description" content="Smartly Tools provides free online tools for everyday tasks, including calculators, converters, generators and other useful web tools." />
     <meta name="keywords" content="free online tools, online tools, useful online tools, free web tools, Smartly Tools, calculators, converters, generators" />
     <meta name="application-name" content="Smartly Tools" />
     <link rel="canonical" href="https://www.smartlytools.cyou/" />
     
+    <meta name="google-site-verification" content="1tojwAqqQ10gPXZNFNrz6ddztRQmTFk-rSHF8Ud8uhI" />
+    <meta name="google-site-verification" content="_NMH70g_di0Uldw1Alg8T11w7-Dsg-Y-gdJ3kzHlpbw" />
+
     <!-- Open Graph / Social Media -->
     <meta property="og:site_name" content="Smartly Tools" />
     <meta property="og:title" content="Smartly Tools – Free Online Tools for Everyday Tasks" />
@@ -53,10 +45,14 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- Google Fonts with display=swap -->
+    <!-- Google Fonts with display=swap (Non-render-blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
+    </noscript>
 
     <!-- Critical CSS for rapid FCP and layout stability -->
     <style>
@@ -89,6 +85,7 @@
       }
     </script>
 
+    <!-- Theme Initialization Script -->
     <script>
       (function() {
         try {
@@ -105,11 +102,22 @@
         } catch (e) {}
       })();
     </script>
+
+    <!-- Google AdSense Account & Auto Ads Script -->
+    <meta name="google-adsense-account" content="ca-pub-2455309165032618">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2455309165032618" crossorigin="anonymous"></script>
+
+    <!-- Google Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2XXDRJKM8D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2XXDRJKM8D');
+    </script>
   </head>
-  <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 antialiased font-sans selection:bg-slate-900 selection:text-white dark:selection:bg-slate-100 dark:selection:text-slate-900 transition-colors duration-150">
+  <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 antialiased font-sans selection:bg-slate-900 selection:text-white dark:selection:bg-slate-100 dark:selection:text-slate-900">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- Google AdSense loaded asynchronously without blocking initial rendering -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2455309165032618" crossorigin="anonymous"></script>
   </body>
 </html>

@@ -14,6 +14,7 @@ export interface ImageToPdfOptions {
   orientation: PageOrientation;
   pageSize: PageSizeOption;
   margin: number; // in points (e.g. 10 or 20)
+  customFilename?: string;
 }
 
 export interface ImageInputItem {
@@ -40,15 +41,27 @@ export async function convertImagesToPdf(
     const imageBytes = await item.file.arrayBuffer();
 
     let embeddedImage;
-    if (item.file.type === 'image/jpeg' || item.name.toLowerCase().endsWith('.jpg') || item.name.toLowerCase().endsWith('.jpeg')) {
-      embeddedImage = await pdfDoc.embedJpg(imageBytes);
-    } else if (item.file.type === 'image/png' || item.name.toLowerCase().endsWith('.png')) {
-      embeddedImage = await pdfDoc.embedPng(imageBytes);
-    } else {
-      // For WebP or other images, draw onto an off-screen canvas and export as PNG bytes
-      const pngBlob = await convertFileToPngBlob(item.file);
-      const pngBytes = await pngBlob.arrayBuffer();
-      embeddedImage = await pdfDoc.embedPng(pngBytes);
+    try {
+      if (item.file.type === 'image/jpeg' || item.name.toLowerCase().endsWith('.jpg') || item.name.toLowerCase().endsWith('.jpeg')) {
+        embeddedImage = await pdfDoc.embedJpg(imageBytes);
+      } else if (item.file.type === 'image/png' || item.name.toLowerCase().endsWith('.png')) {
+        embeddedImage = await pdfDoc.embedPng(imageBytes);
+      } else {
+        // For WebP or other images, draw onto an off-screen canvas and export as PNG bytes
+        const pngBlob = await convertFileToPngBlob(item.file);
+        const pngBytes = await pngBlob.arrayBuffer();
+        embeddedImage = await pdfDoc.embedPng(pngBytes);
+      }
+    } catch (embedErr) {
+      console.warn(`Direct embed failed for "${item.name}", falling back to canvas re-encoding:`, embedErr);
+      try {
+        const pngBlob = await convertFileToPngBlob(item.file);
+        const pngBytes = await pngBlob.arrayBuffer();
+        embeddedImage = await pdfDoc.embedPng(pngBytes);
+      } catch (fallbackErr) {
+        console.error(`Canvas fallback also failed for "${item.name}":`, fallbackErr);
+        throw new Error(`Failed to process image "${item.name}". Please ensure it is a valid JPG, PNG, or WebP file.`);
+      }
     }
 
     const imgWidth = embeddedImage.width;
@@ -100,9 +113,16 @@ export async function convertImagesToPdf(
   const pdfBytes = await pdfDoc.save();
   const blob = new Blob([pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
 
-  // Generate clean download name
-  const firstBase = items[0].name.replace(/\.[^/.]+$/, '');
-  const downloadName = sanitizeFilename(`${firstBase}_converted.pdf`, 'images_converted.pdf');
+  // Generate clean download name (custom name or derived from first image)
+  let downloadName: string;
+  if (options.customFilename && options.customFilename.trim().length > 0) {
+    const raw = options.customFilename.trim();
+    const withExt = raw.toLowerCase().endsWith('.pdf') ? raw : `${raw}.pdf`;
+    downloadName = sanitizeFilename(withExt, 'converted_document.pdf');
+  } else {
+    const firstBase = items[0].name.replace(/\.[^/.]+$/, '');
+    downloadName = sanitizeFilename(`${firstBase}_converted.pdf`, 'images_converted.pdf');
+  }
 
   return { blob, filename: downloadName };
 }
@@ -112,29 +132,59 @@ export async function convertImagesToPdf(
  */
 async function convertFileToPngBlob(file: File): Promise<Blob> {
   return new Promise((resolve, reject) => {
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      reject(new Error('Canvas conversion unavailable in non-browser environment'));
+      return;
+    }
+
     const img = new Image();
     const url = URL.createObjectURL(file);
 
     img.onload = () => {
-      URL.revokeObjectURL(url);
-      const canvas = document.createElement('canvas');
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) {
-        reject(new Error('Canvas context unavailable'));
-        return;
+      try {
+        const width = img.naturalWidth || img.width || 800;
+        const height = img.naturalHeight || img.height || 600;
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          URL.revokeObjectURL(url);
+          reject(new Error('Canvas context unavailable'));
+          return;
+        }
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(blob => {
+          URL.revokeObjectURL(url);
+          if (blob) {
+            resolve(blob);
+          } else {
+            // Data URL fallback
+            try {
+              const dataUrl = canvas.toDataURL('image/png');
+              const parts = dataUrl.split(',');
+              const byteString = atob(parts[1]);
+              const mimeString = parts[0].split(':')[1].split(';')[0];
+              const ab = new ArrayBuffer(byteString.length);
+              const ia = new Uint8Array(ab);
+              for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+              }
+              resolve(new Blob([ab], { type: mimeString }));
+            } catch (fallbackErr) {
+              reject(fallbackErr);
+            }
+          }
+        }, 'image/png');
+      } catch (err) {
+        URL.revokeObjectURL(url);
+        reject(err);
       }
-      ctx.drawImage(img, 0, 0);
-      canvas.toBlob(blob => {
-        if (blob) resolve(blob);
-        else reject(new Error('Failed to convert image to PNG'));
-      }, 'image/png');
     };
 
     img.onerror = () => {
       URL.revokeObjectURL(url);
-      reject(new Error('Failed to load image for PDF conversion'));
+      reject(new Error(`Failed to load image file "${file.name}" for conversion`));
     };
 
     img.src = url;

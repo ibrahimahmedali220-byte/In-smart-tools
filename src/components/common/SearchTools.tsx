@@ -104,8 +104,8 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
   const searchBox = (
     <div className={`relative flex flex-col w-full ${className}`}>
       {/* Input row */}
-      <div className="relative flex items-center">
-        <Search className="absolute left-3.5 w-4 h-4 text-slate-400 dark:text-slate-500 pointer-events-none" />
+      <div className="relative flex items-center group">
+        <Search className="absolute left-4 sm:left-5 w-4 h-4 sm:w-5 sm:h-5 text-slate-400 dark:text-cyan-400 pointer-events-none group-focus-within:text-cyan-300 transition-colors" />
         <input
           ref={inputRef}
           type="text"
@@ -120,25 +120,52 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
           autoFocus={autoFocus}
           maxLength={100}
           placeholder={placeholder}
-          className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-10 pr-10 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-sky-400 focus:border-slate-900 dark:focus:border-sky-400 transition-shadow"
+          className={`w-full bg-white/95 dark:bg-[#0B1530]/90 backdrop-blur-md border border-slate-300 dark:border-blue-900/70 focus:border-cyan-400 dark:focus:border-cyan-400 ${
+            variant === 'inline'
+              ? 'rounded-full pl-11 sm:pl-13 pr-14 sm:pr-16 py-3.5 sm:py-4 text-sm sm:text-base shadow-[0_4px_20px_-4px_rgba(2,6,23,0.3)] focus:shadow-[0_0_25px_rgba(0,200,255,0.35)]'
+              : 'rounded-xl pl-10 pr-10 py-2.5 text-sm shadow-sm'
+          } text-slate-900 dark:text-[#F4F7FF] placeholder:text-slate-400 dark:placeholder:text-[#A8B5CC]/70 focus:outline-none transition-all`}
           role="combobox"
           aria-expanded={results.length > 0}
           aria-controls="search-results-list"
           aria-activedescendant={results[selectedIndex] ? `result-${results[selectedIndex].id}` : undefined}
         />
-        {query && (
-          <button
-            type="button"
-            onClick={() => {
-              setQuery('');
-              inputRef.current?.focus();
-            }}
-            className="absolute right-3 p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded min-h-[36px] min-w-[36px] flex items-center justify-center cursor-pointer"
-            aria-label="Clear search input"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        )}
+        
+        {/* Right action controls */}
+        <div className="absolute right-2 sm:right-2.5 flex items-center gap-1">
+          {query ? (
+            <button
+              type="button"
+              onClick={() => {
+                setQuery('');
+                inputRef.current?.focus();
+              }}
+              className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-full min-h-[36px] min-w-[36px] flex items-center justify-center cursor-pointer transition-colors"
+              aria-label="Clear search input"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          ) : null}
+
+          {variant === 'inline' && (
+            <button
+              type="button"
+              onClick={() => {
+                if (results[0]) {
+                  handleSelectTool(results[0]);
+                } else if (query.trim()) {
+                  navigate(`/tools?q=${encodeURIComponent(query.trim())}`);
+                } else {
+                  inputRef.current?.focus();
+                }
+              }}
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-tr from-blue-600 via-sky-500 to-cyan-400 text-white flex items-center justify-center shadow-[0_0_12px_rgba(22,139,255,0.6)] hover:shadow-[0_0_20px_rgba(0,200,255,0.8)] hover:scale-105 active:scale-95 transition-all cursor-pointer group/btn"
+              aria-label="Submit search"
+            >
+              <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform" />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Instant dropdown / results list */}
@@ -147,7 +174,7 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
           ref={resultsRef}
           id="search-results-list"
           role="listbox"
-          className="mt-2 w-full bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xl max-h-80 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800 z-30"
+          className="mt-2 w-full bg-white dark:bg-[#0D1836] rounded-2xl border border-slate-200 dark:border-blue-900/60 shadow-2xl max-h-80 overflow-y-auto divide-y divide-slate-100 dark:divide-blue-950/60 z-30"
         >
           {results.length > 0 ? (
             results.map((tool, idx) => {
@@ -162,8 +189,8 @@ export const SearchTools: React.FC<SearchToolsProps> = ({
                   onClick={() => handleSelectTool(tool)}
                   className={`flex items-center justify-between p-3.5 cursor-pointer transition-colors ${
                     isSelected
-                      ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white'
-                      : 'hover:bg-slate-50 dark:hover:bg-slate-800/60 text-slate-800 dark:text-slate-200'
+                      ? 'bg-slate-100 dark:bg-[#162754] text-slate-900 dark:text-white'
+                      : 'hover:bg-slate-50 dark:hover:bg-[#101F44] text-slate-800 dark:text-slate-200'
                   }`}
                 >
                   <div className="flex items-center gap-3 min-w-0">

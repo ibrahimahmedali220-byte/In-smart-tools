@@ -3,7 +3,7 @@ import { Link, useRouter } from '../../router/Router';
 import { SearchTools } from '../common/SearchTools';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { PWAInstallButton } from '../common/PWAInstallButton';
-import { Search, Menu, X, ArrowRight } from 'lucide-react';
+import { Search, Menu, X, ArrowRight, Zap } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -37,7 +37,7 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-150">
+      <header className="sticky top-0 z-40 w-full bg-white/95 dark:bg-[#050B1D]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-blue-950/80 dark:shadow-[0_4px_25px_-5px_rgba(5,11,29,0.8)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 gap-4">
             
@@ -45,14 +45,19 @@ export const Header: React.FC = () => {
             <div className="flex items-center gap-6 shrink-0">
               <Link
                 to="/"
-                className="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100 hover:text-slate-700 dark:hover:text-slate-300 transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-sky-400 rounded"
+                className="flex items-center gap-2.5 text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-[#F4F7FF] hover:text-sky-600 dark:hover:text-cyan-300 transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded-lg group"
               >
-                Smartly Tools
+                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 via-sky-500 to-cyan-400 text-white flex items-center justify-center font-bold text-xs shadow-[0_0_18px_rgba(22,139,255,0.7)] group-hover:shadow-[0_0_24px_rgba(0,200,255,0.9)] transition-shadow shrink-0">
+                  <Zap className="w-4 h-4 fill-white text-white" />
+                </div>
+                <span className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 dark:from-white dark:via-blue-100 dark:to-cyan-200 bg-clip-text dark:text-transparent">
+                  India Smart Tools
+                </span>
               </Link>
             </div>
 
             {/* Zone 2: Navigation Links (Desktop) */}
-            <nav className="hidden md:flex items-center gap-6 lg:gap-7 text-sm font-medium text-slate-600 dark:text-slate-300">
+            <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-medium text-slate-600 dark:text-slate-300">
               {navLinks.map(link => {
                 const isActive = link.exact
                   ? currentPath === link.href
@@ -62,10 +67,10 @@ export const Header: React.FC = () => {
                   <Link
                     key={link.href}
                     to={link.href}
-                    className={`transition-colors py-1 hover:text-slate-900 dark:hover:text-white whitespace-nowrap ${
+                    className={`transition-all py-1 whitespace-nowrap relative text-sm font-medium ${
                       isActive
-                        ? 'text-slate-950 dark:text-white font-semibold border-b-2 border-slate-900 dark:border-sky-400'
-                        : 'text-slate-600 dark:text-slate-300'
+                        ? 'text-slate-950 dark:text-cyan-300 font-semibold after:absolute after:-bottom-5 after:left-0 after:right-0 after:h-0.5 after:bg-gradient-to-r after:from-cyan-400 after:to-blue-500 after:rounded-full after:shadow-[0_0_12px_rgba(0,200,255,0.9)]'
+                        : 'text-slate-600 dark:text-[#A8B5CC] hover:text-slate-950 dark:hover:text-white'
                     }`}
                   >
                     {link.label}
@@ -83,12 +88,12 @@ export const Header: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsSearchModalOpen(true)}
-                className="hidden sm:inline-flex items-center gap-2.5 px-3 py-1.5 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 hover:text-slate-800 dark:hover:text-slate-200 rounded-lg border border-slate-200/60 dark:border-slate-700/60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-sky-400 min-h-[36px]"
+                className="hidden sm:inline-flex items-center gap-2.5 px-3.5 py-1.5 text-xs text-slate-600 dark:text-[#A8B5CC] bg-slate-100/90 dark:bg-[#0B1530]/90 hover:bg-slate-200/80 dark:hover:bg-[#112048] hover:text-slate-900 dark:hover:text-white rounded-full border border-slate-200/70 dark:border-blue-900/60 hover:dark:border-sky-500/50 shadow-inner transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 min-h-[36px] cursor-pointer"
                 aria-label="Search tools (Press Cmd+K to open)"
               >
-                <Search className="w-3.5 h-3.5 text-slate-400 dark:text-slate-400" />
+                <Search className="w-3.5 h-3.5 text-slate-400 dark:text-cyan-400" />
                 <span className="font-normal">Search tools...</span>
-                <kbd className="hidden lg:inline-block px-1.5 py-0.5 text-[10px] font-mono font-medium text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded shadow-2xs">
+                <kbd className="hidden lg:inline-block px-1.5 py-0.5 text-[10px] font-mono font-medium text-slate-500 dark:text-slate-400 bg-white dark:bg-[#070F26] border border-slate-200 dark:border-blue-900/60 rounded shadow-2xs">
                   ⌘K
                 </kbd>
               </button>

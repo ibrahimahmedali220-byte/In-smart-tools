@@ -43,7 +43,7 @@ export const RouterProvider: React.FC<RouterProviderProps> = ({ children }) => {
       const path = window.location.pathname || '/';
       setCurrentPath(isSafeUrl(path) ? path : '/');
       setSearchQuery(window.location.search || '');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo(0, 0);
     };
 
     window.addEventListener('popstate', handlePopState);
