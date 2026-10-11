@@ -21,14 +21,14 @@ export const Button: React.FC<ButtonProps> = ({
   className = '',
   ...props
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-sky-400 disabled:opacity-50 disabled:pointer-events-none whitespace-nowrap shrink-0 active:scale-[0.98] transition-transform duration-100 cursor-pointer disabled:cursor-not-allowed select-none';
+  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-sky-400 disabled:opacity-50 disabled:pointer-events-none whitespace-nowrap shrink-0 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] cursor-pointer disabled:cursor-not-allowed select-none group';
 
   const variants = {
-    primary: 'bg-slate-900 text-white hover:bg-slate-800 dark:bg-sky-500 dark:hover:bg-sky-400 dark:text-slate-950 shadow-sm border border-slate-900 dark:border-sky-500 font-semibold',
-    secondary: 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200/60 dark:border-slate-700/60',
-    outline: 'border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 shadow-2xs',
+    primary: 'bg-slate-900 text-white hover:bg-slate-800 dark:bg-sky-500 dark:hover:bg-sky-400 dark:text-slate-950 shadow-sm hover:shadow-[0_4px_16px_rgba(22,139,255,0.35)] dark:hover:shadow-[0_4px_20px_rgba(56,189,248,0.5)] border border-slate-900 dark:border-sky-500 font-semibold',
+    secondary: 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 hover:shadow-sm border border-slate-200/60 dark:border-slate-700/60',
+    outline: 'border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-400 dark:hover:border-cyan-400/60 shadow-2xs hover:shadow-sm',
     ghost: 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white',
-    danger: 'bg-red-600 text-white hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-500 shadow-sm'
+    danger: 'bg-red-600 text-white hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-500 shadow-sm hover:shadow-[0_4px_16px_rgba(239,68,68,0.4)]'
   };
 
   const sizes = {

@@ -51,7 +51,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({ variant = 'h
             type="button"
             onClick={handleInstall}
             disabled={isInstalling}
-            className="shrink-0 px-4 py-2 min-h-[44px] min-w-[120px] bg-slate-900 dark:bg-sky-500 hover:bg-slate-800 dark:hover:bg-sky-600 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-sky-400"
+            className="shrink-0 px-4 py-2 min-h-[44px] min-w-[120px] bg-slate-900 dark:bg-sky-500 hover:bg-slate-800 dark:hover:bg-sky-400 text-white dark:text-slate-950 text-xs font-semibold rounded-lg shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-sky-400 cursor-pointer"
           >
             {isInstalling ? 'Installing...' : isIOS ? 'Install on iOS' : 'Install App'}
           </button>
@@ -119,7 +119,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({ variant = 'h
         onClick={handleInstall}
         disabled={isInstalling}
         aria-label="Install Smartly Tools progressive web app"
-        className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 rounded-lg border border-slate-200/80 dark:border-slate-700/60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-300 min-h-[36px] ${className}`}
+        className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 rounded-lg border border-slate-200/80 dark:border-slate-700/60 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-300 min-h-[36px] cursor-pointer ${className}`}
       >
         <Download className="w-3.5 h-3.5 text-slate-500 dark:text-sky-400" />
         <span>{isInstalling ? 'Installing...' : isIOS ? 'Install iOS' : 'Install App'}</span>

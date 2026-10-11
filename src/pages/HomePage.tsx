@@ -294,7 +294,7 @@ export const HomePage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => removeSearch(term)}
-                    className="text-slate-400 hover:text-red-600 dark:hover:text-red-400 ml-0.5 cursor-pointer"
+                    className="text-slate-400 hover:text-red-600 dark:hover:text-red-400 ml-0.5 cursor-pointer hover:scale-125 active:scale-90 transition-transform duration-150"
                     title={`Remove "${term}" from recent searches`}
                   >
                     ×
@@ -304,7 +304,7 @@ export const HomePage: React.FC = () => {
               <button
                 type="button"
                 onClick={clearRecentSearches}
-                className="text-[11px] text-slate-400 hover:text-red-600 dark:hover:text-red-400 underline ml-1 cursor-pointer"
+                className="text-[11px] text-slate-400 hover:text-red-600 dark:hover:text-red-400 underline ml-1 cursor-pointer hover:scale-105 active:scale-95 transition-transform duration-150"
                 title="Clear all recent searches"
               >
                 Clear
@@ -323,8 +323,8 @@ export const HomePage: React.FC = () => {
                   to={category.route}
                   className={
                     isFirst
-                      ? "px-4 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400 text-white shadow-[0_0_16px_rgba(22,139,255,0.6)] hover:shadow-[0_0_24px_rgba(0,200,255,0.8)] hover:scale-105 active:scale-95 transition-all"
-                      : "px-3.5 py-1.5 rounded-full text-xs font-medium bg-white/80 dark:bg-[#0D1836] text-slate-700 dark:text-[#A8B5CC] border border-slate-200/80 dark:border-blue-900/60 hover:dark:border-cyan-400/80 hover:dark:text-white hover:shadow-[0_0_12px_rgba(0,200,255,0.3)] transition-all"
+                      ? "px-4 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400 text-white shadow-[0_0_16px_rgba(22,139,255,0.6)] hover:shadow-[0_0_24px_rgba(0,200,255,0.8)] hover:scale-105 hover:-translate-y-0.5 active:scale-95 transition-all duration-150 cursor-pointer"
+                      : "px-3.5 py-1.5 rounded-full text-xs font-medium bg-white/80 dark:bg-[#0D1836] text-slate-700 dark:text-[#A8B5CC] border border-slate-200/80 dark:border-blue-900/60 hover:dark:border-cyan-400/80 hover:dark:text-white hover:shadow-[0_0_12px_rgba(0,200,255,0.3)] hover:scale-105 hover:-translate-y-0.5 active:scale-95 transition-all duration-150 cursor-pointer"
                   }
                 >
                   {category.name}
@@ -366,7 +366,7 @@ export const HomePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={clearRecentTools}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-red-600 dark:text-[#A8B5CC] dark:hover:text-red-400 transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-red-600 dark:text-[#A8B5CC] dark:hover:text-red-400 hover:scale-105 active:scale-95 transition-all duration-150 cursor-pointer"
                   title="Clear recently accessed tools history"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
@@ -374,10 +374,10 @@ export const HomePage: React.FC = () => {
                 </button>
                 <Link
                   to="/tools"
-                  className="text-xs font-semibold text-slate-700 dark:text-cyan-400 hover:text-slate-950 dark:hover:text-cyan-300 transition-colors inline-flex items-center gap-1"
+                  className="group text-xs font-semibold text-slate-700 dark:text-cyan-400 hover:text-slate-950 dark:hover:text-cyan-300 hover:translate-x-0.5 active:scale-95 transition-all duration-150 inline-flex items-center gap-1"
                 >
                   <span>All Tools</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-150" />
                 </Link>
               </div>
             </div>
@@ -410,10 +410,10 @@ export const HomePage: React.FC = () => {
             </div>
             <Link
               to="/tools"
-              className="inline-flex items-center text-xs font-semibold text-slate-800 dark:text-cyan-400 hover:text-slate-950 dark:hover:text-cyan-300 gap-1 transition-colors"
+              className="group inline-flex items-center text-xs font-semibold text-slate-800 dark:text-cyan-400 hover:text-slate-950 dark:hover:text-cyan-300 gap-1 hover:translate-x-0.5 active:scale-95 transition-all duration-150 cursor-pointer"
             >
               <span>Browse all tools</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-150" />
             </Link>
           </div>
 
@@ -436,10 +436,10 @@ export const HomePage: React.FC = () => {
               </div>
               <Link
                 to="/tools"
-                className="text-xs font-semibold text-slate-700 dark:text-cyan-400 hover:text-slate-950 dark:hover:text-cyan-300 transition-colors inline-flex items-center gap-1"
+                className="group text-xs font-semibold text-slate-700 dark:text-cyan-400 hover:text-slate-950 dark:hover:text-cyan-300 hover:translate-x-0.5 active:scale-95 transition-all duration-150 inline-flex items-center gap-1 cursor-pointer"
               >
                 <span>Manage in Directory</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-150" />
               </Link>
             </div>
 

@@ -50,7 +50,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ variant = 'compact', c
               role="radio"
               aria-checked={isSelected}
               onClick={() => setTheme(t.mode)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium hover:-translate-y-0.5 active:scale-95 transition-all duration-150 cursor-pointer ${
                 isSelected
                   ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-2xs font-semibold'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
@@ -73,7 +73,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ variant = 'compact', c
         aria-expanded={isOpen}
         aria-haspopup="true"
         aria-label={`Current theme: ${theme} (${effectiveTheme} active). Change theme`}
-        className="flex items-center justify-center min-w-[40px] min-h-[40px] p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-transparent dark:border-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-400"
+        className="flex items-center justify-center min-w-[40px] min-h-[40px] p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg hover:scale-105 active:scale-95 transition-all duration-150 border border-transparent dark:border-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-400 cursor-pointer"
       >
         {currentIcon()}
         <span className="sr-only">Toggle theme</span>

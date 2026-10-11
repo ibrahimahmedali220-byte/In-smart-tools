@@ -88,7 +88,7 @@ export const Header: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsSearchModalOpen(true)}
-                className="hidden sm:inline-flex items-center gap-2.5 px-3.5 py-1.5 text-xs text-slate-600 dark:text-[#A8B5CC] bg-slate-100/90 dark:bg-[#0B1530]/90 hover:bg-slate-200/80 dark:hover:bg-[#112048] hover:text-slate-900 dark:hover:text-white rounded-full border border-slate-200/70 dark:border-blue-900/60 hover:dark:border-sky-500/50 shadow-inner transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 min-h-[36px] cursor-pointer"
+                className="hidden sm:inline-flex items-center gap-2.5 px-3.5 py-1.5 text-xs text-slate-600 dark:text-[#A8B5CC] bg-slate-100/90 dark:bg-[#0B1530]/90 hover:bg-slate-200/80 dark:hover:bg-[#112048] hover:text-slate-900 dark:hover:text-white rounded-full border border-slate-200/70 dark:border-blue-900/60 hover:dark:border-sky-500/50 shadow-inner hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:scale-95 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 min-h-[36px] cursor-pointer"
                 aria-label="Search tools (Press Cmd+K to open)"
               >
                 <Search className="w-3.5 h-3.5 text-slate-400 dark:text-cyan-400" />
@@ -102,7 +102,7 @@ export const Header: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsSearchModalOpen(true)}
-                className="sm:hidden p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center"
+                className="sm:hidden p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg hover:scale-105 active:scale-95 transition-all duration-150 min-h-[40px] min-w-[40px] flex items-center justify-center cursor-pointer"
                 aria-label="Search tools"
               >
                 <Search className="w-5 h-5" />
@@ -115,7 +115,7 @@ export const Header: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center"
+                className="md:hidden p-2 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg hover:scale-105 active:scale-95 transition-all duration-150 min-h-[40px] min-w-[40px] flex items-center justify-center cursor-pointer"
                 aria-expanded={isMobileMenuOpen}
                 aria-label="Toggle navigation menu"
               >

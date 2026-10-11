@@ -72,9 +72,9 @@ export const ToolsPage: React.FC = () => {
             role="tab"
             aria-selected={selectedCategory === 'all'}
             onClick={() => setSelectedCategory('all')}
-            className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-sky-400 min-h-[36px] ${
+            className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg hover:-translate-y-0.5 active:scale-95 transition-all duration-150 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-sky-400 min-h-[36px] cursor-pointer ${
               selectedCategory === 'all'
-                ? 'bg-slate-900 dark:bg-sky-500 text-white dark:text-slate-950'
+                ? 'bg-slate-900 dark:bg-sky-500 text-white dark:text-slate-950 shadow-sm'
                 : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 border border-slate-200 dark:border-slate-700'
             }`}
           >
@@ -92,9 +92,9 @@ export const ToolsPage: React.FC = () => {
                 role="tab"
                 aria-selected={isSelected}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-sky-400 min-h-[36px] ${
+                className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg hover:-translate-y-0.5 active:scale-95 transition-all duration-150 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-sky-400 min-h-[36px] cursor-pointer ${
                   isSelected
-                    ? 'bg-slate-900 dark:bg-sky-500 text-white dark:text-slate-950'
+                    ? 'bg-slate-900 dark:bg-sky-500 text-white dark:text-slate-950 shadow-sm'
                     : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 border border-slate-200 dark:border-slate-700'
                 }`}
               >
