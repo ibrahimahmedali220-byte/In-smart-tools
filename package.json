@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build",
-    "build:tsc": "tsc --noEmit && vite build",
+    "generate-sitemap": "tsx src/utils/sitemapGenerator.ts",
+    "prebuild": "npm run generate-sitemap",
+    "build": "tsc -b && vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "typecheck": "tsc --noEmit",
@@ -16,10 +17,15 @@
   "dependencies": {
     "@google/genai": "^2.4.0",
     "@tailwindcss/vite": "^4.3.3",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.14.0",
     "@types/pg": "^8.23.1",
     "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "@vercel/analytics": "^2.0.1",
     "@vitejs/plugin-react": "^6.1.1",
+    "autoprefixer": "^10.4.21",
     "dotenv": "^17.2.3",
     "drizzle-kit": "^0.31.11",
     "drizzle-orm": "^0.45.3",
@@ -32,18 +38,13 @@
     "qrcode": "^1.5.4",
     "react": "^19.0.1",
     "react-dom": "^19.0.1",
-    "vite": "^8.3.0"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.21",
-    "@types/node": "^22.14.0",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "autoprefixer": "^10.4.21",
-    "esbuild": "^0.25.0",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.21.0",
     "typescript": "^7.0.2",
+    "vite": "^8.3.0",
     "vite-plugin-pwa": "^2.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
   }
 }
