@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
     "build": "vite build",
+    "build:tsc": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
+    "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
     "test": "tsx src/utils/calculators/runTests.ts && tsx src/utils/calculators/runStudentTests.ts && tsx src/utils/processors/documentProcessors.test.ts && tsx src/utils/calculators/runEverydayTests.ts && tsx src/utils/discovery/runDiscoveryTests.ts && tsx src/utils/pwa/runPwaTests.ts"
   },
