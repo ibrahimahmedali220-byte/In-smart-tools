@@ -16,6 +16,7 @@ import { ToolItem } from '../../types/tool';
 const FAVORITES_KEY = 'ist_favorites';
 const RECENT_TOOLS_KEY = 'ist_recent_tools';
 const RECENT_SEARCHES_KEY = 'ist_recent_searches';
+const RATINGS_KEY = 'ist_tool_ratings';
 const MAX_RECENT_TOOLS = 8;
 const MAX_RECENT_SEARCHES = 6;
 
@@ -24,10 +25,13 @@ export interface RecentToolEntry {
   lastUsed: number; // Unix timestamp
 }
 
+export type ToolRatingsMap = Record<string, number>; // toolId -> star rating (1 to 5)
+
 // In-memory fallback if localStorage is blocked or unavailable
 let memoryFavorites: string[] = [];
 let memoryRecentTools: RecentToolEntry[] = [];
 let memoryRecentSearches: string[] = [];
+let memoryRatings: ToolRatingsMap = {};
 
 function isLocalStorageAvailable(): boolean {
   try {
@@ -272,4 +276,170 @@ export function clearRecentSearches(): void {
   }
 
   notifyPreferencesChanged();
+}
+
+/**
+ * 4. RATINGS & PERSONALIZED RECOMMENDATIONS API
+ */
+
+export function getAllToolRatings(): ToolRatingsMap {
+  if (!HAS_STORAGE) return { ...memoryRatings };
+
+  try {
+    const raw = window.localStorage.getItem(RATINGS_KEY);
+    if (!raw) return {};
+
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
+
+    const sanitized: ToolRatingsMap = {};
+    for (const [key, value] of Object.entries(parsed)) {
+      if (isValidToolId(key) && typeof value === 'number' && Number.isFinite(value)) {
+        const rounded = Math.round(value);
+        if (rounded >= 1 && rounded <= 5) {
+          sanitized[key] = rounded;
+        }
+      }
+    }
+    return sanitized;
+  } catch {
+    return {};
+  }
+}
+
+export function getToolRating(toolId: string): number {
+  if (!isValidToolId(toolId)) return 0;
+  const ratings = getAllToolRatings();
+  return ratings[toolId] || 0;
+}
+
+export function setToolRating(toolId: string, rating: number): boolean {
+  if (!isValidToolId(toolId)) return false;
+
+  const current = getAllToolRatings();
+  const updated = { ...current };
+
+  if (rating <= 0) {
+    delete updated[toolId];
+  } else {
+    const clamped = Math.min(5, Math.max(1, Math.round(rating)));
+    updated[toolId] = clamped;
+  }
+
+  if (HAS_STORAGE) {
+    try {
+      window.localStorage.setItem(RATINGS_KEY, JSON.stringify(updated));
+    } catch {
+      memoryRatings = updated;
+    }
+  } else {
+    memoryRatings = updated;
+  }
+
+  notifyPreferencesChanged();
+  return true;
+}
+
+export function clearAllRatings(): void {
+  if (HAS_STORAGE) {
+    try {
+      window.localStorage.removeItem(RATINGS_KEY);
+    } catch {
+      memoryRatings = {};
+    }
+  } else {
+    memoryRatings = {};
+  }
+
+  notifyPreferencesChanged();
+}
+
+/**
+ * Intelligent Personalized Recommendations Engine
+ * Uses user's high ratings (4-5 stars), favorites, and category affinities
+ * to recommend relevant unrated/under-explored tools.
+ */
+export function getPersonalizedRecommendations(limit = 4): ToolItem[] {
+  const ratings = getAllToolRatings();
+  const favoriteIds = new Set(getFavoriteToolIds());
+  const visitedIds = new Set(getRecentToolEntries().map(e => e.toolId));
+
+  // Compute category preference scores
+  const categoryScores: Record<string, number> = {
+    finance: 0,
+    student: 0,
+    documents: 0,
+    everyday: 0
+  };
+
+  // Highly rated tools give high category affinity
+  for (const [toolId, score] of Object.entries(ratings)) {
+    const tool = TOOLS.find(t => t.id === toolId);
+    if (tool && tool.category) {
+      if (score >= 4) {
+        categoryScores[tool.category] = (categoryScores[tool.category] || 0) + (score * 2);
+      } else if (score <= 2) {
+        categoryScores[tool.category] = Math.max(0, (categoryScores[tool.category] || 0) - 2);
+      }
+    }
+  }
+
+  // Favorites also contribute to category affinity
+  for (const favId of favoriteIds) {
+    const tool = TOOLS.find(t => t.id === favId);
+    if (tool && tool.category) {
+      categoryScores[tool.category] = (categoryScores[tool.category] || 0) + 3;
+    }
+  }
+
+  // Visited tools contribute small category affinity
+  for (const visitId of visitedIds) {
+    const tool = TOOLS.find(t => t.id === visitId);
+    if (tool && tool.category) {
+      categoryScores[tool.category] = (categoryScores[tool.category] || 0) + 1;
+    }
+  }
+
+  const hasPreferences = Object.values(categoryScores).some(s => s > 0);
+
+  // Score candidate tools
+  const candidateScores: { tool: ToolItem; score: number }[] = [];
+
+  for (const tool of TOOLS) {
+    let score = 0;
+    const userRating = ratings[tool.id];
+
+    // Highly rated tools should be easy to access (bonus score)
+    if (userRating && userRating >= 4) {
+      score += userRating * 4;
+    }
+
+    // Category affinity bonus
+    const catAffinity = categoryScores[tool.category] || 0;
+    score += catAffinity * 2;
+
+    // Favorite bonus
+    if (favoriteIds.has(tool.id)) {
+      score += 4;
+    }
+
+    // Slight bonus for implemented interactive tools
+    if (tool.status === 'implemented') {
+      score += 3;
+    }
+
+    // Default discovery boost for diverse top tools if no preferences yet
+    if (!hasPreferences) {
+      if (['qr-generator', 'jpg-to-pdf', 'emi-calculator', 'percentage-calculator', 'sip-calculator', 'age-calculator'].includes(tool.slug)) {
+        score += 5;
+      }
+    }
+
+    candidateScores.push({ tool, score });
+  }
+
+  // Sort by highest score first, break ties by implemented status
+  candidateScores.sort((a, b) => b.score - a.score);
+
+  return candidateScores.slice(0, limit).map(c => c.tool);
 }

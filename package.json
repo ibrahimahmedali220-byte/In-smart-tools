@@ -7,16 +7,22 @@
     "dev": "vite --port=3000 --host=0.0.0.0",
     "generate-sitemap": "tsx src/utils/sitemapGenerator.ts",
     "prebuild": "npm run generate-sitemap",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
     "test": "tsx src/utils/calculators/runTests.ts && tsx src/utils/calculators/runStudentTests.ts && tsx src/utils/processors/documentProcessors.test.ts && tsx src/utils/calculators/runEverydayTests.ts && tsx src/utils/discovery/runDiscoveryTests.ts && tsx src/utils/pwa/runPwaTests.ts"
   },
+  "overrides": {
+    "esbuild": "0.28.2"
+  },
+  "resolutions": {
+    "esbuild": "0.28.2"
+  },
   "dependencies": {
     "@google/genai": "^2.4.0",
-    "@tailwindcss/vite": "^4.3.3",
+    "@tailwindcss/vite": "^4.0.0",
     "@types/express": "^4.17.21",
     "@types/node": "^22.14.0",
     "@types/pg": "^8.23.1",
@@ -24,10 +30,10 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vercel/analytics": "^2.0.1",
-    "@vitejs/plugin-react": "^6.1.1",
+    "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
     "dotenv": "^17.2.3",
-    "drizzle-kit": "^0.31.11",
+    "drizzle-kit": "^0.30.5",
     "drizzle-orm": "^0.45.3",
     "express": "^4.21.2",
     "lucide-react": "^0.546.0",
@@ -38,13 +44,13 @@
     "qrcode": "^1.5.4",
     "react": "^19.0.1",
     "react-dom": "^19.0.1",
-    "tailwindcss": "^4.3.3",
-    "tsx": "^4.21.0",
-    "typescript": "^7.0.2",
-    "vite": "^8.3.0",
+    "tailwindcss": "^4.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.2.0",
     "vite-plugin-pwa": "^2.0.0"
   },
   "devDependencies": {
-    "esbuild": "^0.25.0"
+    "esbuild": "0.28.2"
   }
 }

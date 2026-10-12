@@ -98,7 +98,16 @@ export default defineConfig(() => {
         '@': path.resolve(import.meta.dirname, '.'),
       },
     },
+    esbuild: {
+      target: 'es2022',
+    },
+    optimizeDeps: {
+      esbuildOptions: {
+        target: 'es2022',
+      },
+    },
     build: {
+      target: 'es2022',
       sourcemap: false, // Prevent public source map exposure in production
       chunkSizeWarningLimit: 900,
       rollupOptions: {

@@ -7,7 +7,7 @@ import { PWAInstallButton } from '../components/common/PWAInstallButton';
 import { CATEGORIES, TOOLS } from '../data/tools';
 import { Link, useRouter } from '../router/Router';
 import { updateSeoMetadata, getWebSiteSchema, getFaqPageSchema } from '../utils/seo';
-import { ShieldCheck, Zap, Laptop, ArrowRight, Star, History, Trash2, Clock, HelpCircle, Rocket } from 'lucide-react';
+import { ShieldCheck, Zap, Laptop, ArrowRight, Star, History, Trash2, Clock, HelpCircle, Rocket, ThumbsUp, Sparkles } from 'lucide-react';
 import { useUserPreferences } from '../hooks/useUserPreferences';
 
 // 3D Isometric Holographic Tech Illustration for Left Hero (Pure SVG + CSS)
@@ -217,8 +217,10 @@ const HOMEPAGE_FAQS = [
 ];
 
 export const HomePage: React.FC = () => {
-  const { favoriteTools, recentTools, recentSearches, removeSearch, clearRecentSearches, clearRecentTools } = useUserPreferences();
+  const { favoriteTools, recentTools, recentSearches, removeSearch, clearRecentSearches, clearRecentTools, recommendations, ratings } = useUserPreferences();
   const { navigate } = useRouter();
+
+  const ratedToolCount = Object.keys(ratings).length;
 
   useEffect(() => {
     updateSeoMetadata({
@@ -385,6 +387,46 @@ export const HomePage: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {lastRecentTools.map(tool => (
                 <ToolCard key={tool.id} tool={tool} isRecent={true} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Personalized Recommendations Section based on ratings & favorites */}
+        {recommendations.length > 0 && (
+          <section className="bg-gradient-to-r from-sky-50/70 via-indigo-50/50 to-purple-50/70 dark:from-[#091535] dark:via-[#0c1c45] dark:to-[#091535] rounded-2xl border border-sky-200/80 dark:border-blue-900/60 p-6 sm:p-8 space-y-6 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-sky-200/60 dark:border-blue-900/60">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-400/20 to-sky-500/30 border border-amber-400/40 flex items-center justify-center text-amber-500 shadow-[0_0_15px_rgba(251,191,36,0.3)] shrink-0">
+                  <Sparkles className="w-5 h-5 text-amber-500" />
+                </div>
+                <div>
+                  <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
+                    Recommended For You
+                    <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                      Smart AI Match
+                    </span>
+                  </h2>
+                  <p className="text-xs text-slate-500 dark:text-[#A8B5CC]">
+                    {ratedToolCount > 0
+                      ? `Personalized based on your ${ratedToolCount} rated tool${ratedToolCount > 1 ? 's' : ''} and favorites stored locally on your device.`
+                      : 'Curated recommendations tailored to your category preferences and most popular tools.'}
+                  </p>
+                </div>
+              </div>
+
+              <Link
+                to="/tools"
+                className="group text-xs font-semibold text-slate-700 dark:text-cyan-400 hover:text-slate-950 dark:hover:text-cyan-300 hover:translate-x-0.5 active:scale-95 transition-all duration-150 inline-flex items-center gap-1 cursor-pointer self-start sm:self-auto"
+              >
+                <span>Explore all tools</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-150" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {recommendations.slice(0, 4).map(tool => (
+                <ToolCard key={tool.id} tool={tool} />
               ))}
             </div>
           </section>

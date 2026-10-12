@@ -241,8 +241,8 @@ export function getWebApplicationSchema(
     desc = nameOrTool.description;
     cat = nameOrTool.category;
     path = nameOrTool.route;
-  } else {
-    name = nameOrTool || '';
+  } else if (typeof nameOrTool === 'string') {
+    name = nameOrTool;
     desc = description || '';
     cat = category || '';
     path = route || '';

@@ -12,6 +12,7 @@ import { safeClipboardCopy } from '../utils/security';
 import { NotFoundPage } from './NotFoundPage';
 import { useToast } from '../components/common/Toast';
 import { BackButton } from '../components/common/BackButton';
+import { StarRating } from '../components/common/StarRating';
 import { TOOL_SEO_DATA } from '../data/toolSeoData';
 import { MetaTags } from '../components/common/MetaTags';
 
@@ -505,6 +506,26 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
                 <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
                   {seoDetail?.explanation || tool.description}
                 </p>
+
+                {/* Star-based Rating Component */}
+                <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center gap-3">
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                    Rate this tool:
+                  </span>
+                  <StarRating
+                    toolId={tool.id}
+                    toolName={tool.name}
+                    size="md"
+                    showLabel
+                    onRatingChange={(newRating) => {
+                      if (newRating > 0) {
+                        showToast(`Rated ${newRating} star${newRating > 1 ? 's' : ''}! Recommendations updated.`, 'success');
+                      } else {
+                        showToast('Rating removed', 'info');
+                      }
+                    }}
+                  />
+                </div>
               </div>
             </div>
 

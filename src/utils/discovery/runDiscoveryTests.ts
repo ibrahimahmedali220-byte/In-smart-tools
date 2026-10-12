@@ -23,7 +23,12 @@ import {
   getRecentSearches,
   recordSearchQuery,
   removeRecentSearch,
-  clearRecentSearches
+  clearRecentSearches,
+  getAllToolRatings,
+  getToolRating,
+  setToolRating,
+  clearAllRatings,
+  getPersonalizedRecommendations
 } from '../storage/preferences';
 
 let passed = 0;
@@ -193,7 +198,41 @@ recordSearchQuery('a');
 recordSearchQuery('   ');
 assert(getRecentSearches().length === 2, 'Recent Searches: Rejects queries shorter than 2 chars');
 
-// 7. ROUTE INTEGRITY & DETAIL MAPPING
+// 7. STAR RATINGS & PERSONALIZED RECOMMENDATIONS ENGINE
+console.log('\nTesting Star Ratings Storage & Recommendations:');
+clearAllRatings();
+assert(Object.keys(getAllToolRatings()).length === 0, 'Ratings: Cleared ratings starts at 0');
+
+// Set rating
+const setRes1 = setToolRating('emi-calculator', 5);
+assert(setRes1 === true, 'Ratings: Successfully rated emi-calculator 5 stars');
+assert(getToolRating('emi-calculator') === 5, 'Ratings: getToolRating returns 5');
+
+// Update rating
+setToolRating('emi-calculator', 4);
+assert(getToolRating('emi-calculator') === 4, 'Ratings: Successfully updated rating to 4 stars');
+
+// Rate finance and check recommendation
+setToolRating('sip-calculator', 5);
+const recommendations = getPersonalizedRecommendations(4);
+assert(recommendations.length > 0, 'Recommendations: Generated recommendations list');
+assert(recommendations.some(t => t.category === 'finance'), 'Recommendations: Recommends tools from user preferred category (finance)');
+
+// Reset rating with 0
+setToolRating('emi-calculator', 0);
+assert(getToolRating('emi-calculator') === 0, 'Ratings: Rating of 0 clears tool rating');
+
+// Rejection of invalid tool IDs
+const rejectInvalid = setToolRating('non-existent-tool-id', 5);
+assert(rejectInvalid === false, 'Ratings: Rejects invalid tool ID rating attempt');
+
+// Clamping star values between 1 and 5
+setToolRating('age-calculator', 10);
+assert(getToolRating('age-calculator') === 5, 'Ratings: Clamps upper star rating to 5');
+setToolRating('age-calculator', -5);
+assert(getToolRating('age-calculator') === 0, 'Ratings: Negative rating removes star entry');
+
+// 8. ROUTE INTEGRITY & DETAIL MAPPING
 console.log('\nTesting Route & Component Integrity:');
 for (const tool of TOOLS) {
   assert(tool.route === `/tools/${tool.slug}`, `Route: Tool '${tool.id}' has consistent route '${tool.route}'`);

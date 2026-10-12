@@ -10,7 +10,13 @@ import {
   getRecentSearches,
   recordSearchQuery,
   removeRecentSearch,
-  clearRecentSearches
+  clearRecentSearches,
+  getAllToolRatings,
+  getToolRating,
+  setToolRating,
+  clearAllRatings,
+  getPersonalizedRecommendations,
+  ToolRatingsMap
 } from '../utils/storage/preferences';
 import { ToolItem } from '../types/tool';
 
@@ -19,12 +25,16 @@ export function useUserPreferences() {
   const [favoriteTools, setFavoriteTools] = useState<ToolItem[]>(() => getFavoriteTools());
   const [recentTools, setRecentTools] = useState<ToolItem[]>(() => getRecentTools());
   const [recentSearches, setRecentSearches] = useState<string[]>(() => getRecentSearches());
+  const [ratings, setRatings] = useState<ToolRatingsMap>(() => getAllToolRatings());
+  const [recommendations, setRecommendations] = useState<ToolItem[]>(() => getPersonalizedRecommendations());
 
   const syncState = useCallback(() => {
     setFavoriteIds(getFavoriteToolIds());
     setFavoriteTools(getFavoriteTools());
     setRecentTools(getRecentTools());
     setRecentSearches(getRecentSearches());
+    setRatings(getAllToolRatings());
+    setRecommendations(getPersonalizedRecommendations());
   }, []);
 
   useEffect(() => {
@@ -38,7 +48,8 @@ export function useUserPreferences() {
       if (
         e.key === 'ist_favorites' ||
         e.key === 'ist_recent_tools' ||
-        e.key === 'ist_recent_searches'
+        e.key === 'ist_recent_searches' ||
+        e.key === 'ist_tool_ratings'
       ) {
         syncState();
       }
@@ -83,17 +94,37 @@ export function useUserPreferences() {
     clearRecentSearches();
   }, []);
 
+  const rateTool = useCallback((toolId: string, starRating: number) => {
+    const success = setToolRating(toolId, starRating);
+    syncState();
+    return success;
+  }, [syncState]);
+
+  const getRating = useCallback((toolId: string) => {
+    return ratings[toolId] || 0;
+  }, [ratings]);
+
+  const clearRatings = useCallback(() => {
+    clearAllRatings();
+    syncState();
+  }, [syncState]);
+
   return {
     favoriteIds,
     favoriteTools,
     recentTools,
     recentSearches,
+    ratings,
+    recommendations,
     isFavorite: isFav,
     toggleFavorite: toggleFav,
     recordToolVisit: recordVisit,
     clearRecentTools: clearRecent,
     recordSearch,
     removeSearch,
-    clearRecentSearches: clearSearches
+    clearRecentSearches: clearSearches,
+    rateTool,
+    getRating,
+    clearRatings
   };
 }

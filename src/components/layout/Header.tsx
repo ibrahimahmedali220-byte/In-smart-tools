@@ -1,31 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useRouter } from '../../router/Router';
-import { SearchTools } from '../common/SearchTools';
+import { GlobalSearch } from '../common/GlobalSearch';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { PWAInstallButton } from '../common/PWAInstallButton';
-import { Search, Menu, X, ArrowRight, Zap } from 'lucide-react';
+import { Menu, X, Zap } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const { currentPath } = useRouter();
 
   // Close mobile drawer on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [currentPath]);
-
-  // Global keyboard shortcut: Cmd+K / Ctrl+K
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        setIsSearchModalOpen(prev => !prev);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
 
   const navLinks = [
     { label: 'Home', href: '/', exact: true },
@@ -79,34 +66,13 @@ export const Header: React.FC = () => {
               })}
             </nav>
 
-            {/* Zone 3: Primary Actions (PWA Install, Search, Theme & Mobile Toggle) */}
+            {/* Zone 3: Primary Actions (Global Search, PWA Install, Theme & Mobile Toggle) */}
             <div className="flex items-center gap-2 sm:gap-2.5">
+              {/* Global Search Component */}
+              <GlobalSearch />
+
               {/* PWA Install Button */}
               <PWAInstallButton variant="header" />
-
-              {/* Prominent Desktop Search Affordance */}
-              <button
-                type="button"
-                onClick={() => setIsSearchModalOpen(true)}
-                className="hidden sm:inline-flex items-center gap-2.5 px-3.5 py-1.5 text-xs text-slate-600 dark:text-[#A8B5CC] bg-slate-100/90 dark:bg-[#0B1530]/90 hover:bg-slate-200/80 dark:hover:bg-[#112048] hover:text-slate-900 dark:hover:text-white rounded-full border border-slate-200/70 dark:border-blue-900/60 hover:dark:border-sky-500/50 shadow-inner hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:scale-95 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 min-h-[36px] cursor-pointer"
-                aria-label="Search tools (Press Cmd+K to open)"
-              >
-                <Search className="w-3.5 h-3.5 text-slate-400 dark:text-cyan-400" />
-                <span className="font-normal">Search tools...</span>
-                <kbd className="hidden lg:inline-block px-1.5 py-0.5 text-[10px] font-mono font-medium text-slate-500 dark:text-slate-400 bg-white dark:bg-[#070F26] border border-slate-200 dark:border-blue-900/60 rounded shadow-2xs">
-                  ⌘K
-                </kbd>
-              </button>
-
-              {/* Mobile Search Button */}
-              <button
-                type="button"
-                onClick={() => setIsSearchModalOpen(true)}
-                className="sm:hidden p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg hover:scale-105 active:scale-95 transition-all duration-150 min-h-[40px] min-w-[40px] flex items-center justify-center cursor-pointer"
-                aria-label="Search tools"
-              >
-                <Search className="w-5 h-5" />
-              </button>
 
               {/* Dark/Light Theme Toggle */}
               <ThemeToggle />
@@ -129,19 +95,13 @@ export const Header: React.FC = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-6 space-y-4 animate-in slide-in-from-top-2 duration-150 shadow-md">
             {/* Mobile Search Bar Quick Access */}
-            <button
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                setIsSearchModalOpen(true);
-              }}
-              className="w-full flex items-center justify-between px-3.5 py-2.5 text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl"
-            >
-              <div className="flex items-center gap-2">
-                <Search className="w-4 h-4 text-slate-400" />
-                <span>Search all 20 tools...</span>
-              </div>
-              <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
-            </button>
+            <div className="w-full">
+              <GlobalSearch
+                className="w-full"
+                placeholder="Search tools by name or description..."
+                onSelect={() => setIsMobileMenuOpen(false)}
+              />
+            </div>
 
             {/* Mobile Nav Links */}
             <div className="flex flex-col space-y-1">
@@ -199,13 +159,6 @@ export const Header: React.FC = () => {
           </div>
         )}
       </header>
-
-      {/* Global Quick Search Modal */}
-      <SearchTools
-        variant="modal"
-        isOpen={isSearchModalOpen}
-        onClose={() => setIsSearchModalOpen(false)}
-      />
     </>
   );
 };

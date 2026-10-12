@@ -144,8 +144,9 @@ function getToolCardBorder(slug: string, category: string): { border: string; gl
  * - Star-favorite controls and accessibility preserved
  */
 export const ToolCard: React.FC<ToolCardProps> = ({ tool, className = '', isRecent = false }) => {
-  const { isFavorite, toggleFavorite } = useUserPreferences();
+  const { isFavorite, toggleFavorite, getRating } = useUserPreferences();
   const isFav = isFavorite(tool.id);
+  const rating = getRating(tool.id);
   const isComingSoon = Boolean(tool.badge) || tool.status === 'in_development' || tool.status === 'planned';
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
@@ -187,6 +188,14 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, className = '', isRece
               </span>
             )}
           </div>
+
+          {rating > 0 && (
+            <div className="flex items-center gap-1 mt-0.5 text-[11px] text-amber-500 font-medium">
+              <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+              <span>{rating}.0</span>
+              <span className="text-slate-400 dark:text-slate-500 text-[10px]">Your rating</span>
+            </div>
+          )}
         </div>
       </div>
 

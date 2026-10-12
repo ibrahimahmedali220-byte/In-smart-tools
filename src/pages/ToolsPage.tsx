@@ -13,7 +13,7 @@ export const ToolsPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<ToolCategory | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { favoriteTools, recentTools, clearRecentTools } = useUserPreferences();
+  const { favoriteTools, recentTools, clearRecentTools, recommendations, ratings } = useUserPreferences();
 
   useEffect(() => {
     updateSeoMetadata({
@@ -235,7 +235,35 @@ export const ToolsPage: React.FC = () => {
             </section>
           )}
 
-          {/* 3. FEATURED / RECOMMENDED TOOLS */}
+          {/* 3. PERSONALIZED RECOMMENDATIONS (Ratings & Affinity) */}
+          {recommendations.length > 0 && (
+            <section className="space-y-4 bg-gradient-to-r from-sky-50/60 to-indigo-50/60 dark:from-sky-950/20 dark:to-indigo-950/20 p-5 sm:p-6 rounded-2xl border border-sky-100 dark:border-sky-900/40">
+              <div className="flex items-center justify-between pb-3 border-b border-sky-200/50 dark:border-sky-900/50">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-amber-500 fill-amber-400" />
+                  <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 tracking-tight">
+                    Recommended For You
+                  </h2>
+                  <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                    Personalized
+                  </span>
+                </div>
+                <span className="text-xs text-slate-500 dark:text-slate-400">
+                  {Object.keys(ratings).length > 0
+                    ? `Based on your ${Object.keys(ratings).length} star rating${Object.keys(ratings).length > 1 ? 's' : ''}`
+                    : 'Curated by usage'}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {recommendations.slice(0, 3).map(tool => (
+                  <ToolCard key={tool.id} tool={tool} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* 4. FEATURED / RECOMMENDED TOOLS */}
           <section className="space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-2">
