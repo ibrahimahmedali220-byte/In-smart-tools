@@ -1,6 +1,6 @@
 {
   "name": "Smartly Tools",
-  "description": "Smartly Tools provides free online tools for everyday tasks, including calculators, converters, generators and other useful web tools.",
+  "description": "Smartly Tools provides 20+ free, instant, and private online tools: Loan EMI & SIP calculators, UPI QR code generator with logo, JPG to PDF converter, student CGPA calculators, and everyday utilities with zero signup.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

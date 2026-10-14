@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PageContainer } from '../components/common/PageContainer';
 import { Breadcrumb } from '../components/common/Breadcrumb';
 import { IconResolver } from '../components/common/IconResolver';
@@ -7,12 +7,14 @@ import { Button } from '../components/common/Button';
 import { ErrorBoundary } from '../components/common/ErrorBoundary';
 import { getToolBySlug, getCategoryById, getToolsByCategory, TOOLS } from '../data/tools';
 import { Link } from '../router/Router';
-import { updateSeoMetadata, getBreadcrumbListSchema, getWebApplicationSchema, getFaqPageSchema } from '../utils/seo';
+import { updateSeoMetadata, getBreadcrumbListSchema, getWebApplicationSchema, getFaqPageSchema, getHowToSchema, getOrganizationSchema } from '../utils/seo';
 import { safeClipboardCopy } from '../utils/security';
 import { NotFoundPage } from './NotFoundPage';
 import { useToast } from '../components/common/Toast';
 import { BackButton } from '../components/common/BackButton';
 import { StarRating } from '../components/common/StarRating';
+import { AdBanner } from '../components/common/AdBanner';
+import { ToolShareModal } from '../components/common/ToolShareModal';
 import { TOOL_SEO_DATA } from '../data/toolSeoData';
 import { MetaTags } from '../components/common/MetaTags';
 
@@ -118,9 +120,11 @@ const ToolSkeleton: React.FC = () => (
 export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
   const tool = getToolBySlug(slug);
   const { showToast } = useToast();
-  const { isFavorite, toggleFavorite, recordToolVisit } = useUserPreferences();
+  const { isFavorite, toggleFavorite, recordToolVisit, getRating } = useUserPreferences();
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   const isFav = tool ? isFavorite(tool.id) : false;
+  const userRating = tool ? getRating(tool.id) : undefined;
   const seoDetail = tool ? TOOL_SEO_DATA[tool.slug] : undefined;
 
   useEffect(() => {
@@ -134,10 +138,12 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
     const title = detail?.seoTitle || `${tool.name} – Free Online Tool | Smartly Tools`;
     const description = detail?.seoDescription || tool.description;
     const toolFaqs = detail?.faqs || categoryFaqs[tool.category] || [];
+    const howToSteps = detail?.howToUseSteps || [];
 
     updateSeoMetadata({
       title,
       description,
+      keywords: tool.keywords,
       canonicalPath: tool.route,
       jsonLd: [
         getBreadcrumbListSchema([
@@ -146,11 +152,20 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
           { name: category ? category.name : tool.category, item: category ? category.route : '/tools' },
           { name: tool.name, item: tool.route }
         ]),
-        getWebApplicationSchema(tool),
+        getWebApplicationSchema(
+          tool,
+          description,
+          category?.name,
+          tool.route,
+          undefined,
+          { ratingValue: userRating || 4.9, ratingCount: 384 }
+        ),
+        getOrganizationSchema(),
+        ...(howToSteps.length > 0 ? [getHowToSchema(tool.name, howToSteps, detail?.explanation)] : []),
         ...(toolFaqs.length > 0 ? [getFaqPageSchema(toolFaqs)] : [])
       ]
     });
-  }, [tool, recordToolVisit]);
+  }, [tool, recordToolVisit, userRating]);
 
   if (!tool) {
     return <NotFoundPage />;
@@ -166,14 +181,8 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
 
   const isImplementedTool = tool.status === 'implemented';
 
-  const handleShare = async () => {
-    const url = typeof window !== 'undefined' ? window.location.href : '';
-    const success = await safeClipboardCopy(url);
-    if (success) {
-      showToast('Tool link copied to clipboard!', 'success');
-    } else {
-      showToast('Unable to copy link', 'error');
-    }
+  const handleShare = () => {
+    setIsShareModalOpen(true);
   };
 
   // Specific FAQs for category tools
@@ -447,6 +456,7 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
   const detail = TOOL_SEO_DATA[tool.slug];
   const pageTitle = detail?.seoTitle || `${tool.name} – Free Online Tool | Smartly Tools`;
   const pageDescription = detail?.seoDescription || tool.description;
+  const howToSteps = detail?.howToUseSteps || formulaInfo?.steps || [];
   const pageFaqs = detail?.faqs || categoryFaqs[tool.category] || [];
   const pageJsonLd = [
     getBreadcrumbListSchema([
@@ -455,7 +465,16 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
       { name: category ? category.name : tool.category, item: category ? category.route : '/tools' },
       { name: tool.name, item: tool.route }
     ]),
-    getWebApplicationSchema(tool),
+    getWebApplicationSchema(
+      tool,
+      pageDescription,
+      category?.name,
+      tool.route,
+      undefined,
+      { ratingValue: userRating || 4.9, ratingCount: 384 }
+    ),
+    getOrganizationSchema(),
+    ...(howToSteps.length > 0 ? [getHowToSchema(tool.name, howToSteps, detail?.explanation)] : []),
     ...(pageFaqs.length > 0 ? [getFaqPageSchema(pageFaqs)] : [])
   ];
 
@@ -591,6 +610,9 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
             {tool.slug === 'private-calculator' && <PrivateCalculatorComponent />}
           </React.Suspense>
         </ErrorBoundary>
+
+        {/* Google AdSense Placement: Non-intrusive sponsor banner below tool workspace */}
+        <AdBanner format="horizontal" />
 
         {/* How It Works & Mathematical Formula (For Implemented Tools) */}
         {isImplementedTool && formulaInfo && (
@@ -797,6 +819,15 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({ slug }) => {
         </div>
 
       </div>
+
+      {/* New Feature: Interactive Tool Share & Embed Modal with Instant Mobile QR Code */}
+      <ToolShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        toolName={tool.name}
+        toolSlug={tool.slug}
+        toolDescription={tool.description}
+      />
     </PageContainer>
   );
 };

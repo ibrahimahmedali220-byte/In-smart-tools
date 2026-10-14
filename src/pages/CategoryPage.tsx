@@ -6,7 +6,8 @@ import { IconResolver } from '../components/common/IconResolver';
 import { CATEGORIES, getCategoryById, getToolsByCategory, searchTools } from '../data/tools';
 import { ToolCategory } from '../types/tool';
 import { Link } from '../router/Router';
-import { updateSeoMetadata, getBreadcrumbListSchema } from '../utils/seo';
+import { updateSeoMetadata, getBreadcrumbListSchema, getItemListSchema, getOrganizationSchema } from '../utils/seo';
+import { AdBanner } from '../components/common/AdBanner';
 import { NotFoundPage } from './NotFoundPage';
 import { BackButton } from '../components/common/BackButton';
 import { Search, X } from 'lucide-react';
@@ -34,13 +35,26 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId }) => {
       ];
 
       updateSeoMetadata({
-        title: `${category.name} – Free Online Utilities`,
+        title: `${category.name} – Free Online Utilities | Smartly Tools`,
         description: category.description,
         canonicalPath: category.route,
-        jsonLd: getBreadcrumbListSchema(breadcrumbs)
+        keywords: [
+          `${category.name.toLowerCase()} tools`,
+          `free ${category.name.toLowerCase()} calculators`,
+          'smartly tools',
+          'online utilities'
+        ],
+        jsonLd: [
+          getBreadcrumbListSchema(breadcrumbs),
+          getOrganizationSchema(),
+          getItemListSchema(
+            `${category.name} Tools`,
+            allCategoryTools.map(t => ({ name: t.name, url: t.route, description: t.description }))
+          )
+        ]
       });
     }
-  }, [category]);
+  }, [category, allCategoryTools]);
 
   if (!category) {
     return <NotFoundPage />;
@@ -131,6 +145,9 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId }) => {
         emptyDescription="Try clearing your search term or exploring another category."
         onClearFilters={() => setFilterQuery('')}
       />
+
+      {/* Google AdSense Placement: Non-intrusive sponsor banner */}
+      <AdBanner format="horizontal" className="mt-8" />
     </PageContainer>
   );
 };

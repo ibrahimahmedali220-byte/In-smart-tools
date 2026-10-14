@@ -5,7 +5,8 @@ import { ToolCard } from '../components/common/ToolCard';
 import { ToolGrid } from '../components/common/ToolGrid';
 import { TOOLS, CATEGORIES, searchTools } from '../data/tools';
 import { ToolCategory } from '../types/tool';
-import { updateSeoMetadata, getBreadcrumbListSchema } from '../utils/seo';
+import { updateSeoMetadata, getBreadcrumbListSchema, getItemListSchema, getOrganizationSchema } from '../utils/seo';
+import { AdBanner } from '../components/common/AdBanner';
 import { useUserPreferences } from '../hooks/useUserPreferences';
 import { Search, X, Star, History, Sparkles, RotateCcw } from 'lucide-react';
 
@@ -18,12 +19,28 @@ export const ToolsPage: React.FC = () => {
   useEffect(() => {
     updateSeoMetadata({
       title: 'All Tools – Free Online Utilities & Smart Digital Tools',
-      description: 'Browse all free online calculators, academic tools, document converters, and everyday utilities on Smartly Tools.',
+      description: 'Browse 20+ free online calculators, academic tools, document converters, and everyday utilities on Smartly Tools.',
+      keywords: [
+        'all tools',
+        'free online tools',
+        'smartly tools directory',
+        'online calculators',
+        'document tools',
+        'student calculators',
+        'everyday utilities'
+      ],
       canonicalPath: '/tools',
-      jsonLd: getBreadcrumbListSchema([
-        { name: 'Home', item: '/' },
-        { name: 'Tools', item: '/tools' }
-      ])
+      jsonLd: [
+        getBreadcrumbListSchema([
+          { name: 'Home', item: '/' },
+          { name: 'Tools', item: '/tools' }
+        ]),
+        getOrganizationSchema(),
+        getItemListSchema(
+          'All Online Tools',
+          TOOLS.map(t => ({ name: t.name, url: t.route, description: t.description }))
+        )
+      ]
     });
   }, []);
 
@@ -281,6 +298,9 @@ export const ToolsPage: React.FC = () => {
               ))}
             </div>
           </section>
+
+          {/* Google AdSense Placement: Non-intrusive banner between recommendations and directory */}
+          <AdBanner format="horizontal" />
 
           {/* 4. COMPLETE ALL TOOLS DIRECTORY */}
           <section className="space-y-4">

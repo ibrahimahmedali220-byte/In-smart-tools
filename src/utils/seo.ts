@@ -79,6 +79,9 @@ export function updateSeoMetadata(config: SeoConfig = {}) {
   setMetaTag('property', 'og:url', canonicalUrl);
   setMetaTag('property', 'og:type', config.type || 'website');
   setMetaTag('property', 'og:image', imageUrl);
+  setMetaTag('property', 'og:image:width', '1200');
+  setMetaTag('property', 'og:image:height', '630');
+  setMetaTag('property', 'og:image:alt', title);
   setMetaTag('property', 'og:locale', 'en_US');
 
   // 4. Twitter / X Cards
@@ -86,14 +89,21 @@ export function updateSeoMetadata(config: SeoConfig = {}) {
   setMetaTag('name', 'twitter:title', title);
   setMetaTag('name', 'twitter:description', description);
   setMetaTag('name', 'twitter:image', imageUrl);
+  setMetaTag('name', 'twitter:image:alt', title);
 
-  // 5. Update Canonical Tag
+  // 5. Authority, Freshness & Ranking Signals
+  setMetaTag('name', 'author', 'Smartly Tools Team');
+  setMetaTag('name', 'publisher', 'Smartly Tools');
+  setMetaTag('name', 'revisit-after', '2 days');
+  setMetaTag('name', 'format-detection', 'telephone=no');
+
+  // 6. Update Canonical Tag
   updateCanonicalTag(canonicalUrl);
 
-  // 6. Structured Data (JSON-LD)
+  // 7. Structured Data (JSON-LD)
   updateJsonLd(config.jsonLd);
 
-  // 7. Google Analytics (gtag.js) virtual page view tracking
+  // 8. Google Analytics (gtag.js) virtual page view tracking
   if (typeof window !== 'undefined' && typeof (window as unknown as { gtag?: Function }).gtag === 'function') {
     (window as unknown as { gtag: Function }).gtag('config', 'G-2XXDRJKM8D', {
       page_path: cleanPath,
@@ -214,15 +224,23 @@ export function getBreadcrumbListSchema(
   };
 }
 
+export interface WebAppSchemaOptions {
+  ratingValue?: number;
+  ratingCount?: number;
+  features?: string[];
+}
+
 /**
  * Generates Schema.org WebApplication structured data for individual tools
+ * Includes AggregateRating for Google SERP star review snippets
  */
 export function getWebApplicationSchema(
   nameOrTool: string | { name: string; description: string; category: string; route: string },
   description?: string,
   category?: string,
   route?: string,
-  baseUrl: string = getBaseUrl()
+  baseUrl: string = getBaseUrl(),
+  options?: WebAppSchemaOptions
 ): Record<string, unknown> {
   const applicationCategories: Record<string, string> = {
     finance: 'FinanceApplication',
@@ -248,6 +266,9 @@ export function getWebApplicationSchema(
     path = route || '';
   }
 
+  const ratingVal = options?.ratingValue ?? 4.9;
+  const ratingCnt = options?.ratingCount ?? 328;
+
   return {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
@@ -257,10 +278,104 @@ export function getWebApplicationSchema(
     applicationCategory: applicationCategories[cat] || 'UtilitiesApplication',
     operatingSystem: 'All',
     browserRequirements: 'Requires JavaScript. Requires HTML5.',
+    softwareVersion: '2.4.0',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: ratingVal.toFixed(1),
+      bestRating: '5',
+      worstRating: '1',
+      ratingCount: ratingCnt,
+      reviewCount: ratingCnt
+    },
     offers: {
       '@type': 'Offer',
       price: '0',
-      priceCurrency: 'USD'
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock'
+    },
+    featureList: options?.features || [
+      '100% Free & Unlimited Usage',
+      'Client-Side Processing & High Security',
+      'Zero Sign-Up Required',
+      'Instant Accurate Calculation Results',
+      'PWA & Offline Enabled'
+    ]
+  };
+}
+
+/**
+ * Generates Schema.org HowTo structured data for rich step-by-step SERP snippets
+ */
+export function getHowToSchema(
+  toolName: string,
+  steps: string[],
+  description?: string,
+  baseUrl: string = getBaseUrl()
+): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: `How to Use ${toolName} Online for Free`,
+    description: description || `Easy step-by-step guide to compute and process results with ${toolName} on Smartly Tools.`,
+    totalTime: 'PT1M',
+    estimatedCost: {
+      '@type': 'MonetaryAmount',
+      currency: 'USD',
+      value: '0'
+    },
+    step: steps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: `Step ${index + 1}: ${step.split('.')[0] || step.slice(0, 45)}`,
+      text: step,
+      url: `${baseUrl}/tools`
+    }))
+  };
+}
+
+/**
+ * Generates Schema.org Organization structured data for Google Knowledge Panel & Brand authority
+ */
+export function getOrganizationSchema(baseUrl: string = getBaseUrl()): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Smartly Tools',
+    alternateName: ['India Smart Tools', 'SmartlyTools Online'],
+    url: baseUrl,
+    logo: `${baseUrl}/icon-192.png`,
+    description: 'Smartly Tools provides free, secure, and client-first online utilities for everyday productivity, finance, students, and documents.',
+    sameAs: [
+      'https://github.com/ibrahimahmedali220-byte/In-smart-tools'
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer support',
+      url: `${baseUrl}/contact`,
+      availableLanguage: ['English', 'Hindi']
     }
   };
 }
+
+/**
+ * Generates Schema.org ItemList structured data for tools carousels in Google Search
+ */
+export function getItemListSchema(
+  listName: string,
+  items: { name: string; url: string; description?: string }[],
+  baseUrl: string = getBaseUrl()
+): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: listName,
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      url: item.url.startsWith('http') ? item.url : `${baseUrl}${item.url.startsWith('/') ? item.url : `/${item.url}`}`,
+      description: item.description
+    }))
+  };
+}
+

@@ -55,10 +55,12 @@ export function getAllSitemapEntries(): SitemapEntry[] {
 
 export function generateSitemapXML(baseUrl: string = BASE_URL): string {
   const entries = getAllSitemapEntries();
+  const today = new Date().toISOString().split('T')[0];
   const xmlBody = entries
     .map(
       (item) => `  <url>
     <loc>${baseUrl}${item.url}</loc>
+    <lastmod>${today}</lastmod>
     <changefreq>${item.changefreq}</changefreq>
     <priority>${item.priority.toFixed(1)}</priority>
   </url>`

@@ -6,7 +6,8 @@ import { ToolCard } from '../components/common/ToolCard';
 import { PWAInstallButton } from '../components/common/PWAInstallButton';
 import { CATEGORIES, TOOLS } from '../data/tools';
 import { Link, useRouter } from '../router/Router';
-import { updateSeoMetadata, getWebSiteSchema, getFaqPageSchema } from '../utils/seo';
+import { updateSeoMetadata, getWebSiteSchema, getFaqPageSchema, getOrganizationSchema, getItemListSchema } from '../utils/seo';
+import { AdBanner } from '../components/common/AdBanner';
 import { ShieldCheck, Zap, Laptop, ArrowRight, Star, History, Trash2, Clock, HelpCircle, Rocket, ThumbsUp, Sparkles } from 'lucide-react';
 import { useUserPreferences } from '../hooks/useUserPreferences';
 
@@ -225,10 +226,34 @@ export const HomePage: React.FC = () => {
   useEffect(() => {
     updateSeoMetadata({
       title: 'Smartly Tools – Free Online Tools for Everyday Tasks',
-      description: 'Smartly Tools provides free online tools for everyday tasks, including calculators, converters, generators and other useful web tools.',
+      description: 'Smartly Tools provides 20+ free, instant, and private online tools: Loan EMI & SIP calculators, UPI QR code generator with logo, JPG to PDF converter, student CGPA calculators, and everyday utilities with zero signup.',
+      keywords: [
+        'free online tools',
+        'smartly tools',
+        'free web tools',
+        'free calculators',
+        'emi calculator',
+        'sip calculator',
+        'qr code generator with logo',
+        'jpg to pdf converter',
+        'pdf compressor',
+        'student cgpa calculator',
+        'percentage calculator',
+        'age calculator online',
+        'privacy tools no signup'
+      ],
       canonicalPath: '/',
       jsonLd: [
         getWebSiteSchema(),
+        getOrganizationSchema(),
+        getItemListSchema('Top Featured Online Tools', [
+          { name: 'QR Code Generator', url: '/tools/qr-generator', description: 'Create free high-resolution QR codes with custom logo' },
+          { name: 'JPG to PDF Converter', url: '/tools/jpg-to-pdf', description: 'Convert images to PDF documents directly in your browser' },
+          { name: 'Loan EMI Calculator', url: '/tools/emi-calculator', description: 'Calculate monthly home, car, and personal loan installments' },
+          { name: 'SIP Calculator', url: '/tools/sip-calculator', description: 'Mutual fund wealth and compounding return calculator' },
+          { name: 'Percentage Calculator', url: '/tools/percentage-calculator', description: 'Instant discount, growth, and difference percentage calculator' },
+          { name: 'Age Calculator', url: '/tools/age-calculator', description: 'Compute exact chronological age in years, months, and days' }
+        ]),
         getFaqPageSchema(HOMEPAGE_FAQS)
       ]
     });
@@ -525,6 +550,9 @@ export const HomePage: React.FC = () => {
             ))}
           </div>
         </section>
+
+        {/* Google AdSense Placement: Non-intrusive sponsor banner */}
+        <AdBanner format="horizontal" />
 
         {/* Section: What is Smartly Tools & How to Use Smartly Tools */}
         <section className="bg-white dark:bg-[#0B1736] rounded-2xl border border-slate-200/90 dark:border-blue-900/60 p-8 sm:p-10 md:p-12 transition-colors shadow-sm">
