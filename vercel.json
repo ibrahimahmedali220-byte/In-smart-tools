@@ -1,9 +1,13 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "installCommand": "npm install --legacy-peer-deps",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/((?!ads\\.txt|sitemap\\.xml|robots\\.txt|llms\\.txt|ai-catalog\\.json|manifest\\.json|favicon\\.svg|og-image\\.svg|icon-192\\.png|icon-512\\.png|assets/).*)", "destination": "/index.html" }
+    {
+      "source": "/((?!api/|.*\\.[\\w]+$).*)",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {
