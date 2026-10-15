@@ -3,12 +3,6 @@
   "outputDirectory": "dist",
   "installCommand": "npm install --legacy-peer-deps",
   "cleanUrls": true,
-  "rewrites": [
-    {
-      "source": "/((?!api/|.*\\.[\\w]+$).*)",
-      "destination": "/index.html"
-    }
-  ],
   "headers": [
     {
       "source": "/assets/(.*)",
@@ -17,29 +11,35 @@
       ]
     },
     {
-      "source": "/(index\\.html)?",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/(sw\\.js|workbox-(.*)\\.js)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/ads\\.txt",
+      "source": "/ads.txt",
       "headers": [
         { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=86400" }
       ]
     },
     {
-      "source": "/(manifest\\.json|robots\\.txt|sitemap\\.xml|llms\\.txt|ai-catalog\\.json)",
+      "source": "/sw.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/workbox-:match*.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/(manifest.json|robots.txt|sitemap.xml|llms.txt|ai-catalog.json)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=86400" }
       ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/((?!assets/|.*\\..*).*)",
+      "destination": "/index.html"
     }
   ]
 }
